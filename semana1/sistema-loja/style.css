@@ -1,0 +1,87 @@
+header{
+  background-color: aqua;
+  text-align: right;
+  height: 150px;
+  font-size: 20px;
+
+}
+
+header img{
+  float: left;
+  width: auto;
+  height: 100%;
+}
+
+header h2{
+  margin-top:0;
+}
+
+nav{
+  background-color: rgb(104, 188, 228);
+}
+
+nav ul{
+  margin: 0;
+  padding:20px 0;
+  text-align: center;
+  font-size: 19px;
+}
+nav li{
+  display: inline;
+  padding: 20px;
+  
+}
+
+section{
+  height: 400px;
+  text-align: center;
+  background-color: rgb(203, 203, 243);
+}
+
+section p{
+  margin-top: 0;
+}
+
+footer{
+  background-color: rgb(104, 188, 228);
+  padding: 10px 0;
+}
+
+/* Estoque */
+th{
+  padding:0 50px;
+  text-align: center;
+  border: solid 1px red;
+}
+
+td{
+  text-align: center;
+  border-left: solid 1px red;
+  border-bottom: solid 1px red;
+}
+
+.ponta-inferior-tabela{
+  border-bottom: none;
+}
+
+.ponta-esquerda-tabela{
+  border-left: none;
+}
+
+/* COLABORADORES */
+
+h3{
+  background-color: rgb(104, 188, 228);
+  margin: 0;
+  padding: 20px 0;
+  text-align: center;
+}
+
+ol{
+  font-size: 22px;
+  margin: 0;
+}
+
+li{
+  padding: 6px 0;
+}
