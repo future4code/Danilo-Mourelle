@@ -1,0 +1,109 @@
+fase1 {
+  grid-column-start: 3;
+}
+
+fase2 {
+  grid-column-start: 5;
+}
+
+fase3 {
+  grid-column-end: 4;
+}
+
+fase4 {
+  grid-column-end: 2; 
+}
+
+fase5 {
+  grid-column-end: -2;
+}
+
+fase6 {
+  grid-column-start: -3;
+}
+
+fase7 {
+  grid-column-end: span 2;
+}
+
+fase8 {
+  grid-column-end: span 5;
+}
+
+fase9 {
+  grid-column-start: 3;
+}
+
+fase10 {
+  grid-column: 4 / -1;
+}
+
+fase11 {
+  grid-column:2 / span 3;
+}
+
+fase12 {
+  grid-row-start: 3;
+}
+
+fase13 {
+  grid-row: 3 / -1;
+}
+
+fase14 {
+  grid-column: 2;
+  grid-row: -2;
+}
+
+fase15 {
+  grid-column: 2 / -1;
+  grid-row: 1 / -1;
+}
+
+fase16 {
+  grid-area: 1 / 2 / 4 / -1;
+}
+
+fase17 {
+  grid-area: 2 / 3 / -2 / -1;
+}
+
+fase18 {
+  order: 1;
+}
+
+fase19 {
+  order: -1;
+}
+
+fase20 {
+  grid-template-columns: 50% 50%;
+}
+
+fase21 {
+  grid-template-columns: repeat(8 , 12.5%);
+}
+
+fase22 {
+  grid-template-columns: 100px 3em 40%;
+}
+
+fase23 {
+  grid-template-columns: 1fr 5fr;
+}
+
+fase24 {
+  grid-template-columns: 50px 1fr 1fr 1fr 50px;
+}
+fase25 {
+  grid-template-columns: 75px 3fr 2fr;
+}
+fase26 {
+  grid-template-rows: repeat(4, 12.5px) 1fr
+}
+fase27 {
+  grid-template: 60% 40% / 200px;
+}
+fase28 {
+  grid-template: 1fr 50px / 20% 80%;
+}
