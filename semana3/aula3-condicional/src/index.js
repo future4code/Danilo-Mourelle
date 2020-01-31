@@ -24,21 +24,21 @@ Caso não seja usado, a mensagem mostrada será "Número 1 é menor ou igual ao 
 EXERCÍCIO 4
 */
 // A 
-// const num1=Number(prompt("Insira um número"))
-// const num2=Number(prompt("Digite outro número"))
+const num1=Number(prompt("Insira um número"))
+const num2=Number(prompt("Digite outro número"))
 
-// if(num1>num2){
-//   console.log(num1, num2)
-// }
-// else if(num1 === num2){
-//   console.log(Os números são iguais) // comentar mais
-// }
-// else{
-//   console.log(num2, num1)
-// }
+if(num1>num2){
+  console.log(num1, num2)
+}
+else if(num1 === num2){
+  console.log("Os números são iguais") // comentar mais
+}
+else{
+  console.log(num2, num1)
+}
 
 //B
-/* const num1 = Number(prompt("Insira um número"))
+const num1 = Number(prompt("Insira um número"))
 const num2 = Number(prompt("Digite outro número"))
 const num3 = Number(prompt("Digite outro número"))
 
@@ -65,10 +65,10 @@ else if(num3 >= num2 && num3 >= num1) {
   else{
     console.log(num3, num2, num1)
   }
-} */
+}
 
 // C
-/* const num1 = Number(prompt("Insira um número"))
+const num1 = Number(prompt("Insira um número"))
 const num2 = Number(prompt("Digite outro número"))
 const num3 = Number(prompt("Digite outro número"))
 
@@ -100,7 +100,7 @@ else {
       console.log(num3, num2, num1)
     }
   }
-}  */
+} 
 
 /*
 EXERCÍCIO 5
@@ -108,7 +108,7 @@ EXERCÍCIO 5
 //A
 /* Link do compartilhamento: https://1drv.ms/u/s!ArCPBn9dSdQc-F3MnRmnCTVqnyX8?e=szObaN */
 //B
-/* const ossos=prompt("O seu animal apresenta coluna vertebral? [s/n]")
+const ossos=prompt("O seu animal apresenta coluna vertebral? [s/n]")
 let resultado=""
 
 if(ossos ==="s"){
@@ -156,7 +156,7 @@ else if(ossos==="n"){
 }
 if(resultado===""){
   console.log("Você inseriu uma resposta invalida, F5 para recomeçar")
-} */
+}
 
 /*
 DESAFIOS
