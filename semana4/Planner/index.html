@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap" rel="stylesheet">
+  <script src="index.js" defer></script>
+  <title>Planner</title>
+</head>
+
+<body>
+  <header>
+    <div class="container-header">
+      <h1>Minha Semana</h1>
+
+      <div class="seletores">
+        <input type="text" id="tarefa" placeholder="Digite a atividade">
+        <select name="dia-da-semana" id="dia-da-semana">
+          <option value="Segunda">Segunda-feira</option>
+          <option value="Terça">Terça-feira</option>
+          <option value="Quarta">Quarta-feira</option>
+          <option value="Quinta">Quinta-feira</option>
+          <option value="Sexta">Sexta-feira</option>
+          <option value="Sabado">Sábado</option>
+          <option value="Domingo">Domingo</option>
+        </select>
+        <button onclick="addTask()">Adicionar</button>
+        <button onclick="apagaTudo()">Apagar Tarefas</button>
+      </div>
+
+    </div>
+  </header>
+  <main>
+    <div class="container-main">
+      <div class="mainflex-item" id="Segunda">
+        <h3>Segunda-feira</h3>
+        <ul onclick="riscaTask(event)"></ul>
+      </div>
+      <div class="mainflex-item" id="Terça">
+        <h3>Terça-feira</h3>
+        <ul onclick="riscaTask(event)"></ul>
+      </div>
+      <div class="mainflex-item" id="Quarta">
+        <h3>Quarta-feira</h3>
+        <ul onclick="riscaTask(event)"></ul>
+      </div>
+      <div class="mainflex-item" id="Quinta">
+        <h3>Quinta-feira</h3>
+        <ul onclick="riscaTask(event)"></ul>
+      </div>
+      <div class="mainflex-item" id="Sexta">
+        <h3>Sexta-feira</h3>
+        <ul onclick="riscaTask(event)"></ul>
+      </div>
+      <div class="mainflex-item" id="Sabado">
+        <h3>Sábado</h3>
+        <ul onclick="riscaTask(event)"></ul>
+      </div>
+      <div class="mainflex-item" id="Domingo">
+        <h3>Domingo</h3>
+        <ul onclick="riscaTask(event)"></ul>
+      </div>
+    </div>
+  </main>
+
+</body>
+
+</html>
