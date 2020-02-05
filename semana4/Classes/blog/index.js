@@ -19,9 +19,14 @@ function criarPost() {
   document.getElementById("conteudo").value = ""
   let novoPost = new Post(novoAutor, novoTitulo, novoTema, novoConteudo)
 
+  
+  publicaPost(novoAutor, novoTitulo, novoTema, novoConteudo)
   todosOsPosts.push(novoPost)
   console.log(todosOsPosts) 
 }
 
+function publicaPost(autor, titulo, tema, conteudo){
+  document.getElementById("post").innerHTML += "<div><h4>" + tema + "</h4><h2>" + titulo + "</h2><p>" + conteudo + "</p><h4>" + autor + "</h4></div>"
+}
 
 
