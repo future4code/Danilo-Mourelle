@@ -7,8 +7,8 @@ class Post {
   }
 }
 
-
-function criarPost(){
+let todosOsPosts = []
+function criarPost() {
   let novoAutor = document.getElementById("autor").value
   document.getElementById("autor").value = ""
   let novoTitulo = document.getElementById("titulo").value
@@ -18,7 +18,9 @@ function criarPost(){
   let novoConteudo = document.getElementById("conteudo").value
   document.getElementById("conteudo").value = ""
   let novoPost = new Post(novoAutor, novoTitulo, novoTema, novoConteudo)
-  console.log(novoPost)
+
+  todosOsPosts.push(novoPost)
+  console.log(todosOsPosts) 
 }
 
 
