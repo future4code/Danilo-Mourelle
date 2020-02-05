@@ -1,0 +1,15 @@
+.post{
+  background-color: black;
+  color: white;
+  width: 45%;
+  height: 95vh;
+  float: left;
+}
+.input{
+  width:45%;
+  height: 95vh;
+  float: left;
+}
+#conteudo{
+  display: block;
+}
