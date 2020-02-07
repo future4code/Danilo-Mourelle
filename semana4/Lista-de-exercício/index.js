@@ -37,8 +37,7 @@ A impressão no console será de -10 / 1590 (detalhe, o maior número funciona p
 EXERCICIO 1
 Cor forof / for array.length / while array.length index++
  */
-const arrayExemplo = [10, 20, 30, 40, 50, 60, 70, 90, 80]
-
+const arrayExemplo = [20, 10, 30, 40, 50, 60, 70, 90, 80]
 for (const elemento of arrayExemplo) {
   console.log(elemento)
 }
@@ -167,6 +166,13 @@ function segundoMaiorEMenor(array) {
 }
 
 segundoMaiorEMenor(arrayExemplo)
+//*************METODO SORT *****************/
+let ordenado = arrayExemplo.sort((a, b) => {
+  return a - b
+})
+console.log("O segundo menor elemento é: " + ordenado[1])
+console.log("O segundo maior elemento é: " + ordenado[ordenado.length-2])
+//*******************************************/
 
 /* 
 EXERCICIO 2
@@ -307,17 +313,85 @@ console.log(arrayImpressa)
 /*
 EXERCICIO 3
 */
-const pessoas = [
-	{ nome: "Paula", idade: 12, altura: 1.8},
-	{ nome: "João", idade: 20, altura: 1.3},
-	{ nome: "Pedro", idade: 15, altura: 1.9},
-	{ nome: "Luciano", idade: 22, altura: 1.8},
-	{ nome: "Artur", idade: 10, altura: 1.2},
-	{ nome: "Soter", idade: 70, altura: 1.9}
+const pessoasDiferentes = [
+  { nome: "Paula", idade: 12, altura: 1.8 },
+  { nome: "João", idade: 20, altura: 1.3 },
+  { nome: "Pedro", idade: 15, altura: 1.9 },
+  { nome: "Luciano", idade: 22, altura: 1.8 },
+  { nome: "Artur", idade: 10, altura: 1.2 },
+  { nome: "Soter", idade: 70, altura: 1.9 }
 ]
+//A
+const pessoasQualificadasParaMontanhaRussaDoTerror = pessoasDiferentes.filter((pessoa, index, array) => {
+  return (pessoa.idade > 14 && pessoa.idade < 60 && pessoa.altura >= 1.5)
+})
+
+console.log(pessoasDiferentes)
+console.log(pessoasQualificadasParaMontanhaRussaDoTerror)
+//B
+const pessoasDESQualificadasParaMontanhaRussaDoTerror = pessoasDiferentes.filter((pessoa, index, array) => {
+  return !(pessoa.idade > 14 && pessoa.idade < 60 && pessoa.altura >= 1.5)
+})
+
+console.log(pessoasDiferentes)
+console.log(pessoasDESQualificadasParaMontanhaRussaDoTerror)
+
 /*
-EXERCICIO 1
+EXERCICIO 4
 */
+const consultas = [
+  { nome: "João", genero: "masculino", cancelada: true, dataDaConsulta: "01/10/2019" },
+  { nome: "Pedro", genero: "masculino", cancelada: false, dataDaConsulta: "02/10/2019" },
+  { nome: "Paula", genero: "feminino", cancelada: true, dataDaConsulta: "03/11/2019" },
+  { nome: "Márcia", genero: "feminino", cancelada: false, dataDaConsulta: "04/11/2019" }
+]
+
+let emails = consultas.map(paciente => {
+  if (paciente.cancelada === false) {
+    if (paciente.genero === "masculino") {
+      return `Olá, Sr. ${paciente.nome}. Estamos enviando esta mensagem para lembrá-lo da sua consulta no dia ${paciente.dataDaConsulta}. Por favor, acuse o recebimento deste e-mail.`
+    }
+    else {
+      return `Olá, Sra. ${paciente.nome}. Estamos enviando esta mensagem para lembrá-la da sua consulta no dia ${paciente.dataDaConsulta}. Por favor, acuse o recebimento deste e-mail.`
+    }
+  }
+  else {
+    if (paciente.genero === "masculino") {
+      return `Olá, Sr. ${paciente.nome}. Infelizmente, sua consulta marcada para o dia ${paciente.dataDaConsulta} foi cancelada. Se quiser, pode entrar em contato conosco para remarcá-la`
+    }
+    else {
+      return `Olá, Sra. ${paciente.nome}. Infelizmente, sua consulta marcada para o dia ${paciente.dataDaConsulta} foi cancelada. Se quiser, pode entrar em contato conosco para remarcá-la`
+    }
+  }
+})
+
+console.log(emails)
+
 /*
-EXERCICIO 1
+EXERCICIO 5
 */
+const contas = [
+  { cliente: "João", saldoTotal: 1000, compras: [100, 200, 300] },
+  { cliente: "Paula", saldoTotal: 7500, compras: [200, 1040] },
+  { cliente: "Pedro", saldoTotal: 10000, compras: [5140, 6100, 100, 2000] },
+  { cliente: "Luciano", saldoTotal: 100, compras: [100, 200, 1700] },
+  { cliente: "Artur", saldoTotal: 1800, compras: [200, 300] },
+  { cliente: "Soter", saldoTotal: 1200, compras: [] }
+]
+console.log(contas)
+
+function somaDasCompras(arrayParametro) {
+  let somaCompras = 0
+  arrayParametro.forEach((elemento, index, array) => {
+    somaCompras += elemento
+  })
+  return somaCompras
+}
+
+
+contas.forEach((pessoa, index, array) => {
+  let soma = somaDasCompras(pessoa.compras)
+  pessoa.saldoTotal -= soma
+})
+
+console.log(contas)
