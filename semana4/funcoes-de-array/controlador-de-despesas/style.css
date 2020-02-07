@@ -1,0 +1,13 @@
+*{
+  box-sizing: border-box;
+}
+main{
+  display: flex;
+}
+
+section{
+  border: solid 1px black;
+  width: 33%;
+  min-height: calc(100vh - 16px);
+  padding-left: 2% ;
+}
