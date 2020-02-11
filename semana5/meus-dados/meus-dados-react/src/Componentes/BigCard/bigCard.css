@@ -1,0 +1,30 @@
+.bigcard-container{
+  border: 2px solid black;
+  height: 10vh;
+  width: 50%;
+  display: grid;
+  grid-template: 1fr 2fr / 10% 90%;
+  grid-template-areas: 
+    "imagemBgC tituloBgC"
+    "imagemBgC textoBgC";
+  justify-items: start;
+  align-items: center;
+
+}
+
+.imagemBgC{
+  grid-area: imagemBgC;
+  border-radius: 50%;
+  width: 80%;
+  align-self: center;
+  justify-self: center;
+} 
+
+.tituloBgC{
+  grid-area: tituloBgC;
+}
+
+.textoBgC{
+  grid-area: textoBgC;
+  margin: 0;
+}

@@ -1,0 +1,19 @@
+.img-conatainer{
+  display: flex;
+  border-radius: 50vh;
+  border: 2px solid black;
+  width: 30%;
+  height: 10vh;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  font-size: 25px;
+}
+
+.imgImgBtn{
+  max-height: 50%;
+}
+
+.txtImgBtn{
+
+}

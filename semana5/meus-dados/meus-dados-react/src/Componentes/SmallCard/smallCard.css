@@ -1,0 +1,16 @@
+.smallcard-container{
+  display: flex;
+  border: 2px solid black;
+  width: 50%;
+  height: 10vh;
+  align-items: center;
+}
+.imagemSmC{
+  width: 7%;
+  max-height: 8vh;
+  height: auto;
+}
+.labelSmC{
+  font-weight: bold;
+  margin:0 1%;
+}
