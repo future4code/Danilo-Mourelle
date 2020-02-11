@@ -1,0 +1,173 @@
+*{
+  box-sizing: border-box;
+}
+.odin{
+  margin: 8px;
+  width: calc(100%-16px);
+}
+header{
+  width: 100%;
+  height: calc(0.10*(100vh - 16px));
+  background-color: #ffffff;
+  padding: 1%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-lado-esquerdo{
+  flex-grow: 1;
+  display: flex;
+}
+
+h1{
+  margin: 0 auto 0 0; 
+}
+
+.header-centro{
+  flex-grow: 1;
+}
+input{
+  height: 1.5em;
+  justify-self: end;
+  width: 75%;
+  height: 3vh;
+  justify-content: normal;
+}
+
+button{
+  width: 25%;
+  height: 3vh;
+}
+
+.header-lado-direito{
+  flex-grow: 1;
+  display: flex;
+  justify-content: end;
+}
+
+main{
+  float: left;
+  width: 100%;
+}
+
+nav{
+  float: left;
+  width:12%;
+  background-color: #fff0da;
+  height: calc(0.8*(100vh - 16px));
+  
+}
+
+.container-nav{
+  display: flex;
+  flex-direction: column;
+  height: 30%;
+  justify-content: space-evenly;
+  margin: 10%;
+}
+
+section{
+  width: 100%;
+  background-color: rgb(240, 240, 240);
+}
+
+.centro{
+  display: grid;
+  height: calc(0.8*(100vh - 16px));
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-gap: 1%;
+  justify-items: center;
+  padding: 2%;
+          
+}
+.quadro {
+  text-align: center;
+  border: solid 1px;
+}
+
+.centro a{
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 20%;
+}
+
+.quadro p{
+  margin: 0;
+  font-size: 1.5em;
+}
+.centro a:hover{
+  background-color: rgb(201, 201, 201);
+  cursor: pointer;
+}
+
+.quadro img{
+  width: 100%;
+  height: 80%;
+  display: block;
+}
+
+.texto{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer{
+  width: 100%;
+  height:calc(0.1*(100vh - 16px));
+  background-color: darkslategrey;
+  color:ivory;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* ********Pagina do vídeo******** */
+.pag-video{
+  width: 70%;
+  height: calc(0.8*(100vh - 16px));
+  padding: 1%;
+}
+.container-video{
+  display: grid;
+  width: 80%;
+  grid-template: 95% 5% / 1fr 1fr;
+  grid-template-areas: 
+    "video video"
+    "titulo botões";
+  align-content: start;
+}
+
+#video{
+  grid-area: video;
+}
+#titulo{
+  grid-area: titulo;
+  align-self:center;
+}
+#titulo p{
+  margin:0;
+  font-size: larger;
+}
+#btn{
+ grid-area: botões;
+ justify-self: end;
+ align-self: center;
+}
+aside{
+  float: left;
+  width: 15%;
+  padding: 1%;
+  height: calc(0.8*(100vh - 16px));
+  background-color: #fff0da;
+}
+
+.container-aside{
+  display: flex;
+  height: 70%;
+  flex-flow:column nowrap;
+  justify-content:space-between;
+}
