@@ -17,36 +17,20 @@ class App extends React.Component {
     super(props)
     this.state = {
       formulario: 1,
-      escolaridade:'medioIncompleto'
+      escolaridade: 'medioIncompleto'
     }
   }
 
-  selecionaEscolaridade = (event) =>{
-    this.setState ({
-      escolaridade:event.target.value
+  selecionaEscolaridade = (event) => {
+    this.setState({
+      escolaridade: event.target.value
     })
   }
 
+  verificaValorInput = (event) => {
+    
+  }
   onClickEnviar = () => {
-/*     switch (this.state.formulario) {
-      case 1:
-        this.setState({
-          formulario: 2
-        })
-        break;
-
-      case 2:
-        this.setState({
-          formulario: 3
-        })
-        break;
-      case 3:
-        this.setState({
-          formulario: "agradecimento"
-        })
-        break;
-    } */
-
     switch (this.state.escolaridade) {
       case 'superiorIncompleto':
         this.setState({
@@ -63,12 +47,12 @@ class App extends React.Component {
         this.setState({
           formulario: 3
         })
-        break; 
+        break;
       case 'medioIncompleto':
         this.setState({
           formulario: 3
         })
-        break; 
+        break;
     }
   }
 

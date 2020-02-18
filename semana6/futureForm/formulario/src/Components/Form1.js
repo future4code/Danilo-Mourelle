@@ -19,43 +19,44 @@ const SubContainer = styled.div`
 `
 const Titulo = styled.h1`
 `
-const Seletor = styled.select`
-`
 
 class Form1 extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectValue: "medioIncompleto"
+      valor1: "",
+      valor2: "",
+      valor3: "",
     }
   }
-  
-  /* selecionaFormacao = (event) => {
-    
-    let grau = this.state.selectValue
-    this.props.selecao(grau)
 
+  atualizaValor = (event) => {
     this.setState({
-      selectValue: event.target.value
+      [event.target.name]: event.target.value
     })
-    
-  } */
+  }
 
   render() {
+    console.log(this.state.valor1)
+    console.log(this.state.valor2)
+    console.log(this.state.valor3)
     return (
       <Container>
         <Titulo>ETAPA 1 - DADOS GERAIS</Titulo>
         <SubContainer>
-          <Perguntas pergunta="1. Qual seu nome?" />
-          <Perguntas pergunta="2. Qual sua idade?" />
-          <Perguntas pergunta="3. Qual seu e-mail?" />
+          <p>1. Qual seu nome?</p>
+          <input type="text" name="valor1" onChange={this.atualizaValor} value={this.state.valor1} />
+          <p>2. Qual sua idade?</p>
+          <input type="text" name="valor2" onChange={this.atualizaValor} value={this.state.valor2} />
+          <p>3. Qual seu e-mail?</p>
+          <input type="text" name="valor3" onChange={this.atualizaValor} value={this.state.valor3} />
           <p>4. Qual o grau de escolaridade?</p>
-          <Seletor  onChange={this.props.selecao}>
+          <select onChange={this.props.selecao}>
             <option value="medioIncompleto"> Ensino Médio Incompleto </option>
             <option value="medioCompleto"> Ensino Médio Completo </option>
             <option value="superiorIncompleto"> Ensino Superior Incompleto </option>
             <option value="superiorCompleto"> Ensino Superior Completo </option>
-          </Seletor>
+          </select>
         </SubContainer>
       </Container>
     )

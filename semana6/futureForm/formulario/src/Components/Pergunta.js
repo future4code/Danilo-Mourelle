@@ -11,7 +11,7 @@ function Perguntas (props){
   return(
     <Container>
       <p>{props.pergunta}</p>
-      <input type="text" />
+      <input type="text" onChange={props.valor}/>
     </Container>
   )
 }
