@@ -46,6 +46,7 @@ class Lista extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      temDadosNaLista: true,
       listaDePessoas: []
     }
 
@@ -63,39 +64,55 @@ class Lista extends React.Component {
       }
     })
     request.then((response) => {
+      console.log(response.status)
+      console.log(response.statusText)
       console.log(response.data.result)
       this.setState({
+        temDadosNaLista: true,
         listaDePessoas: response.data.result
       })
     }).catch((error) => {
-      console.log("deu ruim")
+      console.log(error.response.status)
+      console.log(error.response.data.message)
       this.setState({
-        listaDePessoas:[]
+        temDadosNaLista: false,
+        listaDePessoas: []
       })
     })
   }
 
   onDeletePerson = (id) => {
-    const request = axios.delete(`${baseUrl}/users/deleteUser?id=${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-        "api-token": token
-      }
-    })
-    request.then((reponse) => {
-      window.alert("Deletado com Sucesso.... Atualizando")
-      this.onListUpdate()
-    }).catch((error)=> {
-      window.alert("Deu ruim aqui também")
-    })
+    if (window.confirm("Deseja realmente deletar este usuário?")) {
+      const request = axios.delete(`${baseUrl}/users/deleteUser?id=${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "api-token": token
+        }
+      })
+      request.then((response) => {
+        console.log(response.status)
+        console.log(response.statusText)
+        window.alert("Deletado com Sucesso.... Atualizando")
+        this.onListUpdate()
+      }).catch((error) => {
+        console.log(error.response.status)
+        console.log(error.response.data.message)
+        window.alert("Erro inesperado ao deletar, tente novamente mais tarde")
+      })
+    }
+  }
+
+  onClickNome = (id) =>{
+    this.props.changePage("detalhe")
+    this.props.getId(id)
   }
 
   render() {
-    console.log(this.state.listaDePessoas)
+
     const novaListaDePessoas = this.state.listaDePessoas.map((cadaPessoa, index, array) => {
       return (
         <Elemento key={cadaPessoa.id}>
-          <p>{cadaPessoa.name}</p>
+          <p onClick={() => this.onClickNome(cadaPessoa.id)}>{cadaPessoa.name}</p>
           <DeleteP onClick={() => this.onDeletePerson(cadaPessoa.id)}>X </DeleteP>
         </Elemento>
       )
@@ -105,9 +122,9 @@ class Lista extends React.Component {
       <Container>
         <h2>Lista de Usuários</h2>
         <Wrapper>
-          {this.state.listaDePessoas.length===0 ? <p>Carregando...</p> : novaListaDePessoas}
+          {this.state.listaDePessoas.length === 0 ? this.state.temDadosNaLista ? <p>Carregando...</p> : <p>Sem dados para mostrar</p> : novaListaDePessoas}
         </Wrapper>
-        <button onClick={this.props.changePage}>Ir para página de cadastro</button>
+        <button onClick={() => this.props.changePage("cadastro")}>Ir para página de cadastro</button>
       </Container>
     )
   }

@@ -1,6 +1,7 @@
 import React from 'react';
 import Inputs from './Components/Inputs';
 import Lista from './Components/Lista';
+import Detalhes from './Components/Detalhes';
 
 
 
@@ -8,23 +9,15 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      idBuscado:'',
       paginaAtual: 'cadastro',
     }
   }
 
-  onPageChange = () => {
-    let actualPage = this.state.paginaAtual
-
-    if (actualPage === 'cadastro') {
-      this.setState({
-        paginaAtual: 'lista'
-      })
-    }
-    else {
-      this.setState({
-        paginaAtual: 'cadastro'
-      })
-    }
+  onPageChange = (paginaRequerida) => {
+    this.setState({
+      paginaAtual: paginaRequerida
+    })
   }
 
   onValueUpdate = (input, newValue) => {
@@ -33,20 +26,30 @@ class App extends React.Component {
     })
   }
 
-  
+  onReceiveIdToSearch = (id) =>{
+    this.setState({
+      idBuscado:id
+    })
+  }
 
   render() {
+    let paginaMostrada
+    switch (this.state.paginaAtual) {
+      case 'cadastro':
+        paginaMostrada = <Inputs changePage={this.onPageChange} />
+        break;
+      case 'lista':
+        paginaMostrada = <Lista changePage={this.onPageChange} getId={this.onReceiveIdToSearch}  />
+        break;
+      case 'detalhe':
+        paginaMostrada = <Detalhes changePage={this.onPageChange} id={this.state.idBuscado} />
+        break;
+    }
 
     return (
       <div>
-        {this.state.paginaAtual==='cadastro' ?
-        <Inputs
-          changePage={this.onPageChange} />
-        :
-        <Lista
-          changePage={this.onPageChange}
-        />}
-      </div>
+        {paginaMostrada}
+      </div >
     );
   }
 }

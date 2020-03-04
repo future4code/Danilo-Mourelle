@@ -57,12 +57,16 @@ class Inputs extends React.Component {
     })
 
     request.then((response) => {
+      console.log(response.status)
+      console.log(response.statusText)
       window.alert('Dados enviados com sucesso!')
       this.setState({
         nome: '',
         email: ''
       })
     }).catch((error) => {
+      console.log(error.response.status)
+      console.log(error.response.data.message)
       window.alert('Erro inesperado')
     })
   }
@@ -89,7 +93,7 @@ class Inputs extends React.Component {
           />
           <button onClick={this.onDataSend}>Enviar</button>
         </Wrapper>
-        <button onClick={this.props.changePage}>Ir para página de lista</button>
+        <button onClick={() => this.props.changePage("lista")}>Ir para página de lista</button>
       </Container>
     )
   }
