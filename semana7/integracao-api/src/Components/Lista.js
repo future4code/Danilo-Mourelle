@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 
+//* **STYLED COMPONENTS** */
 const Container = styled.div`
   width:50%;
   height: 98vh;
@@ -33,10 +34,14 @@ const DeleteP = styled.p`
     cursor: pointer;
   }
 `
+//--------------------------------------------------------------------------
 
+//* **VARIAVEIS GLOBAIS JS** */
 const baseUrl = "https://us-central1-future4-users.cloudfunctions.net/api"
 const token = "danilo-sagan"
+//--------------------------------------------------------------------------
 
+//* **COMPONENTE DE CLASSE** */
 class Lista extends React.Component {
   constructor(props) {
     super(props)

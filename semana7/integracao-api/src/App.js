@@ -1,20 +1,14 @@
 import React from 'react';
-import styled from 'styled-components'
 import Inputs from './Components/Inputs';
-import axios from 'axios'
 import Lista from './Components/Lista';
 
-const baseUrl = "https://us-central1-future4-users.cloudfunctions.net/api"
-const token = "danilo-sagan"
+
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      nome: '',
-      email: '',
       paginaAtual: 'cadastro',
-
     }
   }
 
@@ -39,28 +33,7 @@ class App extends React.Component {
     })
   }
 
-  onDataSend = () => {
-    const dataToSend = {
-      name: this.state.nome,
-      email: this.state.email
-    }
-    this.setState({
-      nome:'',
-      email:''
-    })
-    const request = axios.post(`${baseUrl}/users/createUser`, dataToSend, {
-      headers: {
-        "Content-Type": "application/json",
-        "api-token": token
-      }
-    })
-
-    request.then((response) => {
-      window.alert('Dados enviados com sucesso!')
-    }).catch((error) => {
-      window.alert('Erro inesperado')
-    })
-  }
+  
 
   render() {
 
@@ -68,10 +41,6 @@ class App extends React.Component {
       <div>
         {this.state.paginaAtual==='cadastro' ?
         <Inputs
-          nome={this.state.nome}
-          email={this.state.email}
-          refreshValue={this.onValueUpdate}
-          sendData={this.onDataSend}
           changePage={this.onPageChange} />
         :
         <Lista
