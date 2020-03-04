@@ -20,7 +20,7 @@ class App extends React.Component {
 
   onPageChange = () => {
     let actualPage = this.state.paginaAtual
-    
+
     if (actualPage === 'cadastro') {
       this.setState({
         paginaAtual: 'lista'
@@ -44,6 +44,10 @@ class App extends React.Component {
       name: this.state.nome,
       email: this.state.email
     }
+    this.setState({
+      nome:'',
+      email:''
+    })
     const request = axios.post(`${baseUrl}/users/createUser`, dataToSend, {
       headers: {
         "Content-Type": "application/json",
@@ -62,16 +66,17 @@ class App extends React.Component {
 
     return (
       <div>
-        {/*  <Inputs
+        {this.state.paginaAtual==='cadastro' ?
+        <Inputs
           nome={this.state.nome}
           email={this.state.email}
           refreshValue={this.onValueUpdate}
           sendData={this.onDataSend}
-          changePage={this.onPageChange}
-        /> */}
+          changePage={this.onPageChange} />
+        :
         <Lista
           changePage={this.onPageChange}
-        />
+        />}
       </div>
     );
   }

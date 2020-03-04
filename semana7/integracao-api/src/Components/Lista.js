@@ -27,6 +27,12 @@ const Elemento = styled.div`
   justify-content:space-between;
   margin:0 5%;
 `
+const DeleteP = styled.p`
+  :hover{
+    color: red;
+    cursor: pointer;
+  }
+`
 
 const baseUrl = "https://us-central1-future4-users.cloudfunctions.net/api"
 const token = "danilo-sagan"
@@ -40,7 +46,7 @@ class Lista extends React.Component {
 
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.onListUpdate()
   }
 
@@ -54,21 +60,39 @@ class Lista extends React.Component {
     request.then((response) => {
       console.log(response.data.result)
       this.setState({
-        listaDePessoas:response.data.result
+        listaDePessoas: response.data.result
       })
     }).catch((error) => {
       console.log("deu ruim")
+      this.setState({
+        listaDePessoas:[]
+      })
+    })
+  }
+
+  onDeletePerson = (id) => {
+    const request = axios.delete(`${baseUrl}/users/deleteUser?id=${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "api-token": token
+      }
+    })
+    request.then((reponse) => {
+      window.alert("Deletado com Sucesso.... Atualizando")
+      this.onListUpdate()
+    }).catch((error)=> {
+      window.alert("Deu ruim aqui também")
     })
   }
 
   render() {
-
+    console.log(this.state.listaDePessoas)
     const novaListaDePessoas = this.state.listaDePessoas.map((cadaPessoa, index, array) => {
       return (
-      <Elemento key={cadaPessoa.id}>
-        <p>{cadaPessoa.name}</p>
-        <p>X</p>
-      </Elemento>
+        <Elemento key={cadaPessoa.id}>
+          <p>{cadaPessoa.name}</p>
+          <DeleteP onClick={() => this.onDeletePerson(cadaPessoa.id)}>X </DeleteP>
+        </Elemento>
       )
     })
 
@@ -76,7 +100,7 @@ class Lista extends React.Component {
       <Container>
         <h2>Lista de Usuários</h2>
         <Wrapper>
-          {this.state.listaDePessoas ? novaListaDePessoas : <p>Carregando...</p>}
+          {this.state.listaDePessoas.length===0 ? <p>Carregando...</p> : novaListaDePessoas}
         </Wrapper>
         <button onClick={this.props.changePage}>Ir para página de cadastro</button>
       </Container>
