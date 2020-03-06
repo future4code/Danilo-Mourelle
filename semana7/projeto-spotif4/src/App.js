@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   background-color:#555;
   min-height:100%;
 `
-const  Header = styled.header` 
+const Header = styled.header` 
     background-color: #f05555;
     width:100%;
     height:100px;
@@ -66,23 +66,56 @@ const Main = styled.main`
 `
 
 
-function App() {
-  return (
-    <Wrapper>
-      <GlobalStyle />
-      <Header><h1>spotiF4</h1></Header>
-      <Nav>
-        <div>Criar nova Playlist</div>
-        <div>Minhas Playlists</div>
-        <div>Ouvidas Recentemente</div>
-        <div>Sugestões para você</div>
-      </Nav>
-      <Main>
-         <PlayLists />
-      </Main>
-    </Wrapper>
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      searchedPLId: '',
+      pageShown: 'lista'
+    }
+  }
 
-  );
+  onReceiveIdToSearch = (id) => {
+    this.setState({
+      searchedPLId: id
+    })
+  }
+
+  onPageChange = (pageRequested) => {
+    this.setState({
+      pageShown: pageRequested
+    })
+  }
+
+  render() {
+    let selectedPage
+    switch (this.state.pageShown) {
+      case 'cadastro':
+        selectedPage = <CriaPL />
+        break;
+      case 'lista':
+        selectedPage = <PlayLists changePage={this.onPageChange} getId={this.onReceiveIdToSearch} />
+        break;
+      default:
+        break;
+    }
+    return (
+      <Wrapper>
+        <GlobalStyle />
+        <Header><h1>spotiF4</h1></Header>
+        <Nav>
+          <div onClick={() => this.onPageChange('cadastro')}>Criar nova Playlist</div>
+          <div onClick={() => this.onPageChange('lista')}>Minhas Playlists</div>
+          <div>Ouvidas Recentemente</div>
+          <div>Sugestões para você</div>
+        </Nav>
+        <Main>
+          {selectedPage}
+        </Main>
+      </Wrapper>
+
+    );
+  }
 }
 
 export default App;
