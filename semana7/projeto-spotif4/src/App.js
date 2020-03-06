@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { createGlobalStyle } from 'styled-components'
 import CriaPL from './Components/CriaPL';
 import PlayLists from './Components/PlayLists';
+import PLDetailed from './Components/PLDetailed';
 
 const GlobalStyle = createGlobalStyle`
   body{
@@ -70,14 +71,16 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      searchedPLId: '',
-      pageShown: 'lista'
+      searchedPlId: '',
+      searchedPlName:'',
+      pageShown: 'playlists'
     }
   }
 
-  onReceiveIdToSearch = (id) => {
+  onReceivePlData = (id, name) => {
     this.setState({
-      searchedPLId: id
+      searchedPlId: id,
+      searchedPlName: name
     })
   }
 
@@ -90,12 +93,14 @@ class App extends React.Component {
   render() {
     let selectedPage
     switch (this.state.pageShown) {
-      case 'cadastro':
+      case 'addPlaylist':
         selectedPage = <CriaPL />
         break;
-      case 'lista':
-        selectedPage = <PlayLists changePage={this.onPageChange} getId={this.onReceiveIdToSearch} />
+      case 'playlists':
+        selectedPage = <PlayLists changePage={this.onPageChange} getPlData={this.onReceivePlData} />
         break;
+        case 'detail':
+          selectedPage = <PLDetailed pLid={this.state.searchedPlId} pLname={this.state.searchedPlName}  />
       default:
         break;
     }
@@ -104,10 +109,10 @@ class App extends React.Component {
         <GlobalStyle />
         <Header><h1>spotiF4</h1></Header>
         <Nav>
-          <div onClick={() => this.onPageChange('cadastro')}>Criar nova Playlist</div>
-          <div onClick={() => this.onPageChange('lista')}>Minhas Playlists</div>
+          <div onClick={() => this.onPageChange('addPlaylist')}>Criar nova Playlist</div>
+          <div onClick={() => this.onPageChange('playlists')}>Minhas Playlists</div>
+          <div onClick={() => this.onPageChange('add')}>Adicionar Música</div>
           <div>Ouvidas Recentemente</div>
-          <div>Sugestões para você</div>
         </Nav>
         <Main>
           {selectedPage}

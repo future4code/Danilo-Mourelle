@@ -84,9 +84,10 @@ class PlayLists extends React.Component {
     }
   }
 
-  onClickPLName = (id) => {
+  onClickPLName = (id, pLname) => {
     this.props.changePage("detail")
-    this.props.getId(id)
+    this.props.getPlData(id, pLname)
+    
   }
 
   render() {
@@ -97,9 +98,9 @@ class PlayLists extends React.Component {
         <div>
           {this.state.qtdPlayLists ?
             this.state.AllPlayLists.map(playlist => (
-              <ListItem >
-                <span onClick={() => this.onClickPLName(playlist.id)} > {playlist.name} </span>
-                <span onClick={() => this.onDeletePL(playlist.id)} > <i class="fa fa-trash-o" ></i> </span>
+              <ListItem key={playlist.id}>
+                <span onClick={() => this.onClickPLName(playlist.id, playlist.name)} > {playlist.name} </span>
+                <span onClick={() => this.onDeletePL(playlist.id)} > <i className="fa fa-trash-o" ></i> </span>
               </ListItem>)) :
             buscando}
         </div>
