@@ -15,9 +15,10 @@ const Wrapper = styled.div`
 `
 
 function Cidades (props) {
+  
   return(
-    <Wrapper>
-      <p>{props.local}</p>
+    <Wrapper onClick= {() => props.getWoeid(props.woeid)}>
+      <p>{props.local} </p>
     </Wrapper>
   )
 
