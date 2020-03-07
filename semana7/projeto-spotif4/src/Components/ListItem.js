@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components'
 
 const ListItem = styled.div`
@@ -11,21 +10,21 @@ const ListItem = styled.div`
   margin-bottom:10px;
   .fa-trash-o{
     font-size:25px;
-    color:#f05555;
+    color:#000;
   }
   span:nth-child(2){
     width:35px;
     height:35px;
-    background-color:#000;
+    background-color:#f05555;
     border-radius:5px;
     display:flex;
     justify-content:center;
     align-items:center;
     :hover{
-      background-color:#f05555;
+      background-color:#000;
       cursor: pointer;
       .fa-trash-o{
-        color:#000
+        color:#f05555
       }
     }
   }

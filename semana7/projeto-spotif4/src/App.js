@@ -4,6 +4,7 @@ import { createGlobalStyle } from 'styled-components'
 import CriaPL from './Components/CriaPL';
 import PlayLists from './Components/PlayLists';
 import PLDetailed from './Components/PLDetailed';
+import AddMusic from './Components/AddMusic';
 
 const GlobalStyle = createGlobalStyle`
   body{
@@ -21,6 +22,7 @@ const Wrapper = styled.div`
   width:100%;
   background-color:#555;
   min-height:100%;
+  padding-bottom:50px;
 `
 const Header = styled.header` 
     background-color: #f05555;
@@ -72,8 +74,8 @@ class App extends React.Component {
     super(props)
     this.state = {
       searchedPlId: '',
-      searchedPlName:'',
-      pageShown: 'playlists'
+      searchedPlName: '',
+      pageShown: 'addMusic'
     }
   }
 
@@ -99,8 +101,12 @@ class App extends React.Component {
       case 'playlists':
         selectedPage = <PlayLists changePage={this.onPageChange} getPlData={this.onReceivePlData} />
         break;
-        case 'detail':
-          selectedPage = <PLDetailed pLid={this.state.searchedPlId} pLname={this.state.searchedPlName}  />
+      case 'detail':
+        selectedPage = <PLDetailed pLid={this.state.searchedPlId} pLname={this.state.searchedPlName} />
+        break;
+      case 'addMusic':
+        selectedPage = <AddMusic />
+        break;
       default:
         break;
     }
@@ -111,7 +117,7 @@ class App extends React.Component {
         <Nav>
           <div onClick={() => this.onPageChange('addPlaylist')}>Criar nova Playlist</div>
           <div onClick={() => this.onPageChange('playlists')}>Minhas Playlists</div>
-          <div onClick={() => this.onPageChange('add')}>Adicionar Música</div>
+          <div onClick={() => this.onPageChange('addMusic')}>Adicionar Música</div>
           <div>Ouvidas Recentemente</div>
         </Nav>
         <Main>

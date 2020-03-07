@@ -37,7 +37,11 @@ const Wrapper = styled.div`
     background-color: #f05555;
     border-radius: 5px;
     border: 1px solid black;
-    font-size:1.3em
+    font-size:1.3em;
+    :hover{
+      background-color:#000;
+      color: #f05555;
+    }
   }
 `
 
