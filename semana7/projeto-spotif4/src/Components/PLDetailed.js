@@ -7,7 +7,7 @@ const baseURL = 'https://us-central1-spotif4.cloudfunctions.net/api'
 const token = 'danilo-sagan'
 
 const Wrapper = styled.div`
-  width:60%;
+  width:70%;
   min-height:50vh;
   border: solid 3px #f05555;
   border-radius: 15px;
@@ -23,21 +23,37 @@ const Wrapper = styled.div`
     margin:0;
   }
   h4{
+    font-size:1.1em;
     width:100%;
   }
-  `
-  const SubDiv = styled.div`
-    display:flex;
-    flex-flow: row wrap;
-    justify-content:space-between;
+  audio{
+    background-color:blue;
+    width:50%;
+    height:40px;
+    border-radius:20px;
+  }
+`
+const SubDiv = styled.div`
+  width:90%;
+  display:flex;
+  flex-flow: row wrap;
+  justify-content:space-between;
+  p{
+    text-align:center;
+    width:100%;
+  }
  `
 
 class PLDetailed extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      alreadySearch: false,
       musics: [],
-      quantity: 0
+      musicPlayingId: '',
+      musicUrl: '',
+      quantity: 0,
+      play: false
     }
   }
 
@@ -57,6 +73,7 @@ class PLDetailed extends React.Component {
       this.setState({
         quantity: response.data.result.quantity,
         musics: response.data.result.musics,
+        alreadySearch: true
       })
     }).catch(error => {
       console.log(error.response.status)
@@ -65,25 +82,48 @@ class PLDetailed extends React.Component {
     })
   }
 
+  playMusic = (musicUrl, musicId) => {
+    if (musicId === this.state.musicPlayingId) {
+      this.setState({
+        play: !this.state.play,
+      })
+    } else {
+      this.setState({
+        play: true,
+        musicUrl: musicUrl,
+        musicPlayingId: musicId
+      })
+    }
+  }
+
   render() {
-    const buscando = <p>Buscando Detalhes da sua Playlist</p>
+    const buscando = this.state.alreadySearch ? <p>Parece que não há músicas na sua Playlist</p> : <p>Buscando Detalhes da sua Playlist</p>
     const listaDetalhes = this.state.musics.map(music => {
       return (
-        <MusicDetails name={music.name} artist={music.artist} url={music.url} />
+        <MusicDetails
+          key={music.id}
+          name={music.name}
+          artist={music.artist}
+          url={music.url}
+          musicId={music.id}
+          plId={this.props.pLid}
+          update={this.getPlDetails}
+          playIt={this.playMusic}
+          isPlaying={this.state.play}
+          musicPlaying={this.state.musicPlayingId}
+        />
       )
-
     })
 
     return (
       <Wrapper>
-
         <h2>{this.props.pLname}</h2>
         <SubDiv>
           {this.state.quantity > 0 && <h4>Quantidade de músicas encontradas: {this.state.quantity}</h4>}
           {this.state.quantity ? listaDetalhes : buscando}
         </SubDiv>
+        {this.state.play && <audio src={this.state.musicUrl} controls ></audio>}
       </Wrapper>
-
     )
   }
 }

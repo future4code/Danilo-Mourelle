@@ -86,7 +86,6 @@ class CriaPL extends React.Component {
     })
   }
 
-
   render() {
     return (
       <Wrapper>
@@ -97,7 +96,6 @@ class CriaPL extends React.Component {
         </span>
         <button onClick={this.createPL}> Criar Playlist</button>
       </Wrapper>
-
     )
   }
 }

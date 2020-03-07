@@ -42,7 +42,6 @@ const Nav = styled.nav`
   background-color:#000;
   color:#f05555;
   display:flex;
-
   div{
     width:25%;
     display:flex;
@@ -55,7 +54,6 @@ const Nav = styled.nav`
       font-weight:bold;
     }
   }
-  
   div + div {
     border-left: solid 1px #f05555;
   }
@@ -68,14 +66,13 @@ const Main = styled.main`
   padding-top:150px;
 `
 
-
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      searchedPlId: '',
-      searchedPlName: '',
-      pageShown: 'addMusic'
+      searchedPlId: 'c89f556e-2020-4b5a-8513-e11ccdcb5d90',
+      searchedPlName: 'Pop',
+      pageShown: 'addPlaylist'
     }
   }
 
@@ -124,7 +121,6 @@ class App extends React.Component {
           {selectedPage}
         </Main>
       </Wrapper>
-
     );
   }
 }

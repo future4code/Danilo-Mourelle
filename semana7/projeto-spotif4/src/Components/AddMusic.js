@@ -62,7 +62,6 @@ class AddMusic extends React.Component {
       artist: 'Red Hot Chilli Peppers',
       url: 'http://spoti4.future4.com.br/1.mp3',
       playlist: [],
-
     }
   }
 

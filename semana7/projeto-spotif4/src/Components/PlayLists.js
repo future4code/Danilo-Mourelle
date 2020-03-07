@@ -87,7 +87,6 @@ class PlayLists extends React.Component {
   onClickPLName = (id, pLname) => {
     this.props.changePage("detail")
     this.props.getPlData(id, pLname)
-    
   }
 
   render() {
@@ -105,7 +104,6 @@ class PlayLists extends React.Component {
             buscando}
         </div>
       </Wrapper>
-
     )
   }
 }

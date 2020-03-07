@@ -8,9 +8,11 @@ const ListItem = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom:10px;
-  .fa-trash-o{
-    font-size:25px;
-    color:#000;
+  span:first-child{
+    :hover {
+      cursor: pointer;
+      font-style:italic;
+    }
   }
   span:nth-child(2){
     width:35px;
@@ -28,13 +30,10 @@ const ListItem = styled.div`
       }
     }
   }
-  span:first-child{
-    :hover {
-      cursor: pointer;
-      font-style:italic;
-    }
+  .fa-trash-o{
+    font-size:25px;
+    color:#000;
   }
-  
 `
 
 export default ListItem
