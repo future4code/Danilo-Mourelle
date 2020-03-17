@@ -16,7 +16,7 @@ export const completeTask = id => {
   }
 }
 
-export const deleteTaks = id => {
+export const deleteTask = id => {
   return{
     type: 'DELETE_TASK',
     payload:{

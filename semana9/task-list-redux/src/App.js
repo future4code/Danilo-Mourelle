@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { addTaskToList } from './Actions'
 import styled from "styled-components";
 
 import List from "@material-ui/core/List";
@@ -44,22 +45,51 @@ const Input = styled.input`
   }
 `;
 
-function App(props) {
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      inputValue: ''
+    }
+  }
 
-  return (
-    <div>
-      <Header>
-        <Title>4Task</Title>
-      </Header>
-      <Main>
-        <Input placeholder="O que tem que ser feito?" />
-        <List>
-          <ItemList />
-        </List>
-      </Main>
-    </div>
-  );
+  handleInputValue = (e) => {
+    this.setState({
+      inputValue: e.target.value
+    })
+  }
+
+  handleEnterKey = (e) => {
+    if (e.keyCode === 13) {
+      this.props.newTask(this.state.inputValue)
+      this.setState({
+        inputValue: ''
+      })
+    }
+  }
+  render() {
+    return (
+      <div>
+        <Header>
+          <Title>4Task</Title>
+        </Header>
+        <Main>
+          <Input value={this.state.inputValue} placeholder="O que tem que ser feito?" onChange={this.handleInputValue} onKeyDown={this.handleEnterKey} />
+          <List>
+            <ItemList />
+          </List>
+        </Main>
+      </div>
+    );
+  }
 }
 
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    newTask: text => dispatch(addTaskToList(text))
+  }
+}
+
+
+export default connect(null, mapDispatchToProps)(App);

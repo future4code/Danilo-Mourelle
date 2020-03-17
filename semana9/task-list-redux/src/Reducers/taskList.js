@@ -35,8 +35,12 @@ const updateTaskList = (state = initialState, action) => {
       }
 
     case 'DELETE_TASK':
-      return state.taskList.filter(task =>
+      taskListCopy = state.taskList.filter(task =>
         task.id !== action.payload.id)
+      return  {
+        ...state,
+        taskList: taskListCopy
+      }
 
     case 'COMPLETE_ALL':
       return state.taskList.map(task => (
