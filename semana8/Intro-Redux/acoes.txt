@@ -1,0 +1,5 @@
+Através da tecla enter colocar o valor do input na lista de tarefas
+
+Alterar o status da tarefa (completo, pendente, apagar), de acordo com os botões no footer
+
+Alterar status da tarefa (completo, pendente) de acordo com o checkbox.
