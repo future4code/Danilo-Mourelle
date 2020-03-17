@@ -11,8 +11,10 @@ function ItemList(props) {
   const handleChecked = id =>{
     props.handleCheckedStatus(id)
   }
+  console.log(props.taskList)
+  
   return (
-    props.taksList.map(task => (
+    props.taskList.map(task => (
     <ListItem
       key={task.id}
       role={undefined}
@@ -21,7 +23,7 @@ function ItemList(props) {
       onClick={()=>handleChecked(task.id)}
     >
       <Checkbox
-        checked={task.complete}
+        checked={task.completed}
         tabIndex={-1}
         disableRipple
       />
@@ -33,7 +35,7 @@ function ItemList(props) {
 
 const mapStateToProps = state => {
   return {
-    taksList: state.taksList.taksList
+    taskList: state.allTasks.taskList
   }
 }
 

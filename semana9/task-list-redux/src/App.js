@@ -60,14 +60,6 @@ function App(props) {
     </div>
   );
 }
-const mapStateToProps = state => {
-  return {
-    taksList: state.taksList.taksList
-  }
-}
-const mapDispatchToProps = dispatch => {
-  return
-}
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

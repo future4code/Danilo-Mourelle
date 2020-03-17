@@ -4,7 +4,7 @@ import setVisibilityFilter from './filterVisibility'
 
 
 const rootReducer = combineReducers({
-  taskList: updateTaskList,
+  allTasks: updateTaskList,
   filterCriterion: setVisibilityFilter
 })
 
