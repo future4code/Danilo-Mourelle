@@ -8,6 +8,17 @@ import { createStore } from 'redux';
 import rootReducer from './Reducers'
 
 const GlobalStyle = createGlobalStyle`
+body{
+    margin:auto;
+    width:700px;
+    min-height:100vh;
+    background-color: #f5f5f5;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    
+  }
+  *{
+    box-sizing: border-box;
+  }
 `
 
 const store = createStore(rootReducer)

@@ -1,5 +1,11 @@
 const initialState = {
-  taksList: []
+  taksList: [
+    {
+      text: "Use Redux",
+      id: 0,
+      completed: true,
+    }
+  ]
 }
 
 const updateTaskList = (state = initialState, action) => {
@@ -30,9 +36,11 @@ const updateTaskList = (state = initialState, action) => {
         { ...task, complete: true }
       ))
 
-      case 'REMOVE_ALL_COMPLETE':
-        return state.filter(task =>
-          task !== task.complete)
+    case 'REMOVE_ALL_COMPLETE':
+      return state.filter(task =>
+        task !== task.complete)
+    default:
+      return state;
   }
 }
 
