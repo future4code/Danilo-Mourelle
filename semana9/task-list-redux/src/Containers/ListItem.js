@@ -16,6 +16,12 @@ import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded'
 const TrashIcon = styled(DeleteForeverRoundedIcon)`
   color: #b80713;
 `
+const NewListText = styled(ListItemText)`
+  color: ${props => props.done ? '#555' : '#000'};
+  font-style: ${props => props.done ? 'italic' : 'normal'};
+  text-decoration:${props => props.done ? 'line-through' : 'none'};
+  font-size:60px;
+`
 
 function ItemList(props) {
 
@@ -38,7 +44,7 @@ function ItemList(props) {
           tabIndex={-1}
           disableRipple
         />
-        <ListItemText primary={task.text} />
+        <NewListText done={task.completed} primary={task.text}  />
         <ListItemSecondaryAction>
           <IconButton aria-label="Delete">
             <TrashIcon onClick={() => props.deleteTask(task.id)} />
