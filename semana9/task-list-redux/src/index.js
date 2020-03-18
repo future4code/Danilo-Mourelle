@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
-import App from './App';
+import App from './Containers/App';
 
 import { createStore } from 'redux';
 import rootReducer from './Reducers'

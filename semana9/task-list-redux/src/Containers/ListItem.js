@@ -5,11 +5,8 @@ import { connect } from "react-redux";
 import { completeTask } from "../Actions";
 import { deleteTask } from "../Actions"
 
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import Checkbox from "@material-ui/core/Checkbox";
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
+import { ListItem, ListItemText, Checkbox, ListItemSecondaryAction, IconButton } from '@material-ui/core';
+
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded'
 
 
@@ -28,10 +25,26 @@ function ItemList(props) {
   const handleChecked = id => {
     props.handleCheckedStatus(id)
   }
+
   console.log(props.taskList)
 
+
+  let newList = props.taskList.filter(task => {
+    switch (props.filter) {
+      case 'all':
+        return true
+      case 'pending':
+        return !task.completed
+      case 'complete':
+        return task.completed
+      default:
+        return true
+    }
+  })
+
   return (
-    props.taskList.map(task => (
+
+    newList.map(task => (
       <ListItem
         key={task.id}
         role={undefined}
@@ -44,10 +57,10 @@ function ItemList(props) {
           tabIndex={-1}
           disableRipple
         />
-        <NewListText done={task.completed} primary={task.text}  />
-        <ListItemSecondaryAction>
+        <NewListText done={task.completed} primary={task.text} />
+        <ListItemSecondaryAction onClick={() => props.deleteTask(task.id)}>
           <IconButton aria-label="Delete">
-            <TrashIcon onClick={() => props.deleteTask(task.id)} />
+            <TrashIcon />
           </IconButton>
         </ListItemSecondaryAction>
       </ListItem>
@@ -57,7 +70,8 @@ function ItemList(props) {
 
 const mapStateToProps = state => {
   return {
-    taskList: state.allTasks.taskList
+    taskList: state.allTasks.taskList,
+    filter: state.filterCriterion.filterCriterion
   }
 }
 
