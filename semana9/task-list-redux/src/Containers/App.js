@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addTaskToList } from '../Actions'
+import { createNewTask } from '../Actions'
 import styled from "styled-components";
 
 import List from "@material-ui/core/List";
@@ -9,7 +9,7 @@ import Filters from "./Filters";
 
 const Header = styled.header`
   width: 100%;
-  height: 12vh;
+  height: 120px;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 `
 const Title = styled.h1`
@@ -82,7 +82,7 @@ class App extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    newTask: text => dispatch(addTaskToList(text))
+    newTask: text => dispatch(createNewTask(text))
   }
 }
 

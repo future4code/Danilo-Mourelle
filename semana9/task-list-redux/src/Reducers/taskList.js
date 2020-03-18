@@ -1,9 +1,9 @@
 const initialState = {
   taskList: [
     {
-      text: "Use Redux",
+      text: "Carregando Lista",
       id: 0,
-      completed: false,
+      done: false,
     }
   ]
 }
@@ -11,45 +11,21 @@ const initialState = {
 const updateTaskList = (state = initialState, action) => {
   let taskListCopy
   switch (action.type) {
-    case 'ADD_TASK':
-      taskListCopy = [...state.taskList]
-      const novaTask = {
-        text: action.payload.text,
-        id: Date.now(),
-        completed: false
-      }
-      taskListCopy.push(novaTask)
+    case 'SET_TASK_LIST':
       return {
         ...state,
-        taskList: taskListCopy
+        taskList: action.payload.taskList
       }
 
     case 'COMPLETE_TASK':
-      taskListCopy = [...state.taskList]
-      let novaLista = taskListCopy.map(task =>
-        task.id === action.payload.id ? { ...task, completed: !task.completed } : task
+      taskListCopy = state.taskList.map(task =>
+        task.id === action.payload.id ? { ...task, done: !task.done } : task
       )
       return {
-        ...state,
-        taskList: novaLista
-      }
-
-    case 'DELETE_TASK':
-      taskListCopy = state.taskList.filter(task =>
-        task.id !== action.payload.id)
-      return  {
         ...state,
         taskList: taskListCopy
       }
 
-    case 'COMPLETE_ALL':
-      return state.taskList.map(task => (
-        { ...task, complete: true }
-      ))
-
-    case 'REMOVE_ALL_COMPLETE':
-      return state.taskList.filter(task =>
-        task !== task.complete)
     default:
       return state;
   }
