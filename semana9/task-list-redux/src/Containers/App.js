@@ -1,24 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addTaskToList } from './Actions'
+import { createNewTask } from '../Actions'
 import styled from "styled-components";
 
 import List from "@material-ui/core/List";
-import ItemList from './Containers/ListItem'
-
-
-/* const styles = theme => ({
-  root: {
-    width: "100%",
-    backgroundColor: theme.palette.background.paper
-  }
-}); */
+import ItemList from './ListItem'
+import Filters from "./Filters";
 
 const Header = styled.header`
   width: 100%;
-  height: 12vh;
+  height: 120px;
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-`;
+`
 const Title = styled.h1`
   font-size: 80px;
   color: #b83f45;
@@ -26,10 +19,10 @@ const Title = styled.h1`
   width: 100%;
   font-weight: 200;
   margin-top: 20px;
-`;
+`
 const Main = styled.div`
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
-`;
+`
 const Input = styled.input`
   width: 100%;
   border: none;
@@ -43,7 +36,8 @@ const Input = styled.input`
     font-weight: 300;
     color: rgba(0, 0, 0, 0.4);
   }
-`;
+`
+
 
 class App extends React.Component {
   constructor(props) {
@@ -78,6 +72,7 @@ class App extends React.Component {
           <List>
             <ItemList />
           </List>
+          <Filters />
         </Main>
       </div>
     );
@@ -87,7 +82,7 @@ class App extends React.Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    newTask: text => dispatch(addTaskToList(text))
+    newTask: text => dispatch(createNewTask(text))
   }
 }
 
