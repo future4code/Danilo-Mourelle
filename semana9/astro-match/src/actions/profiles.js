@@ -21,10 +21,11 @@ export const choosePerson = (id, choice) => async (dispatch) => {
   }
   console.log(dataToSend)
   try {
-    await axios.post(
+   const result = await axios.post(
       'https://us-central1-missao-newton.cloudfunctions.net/astroMatch/mourelle/choose-person',
      dataToSend 
     )
+    console.log(result.data)
     dispatch(getNewProfile())
   } catch (error) {
     console.log('Opa, deu ruim aqui')
