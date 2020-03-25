@@ -1,29 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
-import Button from "@material-ui/core/Button";
 import { connect } from 'react-redux';
 import { getTripsList, applyToTrip } from "../../Actions"
+
+import Button from "@material-ui/core/Button";
+
+import ButtonAppBar from '../../Components/AppBar'
+import Title from '../../Components/Title'
+import CTextField from '../../Components/TextField'
+import ContrySelect from '../../Components/SelectCountry'
+import TripSelect from '../../Components/SelectTrip'
+
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
-  gap: 10px;
-  place-content: center;
-  justify-items: center;
-  display: grid;
-`
-const InputField = styled.input`
-  width: 40%;
-  border-radius:3px;
-  /* Chrome, Safari, Edge, Opera */
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-  }
-  /* Firefox */
-  &[type=number] {
-    -moz-appearance: textfield;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items:flex-start;
+  form{
+    width:20%;
+    text-align:center
   }
 `
 
@@ -74,7 +72,9 @@ class ApplyTripPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      form: {}
+      form: {
+        trip: ''
+      }
     }
   }
 
@@ -100,79 +100,28 @@ class ApplyTripPage extends React.Component {
 
   render() {
     const { tripList } = this.props
+
     return (
       <Wrapper>
+        <ButtonAppBar btnText='LOGIN' />
+        <Title> Preencha abaixo para se candidatar a sua próxima viagem</Title>
         <form onSubmit={this.handleSubmit}>
           {createTripForm.map(field => {
             if (field.type !== 'select') {
               return (
-                <div key={field.name}>
-                  <label htmlFor={field.name}>{field.label}: </label>
-                  <InputField
-                    id={field.name}
-                    name={field.name}
-                    type={field.type}
-                    onChange={this.handleFieldChange}
-                    pattern={field.pattern}
-                    min={field.min}
-                    required={field.required}
-                    title={field.title}
-                    value={this.state.form[field.name]}
-                  />
-                </div>
+                <CTextField key={field.name} field={field} value={this.state.form[field.name]} change={this.handleFieldChange} />
               )
             } else {
               return (
-                <div key={field.name}>
-                  <label htmlFor={field.name}>{field.label}: </label>
-                  <select
-                    id={field.name}
-                    name={field.name}
-                    onChange={this.handleFieldChange}
-                    required={field.required}
-                    title='Selecione o seu pais'
-                    value={this.state.form[field.name]}
-                  >
-                    {field.options.map((option, index) => {
-                      return (
-                        index === 0 ?
-                          <option key={index} hidden value=''>{option}</option> :
-                          <option key={index} value={option}>{option}</option>
-                      )
-                    })}
-                  </select>
-                </div>
+                <ContrySelect key={field.name} field={field} value={this.state.form[field.name]} change={this.handleFieldChange} options={field.options} />
               )
             }
           })}
-          <div>
-            <label htmlFor='trip'>Selecione uma viagem: </label>
-            <select
-              id='trip'
-              name='trip'
-              onChange={this.handleFieldChange}
-              required
-              title='Selecione uma viagem'
-              value={this.state.form.trip}
-            >
-              {tripList.length > 0 ?
-                <option hidden value=''>Selecione sua Trip</option> :
-                <option value=''>Carregando Viagens</option>
-              }
-              {tripList.length > 0 &&
-                tripList.map((trip, index) => {
-                  return (
-                    <option key={trip.id} value={trip.id}>
-                      {`${trip.name} - ${trip.planet}`}
-                    </option>
-                  )
-                }) 
-              }
-            </select>
-          </div>
-          <Button type='submit'>Cadastrar</Button>
+          <TripSelect tripList={tripList} value={this.state.form.trip || ''} change={this.handleFieldChange} />
+          <Button color='primary' variant="contained" type='submit'>Cadastrar</Button>
         </form>
       </Wrapper>
+
     )
   }
 }
