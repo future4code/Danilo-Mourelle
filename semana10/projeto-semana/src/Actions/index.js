@@ -6,7 +6,7 @@ const user = 'mourelle'
 //***** ASSÍNCRONAS*****//
 export const getTripsList = () => async (dispatch) => {
   try{
-    const response = await axios.get('https://us-central1-missao-newton.cloudfunctions.net/futureX/mourelle/trips')
+    const response = await axios.get(`${baseUrl}${user}/trips`)
     console.log('passei aqui')
     dispatch(setTripsList(response.data.trips))
   } catch (error) {

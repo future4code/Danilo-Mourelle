@@ -2,11 +2,11 @@ import React from "react";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
-import theme from "../../style/theme";
+import theme from "../../Style/theme";
 import Router from "../Router";
 import { createBrowserHistory } from "history";
 import { createStore, applyMiddleware, compose } from "redux";
-import { generateReducers } from "../../reducers";
+import { generateReducers } from "../../Reducers";
 import { routerMiddleware } from "connected-react-router";
 
 export const history = createBrowserHistory();
