@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Button from "@material-ui/core/Button";
 import { connect } from 'react-redux';
-import { getTripsList } from "../../Actions"
+import { getTripsList, applyToTrip } from "../../Actions"
 
 const Wrapper = styled.div`
   width: 100%;
@@ -94,6 +94,7 @@ class ApplyTripPage extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault()
+    this.props.sendApplyForm(this.state.form)
     console.log(this.state.form)
   }
 
@@ -180,6 +181,7 @@ const mapStateToProps = state => ({
   tripList: state.trips.tripList
 })
 const mapDispatchToProps = dispatch => ({
+  sendApplyForm: (form) => dispatch(applyToTrip(form)),
   getTripsList: () => dispatch(getTripsList())
 })
 

@@ -8,8 +8,8 @@ const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijl6V0hhYnp6Uk9sZllB
 export const getTripsList = () => async (dispatch) => {
   try {
     const response = await axios.get(`${baseUrl}${user}/trips`)
-    console.log(result.status)
-    console.log(result.statusText)
+    console.log(response.status)
+    console.log(response.statusText)
 
     dispatch(setTripsList(response.data.trips))
   } 
@@ -41,6 +41,26 @@ export const createTrip = (form) => async dispatch => {
   catch (error) {
     console.error(error)
   }
+}
+
+export const applyToTrip = (form) => async dispatch => {
+  let dataToSend = {...form}
+  delete dataToSend.trip
+  console.log(dataToSend)
+ /*  try{
+    const result = await axios.post(`${baseUrl}${user}/trips/${form.id}/apply`, dataToSend, {
+      headers: {
+        "Content-Type": "application/json",
+        auth:token
+      }
+    })
+    console.log(result.status)
+    console.log(result.statusText)
+    window.alert('Trip cadastrada com sucesso!')
+  }
+  catch (error) {
+    console.error(error)
+  } */
 }
 
 //*****SÍNCRONAS*****//
