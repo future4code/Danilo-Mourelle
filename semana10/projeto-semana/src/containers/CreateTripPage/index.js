@@ -1,9 +1,12 @@
 import React, { Component } from "react";
+import styled from "styled-components";
+
+import {createTrip} from '../../Actions'
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
+
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import styled from "styled-components";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -64,7 +67,7 @@ const createTripForm = [
     name: 'description',
     label: 'Descrição do Evento',
     type: 'text',
-    minlength: '.{30,}',
+    pattern: '.{30,}',
     required: true,
     title: 'Sua descrição deve ter pelo menos 30 caracteres'
   },
@@ -93,16 +96,15 @@ class CreateTripPage extends Component {
         ...this.state.form,
         [name]: value
       }
-    });
-  };
+    })
+  }
 
   handleSubmit = e => {
     e.preventDefault()
-    console.log(this.state.form)
+    this.props.sendTripForm(this.state.form)
   }
 
   render() {
-
     return (
       <Wrapper>
         <form onSubmit={this.handleSubmit}>
@@ -134,15 +136,15 @@ class CreateTripPage extends Component {
                     name={field.name}
                     onChange={this.handleFieldChange}
                     required={field.required}
-                    title= 'Selecione o planeta'
+                    title='Selecione o planeta'
                     value={this.state.form[field.name]}
                     pattern={field.pattern}
                   >
                     {field.options.map((option, index) => {
                       return (
                         index === 0 ?
-                        <option key={index} hidden value=''>{option}</option> :
-                        <option key={index} value={option}>{option}</option>
+                          <option key={index} hidden value=''>{option}</option> :
+                          <option key={index} value={option}>{option}</option>
                       )
                     })}
                   </select>
@@ -157,4 +159,7 @@ class CreateTripPage extends Component {
   }
 }
 
-export default CreateTripPage;
+const mapDispatchToProps = dispatch => ({
+  sendTripForm: (form) => dispatch(createTrip(form))
+})
+export default connect(null, mapDispatchToProps) (CreateTripPage)
