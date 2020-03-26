@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from "../Router"
 
-import { getTripsList } from "../../Actions"
+import { getTripsList, setTripIdToDetail } from "../../Actions"
 
 import Trip from '../../Components/Trip';
 import ButtonAppBar from '../../Components/AppBar'
@@ -30,17 +30,22 @@ const List = styled.div`
 class ListTripPages extends React.Component {
   componentDidMount() {
     const token = localStorage.getItem('token')
-    if(token === null){
+    if (token === null) {
       this.props.goToLoginScreen()
     } else {
       this.props.getTripsList();
     }
   }
- 
+
+  handleDetailClick = (tripId) => {
+    this.props.setTripIdToDetail(tripId)
+    this.props.goToTripDetailsPage()
+  }
+
 
   render() {
     const { tripList, goToCreatTripScreen, goToLoginScreen } = this.props
-    
+
     const btnAppBar = [
       {
         text: 'CRIAR TRIP',
@@ -54,12 +59,16 @@ class ListTripPages extends React.Component {
     return (
       <Wrapper>
         <ButtonAppBar btns={btnAppBar} />
-        <Title> Lista com as viagens cadastradas </Title>
-        <List>
-          {tripList.map((trip, index, tripList) => (
-            <Trip key={index} trip={trip} />
-          ))}
-        </List>
+
+        {tripList.length > 0 ?<>
+          <Title> Lista com as viagens cadastradas </Title>
+          <List>
+            {tripList.map((trip, index) => (
+              <Trip key={index} trip={trip} btnDetailClick={this.handleDetailClick} />
+            ))}
+          </List> </>:
+          <h3>Carregando Eventos...</h3>
+        }
       </Wrapper>
     )
   }
@@ -68,11 +77,13 @@ class ListTripPages extends React.Component {
 const mapStateToProps = state => ({
   tripList: state.trips.tripList
 })
+
 const mapDispatchToProps = dispatch => ({
+  setTripIdToDetail: (id) => dispatch(setTripIdToDetail(id)),
   getTripsList: () => dispatch(getTripsList()),
   goToLoginScreen: () => dispatch(push(routes.root)),
-  goToCreatTripScreen: () => dispatch(push(routes.tripCreation))
-
+  goToCreatTripScreen: () => dispatch(push(routes.tripCreation)),
+  goToTripDetailsPage: () => dispatch(push(routes.tripsDetails))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListTripPages)

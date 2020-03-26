@@ -10,6 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
 import ButtonAppBar from '../../Components/AppBar'
+import Title from '../../Components/Title'
 
 
 const LoginWrapper = styled.div`
@@ -23,6 +24,7 @@ const LoginWrapper = styled.div`
 const FormWrapper = styled.form`
   width:20%;
   text-align:center;
+  margin-bottom:220px;
 `
 
 class LoginPage extends Component {
@@ -61,6 +63,7 @@ class LoginPage extends Component {
     return (
       <LoginWrapper>
         <ButtonAppBar btns={btnAppBar} />
+        <Title> Insira os dados do administrador ou aplique-se a uma viagem no botão acima </Title>
         <FormWrapper onSubmit={this.handleSubmit}>
           <TextField
             onChange={this.handleFieldChange}

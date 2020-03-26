@@ -29,7 +29,7 @@ function ButtonAppBar(props) {
           <Typography variant="h4" color="inherit" className={classes.grow}>
             FutureX
           </Typography>
-          {props.btns && props.btns.map(btn => (<Button size='large' color="inherit" onClick={btn.click}>{btn.text}</Button> ))}
+          {props.btns && props.btns.map((btn, index) => (<Button key={index} size='large' color="inherit" onClick={btn.click}>{btn.text}</Button> ))}
         </Toolbar>
       </AppBar>
     </div>

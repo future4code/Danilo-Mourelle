@@ -33,12 +33,18 @@ class TripDetailsPage extends React.Component {
         <ButtonAppBar btnText='LOGOUT' click={goToLoginScreen} />
         <Title> Abaixo os detalhes da viagem e seus inscritos</Title>
         <p>Página de detalhes da viagem</p>
+        {this.props.tripId}
       </Wrapper>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  tripId: state.trips.detaieldTripId
+})
+
 const mapDispatchToProps = dispatch => ({
   goToLoginScreen: () => dispatch(push(routes.root))
 })
 
-export default connect(null, mapDispatchToProps)(TripDetailsPage)
+export default connect(mapStateToProps, mapDispatchToProps)(TripDetailsPage)

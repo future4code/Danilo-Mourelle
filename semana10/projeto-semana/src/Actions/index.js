@@ -89,3 +89,10 @@ export const setTripsList = (list) => ({
     list,
   }
 })
+
+export const setTripIdToDetail = (id) => ({
+  type: 'SET_TRIP_TO_DETAIL',
+  payload:{
+    id,
+  }
+})

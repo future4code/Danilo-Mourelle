@@ -32,20 +32,22 @@ const ButtonWrapper = styled.span`
 `
 
 function Trip(props) {
+  const { trip } = props
   return (
     <Wrapper>
       <DetailsWrapper>
-        <DetailField><strong>Nome do Evento: </strong>{props.trip.name}</DetailField>
-        <DetailField><strong>Planeta: </strong>{props.trip.planet}</DetailField>
-        <DetailField><strong>Data: </strong>{props.trip.date}</DetailField>
-        <DetailField><strong>Descrição: </strong>{props.trip.description}</DetailField>
-        <DetailField><strong>Duração do Evento: </strong>{props.trip.durationInDays} dias</DetailField>
+        <DetailField><strong>Nome do Evento: </strong>{trip.name}</DetailField>
+        <DetailField><strong>Planeta: </strong>{trip.planet}</DetailField>
+        <DetailField><strong>Data: </strong>{trip.date}</DetailField>
+        <DetailField><strong>Descrição: </strong>{trip.description}</DetailField>
+        <DetailField><strong>Duração do Evento: </strong>{trip.durationInDays} dias</DetailField>
 
       </DetailsWrapper>
       <ButtonWrapper>
         <Button
           color='primary'
           variant="contained"
+          onClick={() => props.btnDetailClick(trip.id)}
           type='submit' >Detalhes</Button>
       </ButtonWrapper>
 
