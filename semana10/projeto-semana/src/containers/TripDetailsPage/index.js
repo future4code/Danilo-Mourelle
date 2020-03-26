@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux';
-import { push } from "connected-react-router";
+import { push, goBack } from "connected-react-router";
 import { routes } from "../Router"
+
+import { getTripDetails } from '../../Actions'
 
 import ButtonAppBar from '../../Components/AppBar'
 import Title from '../../Components/Title'
@@ -25,12 +27,20 @@ class TripDetailsPage extends React.Component {
     if (token === null) {
       this.props.goToLoginScreen()
     }
+    else{
+      this.props.getTripDetails(this.props.tripId)
+    }
   }
   render() {
-    const { goToLoginScreen } = this.props
+    const btnAppBar = [
+      {
+        text: 'VOLTAR',
+        click: this.props.goBack
+      }
+    ]
     return (
       <Wrapper>
-        <ButtonAppBar btnText='LOGOUT' click={goToLoginScreen} />
+        <ButtonAppBar btns={btnAppBar} />
         <Title> Abaixo os detalhes da viagem e seus inscritos</Title>
         <p>Página de detalhes da viagem</p>
         {this.props.tripId}
@@ -40,11 +50,12 @@ class TripDetailsPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tripId: state.trips.detaieldTripId
+  tripId: state.details.detaieldTripId
 })
 
 const mapDispatchToProps = dispatch => ({
-  goToLoginScreen: () => dispatch(push(routes.root))
+  getTripDetails: (id) => dispatch(getTripDetails(id)),
+  goBack: () => dispatch(goBack())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TripDetailsPage)

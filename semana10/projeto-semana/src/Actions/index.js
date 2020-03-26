@@ -50,6 +50,7 @@ export const getTripsList = () => async (dispatch) => {
   }
   catch (error) {
     console.log('Erro ao obter a TripList')
+    dispatch(push(routes.root))
   }
 }
 
@@ -78,6 +79,26 @@ export const createTrip = (form) => async dispatch => {
   }
   catch (error) {
     console.error(error)
+    dispatch(push(routes.root))
+  }
+}
+
+export const getTripDetails = (id) => async dispatch => {
+  console.log(id)
+  const token = localStorage.getItem('token')
+  try {
+    const response = await axios.get(`${baseUrl}${user}/trip/${id}?=`,{
+      headers: {
+        "Content-Type": "application/json",
+        auth: token
+      }
+    })
+    console.log(`Status Requisição getTripDetails: ${response.status}`)
+    console.log(`Mensagem Requisição getTripDetails: ${response.statusText}`)
+  }
+  catch (error){
+    console.error(error)
+    // dispatch(push(routes.root))
   }
 }
 
