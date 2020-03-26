@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-
-import { createTrip } from '../../Actions'
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
+import { routes } from "../Router"
+
+import { createTrip } from '../../Actions'
 
 import Button from "@material-ui/core/Button";
 import ButtonAppBar from '../../Components/AppBar'
@@ -98,9 +99,10 @@ class CreateTripPage extends Component {
   }
 
   render() {
+    const {goToLoginScreen} = this.props
     return (
       <Wrapper>
-        <ButtonAppBar btnText='LOGOUT' />
+        <ButtonAppBar btnText='LOGOUT' click={goToLoginScreen} />
         <Title> Preencha abaixo para cadastrar uma nova viagem</Title>
         <form onSubmit={this.handleSubmit}>
           {createTripForm.map(field => {
@@ -137,6 +139,7 @@ class CreateTripPage extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  sendTripForm: (form) => dispatch(createTrip(form))
+  sendTripForm: (form) => dispatch(createTrip(form)),
+  goToLoginScreen: () => dispatch(push(routes.root))
 })
 export default connect(null, mapDispatchToProps)(CreateTripPage)

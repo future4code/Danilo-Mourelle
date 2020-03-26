@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux';
+import { push } from "connected-react-router";
+import { routes } from "../Router"
+
 import { getTripsList, applyToTrip } from "../../Actions"
 
 import Button from "@material-ui/core/Button";
@@ -99,11 +102,11 @@ class ApplyTripPage extends React.Component {
   }
 
   render() {
-    const { tripList } = this.props
+    const { tripList, goToLoginScreen } = this.props
 
     return (
       <Wrapper>
-        <ButtonAppBar btnText='LOGIN' />
+        <ButtonAppBar btnText='LOGIN' click={goToLoginScreen} />
         <Title> Preencha abaixo para se candidatar a sua próxima viagem</Title>
         <form onSubmit={this.handleSubmit}>
           {createTripForm.map(field => {
@@ -149,7 +152,8 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
   sendApplyForm: (form) => dispatch(applyToTrip(form)),
-  getTripsList: () => dispatch(getTripsList())
+  getTripsList: () => dispatch(getTripsList()),
+  goToLoginScreen: () => dispatch(push(routes.root))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ApplyTripPage)

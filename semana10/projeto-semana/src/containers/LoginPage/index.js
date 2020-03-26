@@ -1,10 +1,11 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
+import { routes } from "../Router"
 
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import styled from "styled-components";
 
 import ButtonAppBar from '../../Components/AppBar'
 
@@ -38,11 +39,12 @@ class LoginPage extends Component {
   };
 
   render() {
+    const { goToApplyScreen } = this.props
     const { email, password } = this.state;
 
     return (
       <LoginWrapper>
-        <ButtonAppBar btnText='' />
+        <ButtonAppBar btnText='Candidatar' click={goToApplyScreen} />
         <FormWrapper>
           <TextField
             onChange={this.handleFieldChange}
@@ -74,4 +76,11 @@ class LoginPage extends Component {
   }
 }
 
-export default LoginPage;
+const mapDispatchToProps = dispatch => {
+  return {
+    goToApplyScreen: () => dispatch(push(routes.application))
+  }
+}
+
+
+export default connect(null, mapDispatchToProps)(LoginPage);

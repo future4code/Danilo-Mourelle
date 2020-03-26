@@ -7,11 +7,7 @@ import ListTripPages from "../ListTripsPage"
 import LoginPage from "../LoginPage";
 import tripsDetailsPage from "../TripDetailsPage"
 
-
-
-
-
-const routes = {
+export const routes = {
   root: '/',
   application: '/application-form',
   tripCreation: '/trips/create',

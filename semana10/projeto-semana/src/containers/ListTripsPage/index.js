@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from "react-redux";
+import { push } from "connected-react-router";
+import { routes } from "../Router"
+
 import { getTripsList } from "../../Actions"
 
 import Trip from '../../Components/Trip';
@@ -30,11 +33,11 @@ class ListTripPages extends React.Component {
   }
 
   render() {
-    const { tripList } = this.props
+    const { tripList, goToLoginScreen } = this.props
     console.log(tripList)
     return (
       <Wrapper>
-        <ButtonAppBar btnText='LOGOUT' />
+        <ButtonAppBar btnText='LOGOUT' click={goToLoginScreen} />
         <Title> Lista com as viagens cadastradas </Title>
         <List>
           {tripList.map((trip, index, tripList) => (
@@ -50,7 +53,8 @@ const mapStateToProps = state => ({
   tripList: state.trips.tripList
 })
 const mapDispatchToProps = dispatch => ({
-  getTripsList: () => dispatch(getTripsList())
+  getTripsList: () => dispatch(getTripsList()),
+  goToLoginScreen: () => dispatch(push(routes.root))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListTripPages)

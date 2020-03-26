@@ -30,7 +30,7 @@ function ButtonAppBar(props) {
             FutureX
           </Typography>
           {props.btnText && 
-          <Button size='large' color="inherit">{props.btnText}</Button>}
+          <Button size='large' color="inherit" onClick={props.click}>{props.btnText}</Button>}
         </Toolbar>
       </AppBar>
     </div>
