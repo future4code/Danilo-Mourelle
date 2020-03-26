@@ -29,7 +29,8 @@ function ButtonAppBar(props) {
           <Typography variant="h4" color="inherit" className={classes.grow}>
             FutureX
           </Typography>
-          <Button size='large' color="inherit">{props.btnText}</Button>
+          {props.btnText && 
+          <Button size='large' color="inherit">{props.btnText}</Button>}
         </Toolbar>
       </AppBar>
     </div>
