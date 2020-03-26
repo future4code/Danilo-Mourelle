@@ -29,8 +29,14 @@ const List = styled.div`
 
 class ListTripPages extends React.Component {
   componentDidMount() {
-    this.props.getTripsList();
+    const token = localStorage.getItem('token')
+    if(token === null){
+      this.props.goToLoginScreen()
+    } else {
+      this.props.getTripsList();
+    }
   }
+ 
 
   render() {
     const { tripList, goToLoginScreen } = this.props

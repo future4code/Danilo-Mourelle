@@ -16,15 +16,27 @@ const Wrapper = styled.div`
   align-items:flex-start;
   `
 
-function TripDetailsPage(props) {
-  const { goToLoginScreen } = props
-  return (
-    <Wrapper>
-      <ButtonAppBar btnText='LOGOUT' click={goToLoginScreen} />
-      <Title> Abaixo os detalhes da viagem e seus inscritos</Title>
-      <p>Página de detalhes da viagem</p>
-    </Wrapper>
-  )
+class TripDetailsPage extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  componentDidMount() {
+    const token = localStorage.getItem('token')
+    if (token === null) {
+      this.props.goToLoginScreen()
+    }
+  }
+
+  render() {
+    const { goToLoginScreen } = this.props
+    return (
+      <Wrapper>
+        <ButtonAppBar btnText='LOGOUT' click={goToLoginScreen} />
+        <Title> Abaixo os detalhes da viagem e seus inscritos</Title>
+        <p>Página de detalhes da viagem</p>
+      </Wrapper>
+    )
+  }
 }
 const mapDispatchToProps = dispatch => ({
   goToLoginScreen: () => dispatch(push(routes.root))

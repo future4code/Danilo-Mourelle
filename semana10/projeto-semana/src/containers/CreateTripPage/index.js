@@ -83,6 +83,13 @@ class CreateTripPage extends Component {
     };
   }
 
+  componentDidMount(){
+    const token = localStorage.getItem('token')
+    if(token === null){
+      this.props.goToLoginScreen()
+    }
+  }
+
   handleFieldChange = event => {
     const { name, value } = event.target
     this.setState({
