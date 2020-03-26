@@ -26,7 +26,6 @@ class TripDetailsPage extends React.Component {
       this.props.goToLoginScreen()
     }
   }
-
   render() {
     const { goToLoginScreen } = this.props
     return (

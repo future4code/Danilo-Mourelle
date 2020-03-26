@@ -39,11 +39,21 @@ class ListTripPages extends React.Component {
  
 
   render() {
-    const { tripList, goToLoginScreen } = this.props
-    console.log(tripList)
+    const { tripList, goToCreatTripScreen, goToLoginScreen } = this.props
+    
+    const btnAppBar = [
+      {
+        text: 'CRIAR TRIP',
+        click: goToCreatTripScreen
+      },
+      {
+        text: 'LOGOUT',
+        click: goToLoginScreen
+      }
+    ]
     return (
       <Wrapper>
-        <ButtonAppBar btnText='LOGOUT' click={goToLoginScreen} />
+        <ButtonAppBar btns={btnAppBar} />
         <Title> Lista com as viagens cadastradas </Title>
         <List>
           {tripList.map((trip, index, tripList) => (
@@ -60,7 +70,9 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
   getTripsList: () => dispatch(getTripsList()),
-  goToLoginScreen: () => dispatch(push(routes.root))
+  goToLoginScreen: () => dispatch(push(routes.root)),
+  goToCreatTripScreen: () => dispatch(push(routes.tripCreation))
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListTripPages)

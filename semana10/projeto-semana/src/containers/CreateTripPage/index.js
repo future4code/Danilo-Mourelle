@@ -83,9 +83,9 @@ class CreateTripPage extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const token = localStorage.getItem('token')
-    if(token === null){
+    if (token === null) {
       this.props.goToLoginScreen()
     }
   }
@@ -103,13 +103,27 @@ class CreateTripPage extends Component {
   handleSubmit = e => {
     e.preventDefault()
     this.props.sendTripForm(this.state.form)
+    this.setState({
+      form:{}
+    })
   }
 
   render() {
-    const {goToLoginScreen} = this.props
+    const { goToLoginScreen, goToListScreen } = this.props
+    const btnAppBar = [
+      {
+        text: 'LISTA',
+        click: goToListScreen
+      },
+      {
+        text: 'LOGOUT',
+        click: goToLoginScreen
+      }
+    ]
+    
     return (
       <Wrapper>
-        <ButtonAppBar btnText='LOGOUT' click={goToLoginScreen} />
+        <ButtonAppBar btns={btnAppBar} />
         <Title> Preencha abaixo para cadastrar uma nova viagem</Title>
         <form onSubmit={this.handleSubmit}>
           {createTripForm.map(field => {
@@ -118,7 +132,7 @@ class CreateTripPage extends Component {
                 <CTextField
                   key={field.name}
                   field={field}
-                  value={this.state.form[field.name]}
+                  value={this.state.form[field.name]||''}
                   change={this.handleFieldChange}
                 />
 
@@ -127,8 +141,8 @@ class CreateTripPage extends Component {
               return (
                 <CSelect
                   key={field.name}
-                  field={field} v
-                  alue={this.state.form[field.name]}
+                  field={field}
+                  value={this.state.form[field.name]||''}
                   change={this.handleFieldChange}
                   options={field.options}
                 />
@@ -147,6 +161,7 @@ class CreateTripPage extends Component {
 
 const mapDispatchToProps = dispatch => ({
   sendTripForm: (form) => dispatch(createTrip(form)),
-  goToLoginScreen: () => dispatch(push(routes.root))
+  goToLoginScreen: () => dispatch(push(routes.root)),
+  goToListScreen: () => dispatch(push(routes.tripsList))
 })
 export default connect(null, mapDispatchToProps)(CreateTripPage)

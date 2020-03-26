@@ -75,9 +75,7 @@ class ApplyTripPage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      form: {
-        trip: ''
-      }
+      form: {}
     }
   }
 
@@ -98,15 +96,23 @@ class ApplyTripPage extends React.Component {
   handleSubmit = e => {
     e.preventDefault()
     this.props.sendApplyForm(this.state.form)
-    console.log(this.state.form)
+    this.setState({
+      form: {
+      }
+    })
   }
 
   render() {
     const { tripList, goToLoginScreen } = this.props
-
+    const btnAppBar = [
+      {
+        text: 'LOGIN',
+        click: goToLoginScreen
+      },
+    ]
     return (
       <Wrapper>
-        <ButtonAppBar btnText='LOGIN' click={goToLoginScreen} />
+        <ButtonAppBar btns={btnAppBar} />
         <Title> Preencha abaixo para se candidatar a sua próxima viagem</Title>
         <form onSubmit={this.handleSubmit}>
           {createTripForm.map(field => {
@@ -115,16 +121,16 @@ class ApplyTripPage extends React.Component {
                 <CTextField
                   key={field.name}
                   field={field}
-                  value={this.state.form[field.name]} c
-                  hange={this.handleFieldChange}
+                  value={this.state.form[field.name]||''} 
+                  change={this.handleFieldChange}
                 />
               )
             } else {
               return (
                 <CSelect
                   key={field.name}
-                  field={field} v
-                  alue={this.state.form[field.name]}
+                  field={field}
+                  value={this.state.form[field.name]||''}
                   change={this.handleFieldChange}
                   options={field.options}
                 />
@@ -133,7 +139,7 @@ class ApplyTripPage extends React.Component {
           })}
           <TripSelect
             tripList={tripList}
-            value={this.state.form.trip || ''}
+            value={this.state.form.trip ||''}
             change={this.handleFieldChange}
           />
           <Button

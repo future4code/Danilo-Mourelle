@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { push } from "connected-react-router";
 import { routes } from "../Router"
 
+import {logIn} from "../../Actions"
+
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
@@ -32,20 +34,34 @@ class LoginPage extends Component {
     };
   }
 
+  componentDidMount(){
+    localStorage.removeItem('token')
+  }
+
   handleFieldChange = event => {
     this.setState({
       [event.target.name]: event.target.value
     });
   };
 
+  handleSubmit = e => {
+    e.preventDefault()
+    this.props.login(this.state.email, this.state.password)
+  }
+
   render() {
     const { goToApplyScreen } = this.props
     const { email, password } = this.state;
-
+    const btnAppBar = [
+      {
+        text: 'CANDIDATAR',
+        click: goToApplyScreen
+      },
+    ]
     return (
       <LoginWrapper>
-        <ButtonAppBar btnText='Candidatar' click={goToApplyScreen} />
-        <FormWrapper>
+        <ButtonAppBar btns={btnAppBar} />
+        <FormWrapper onSubmit={this.handleSubmit}>
           <TextField
             onChange={this.handleFieldChange}
             name="email"
@@ -54,6 +70,7 @@ class LoginPage extends Component {
             value={email}
             variant="outlined"
             margin="normal"
+            required
             fullWidth
           />
           <TextField
@@ -64,6 +81,7 @@ class LoginPage extends Component {
             value={password}
             variant="outlined"
             margin="normal"
+            required
             fullWidth
           />
           <Button
@@ -78,6 +96,7 @@ class LoginPage extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
+    login:(email, password) => dispatch(logIn(email,password)),
     goToApplyScreen: () => dispatch(push(routes.application))
   }
 }
