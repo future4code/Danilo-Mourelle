@@ -1,33 +1,26 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-import {createTrip} from '../../Actions'
+import { createTrip } from '../../Actions'
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
 
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import ButtonAppBar from '../../Components/AppBar'
+import Title from '../../Components/Title'
+import CTextField from '../../Components/TextField'
+import CSelect from '../../Components/Select'
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100vh;
-  gap: 10px;
-  place-content: center;
-  justify-items: center;
-  display: grid;
-`
-const InputField = styled.input`
-  width: 40%;
-  border-radius:3px;
-  /* Chrome, Safari, Edge, Opera */
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-  }
-  /* Firefox */
-  &[type=number] {
-    -moz-appearance: textfield;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items:flex-start;
+  form{
+    width:20%;
+    text-align:center
   }
 `
 
@@ -107,52 +100,36 @@ class CreateTripPage extends Component {
   render() {
     return (
       <Wrapper>
+        <ButtonAppBar btnText='LOGOUT' />
+        <Title> Preencha abaixo para cadastrar uma nova viagem</Title>
         <form onSubmit={this.handleSubmit}>
           {createTripForm.map(field => {
             if (field.type !== 'select') {
               return (
-                <div key={field.name}>
-                  <label htmlFor={field.name}>{field.label}: </label>
-                  <InputField
-                    id={field.name}
-                    name={field.name}
-                    type={field.type}
-                    onChange={this.handleFieldChange}
-                    pattern={field.pattern}
-                    min={field.min}
-                    minlength={field.minlength}
-                    required={field.required}
-                    title={field.title}
-                    value={this.state.form[field.name]}
-                  />
-                </div>
+                <CTextField
+                  key={field.name}
+                  field={field}
+                  value={this.state.form[field.name]}
+                  change={this.handleFieldChange}
+                />
+
               )
             } else {
               return (
-                <div key={field.name}>
-                  <label htmlFor={field.name}>{field.label}: </label>
-                  <select
-                    id={field.name}
-                    name={field.name}
-                    onChange={this.handleFieldChange}
-                    required={field.required}
-                    title='Selecione o planeta'
-                    value={this.state.form[field.name]}
-                    pattern={field.pattern}
-                  >
-                    {field.options.map((option, index) => {
-                      return (
-                        index === 0 ?
-                          <option key={index} hidden value=''>{option}</option> :
-                          <option key={index} value={option}>{option}</option>
-                      )
-                    })}
-                  </select>
-                </div>
+                <CSelect
+                  key={field.name}
+                  field={field} v
+                  alue={this.state.form[field.name]}
+                  change={this.handleFieldChange}
+                  options={field.options}
+                />
               )
             }
           })}
-          <Button type='submit'>Cadastrar</Button>
+          <Button
+            color='primary'
+            variant="contained"
+            type='submit'>Cadastrar</Button>
         </form>
       </Wrapper>
     );
@@ -162,4 +139,4 @@ class CreateTripPage extends Component {
 const mapDispatchToProps = dispatch => ({
   sendTripForm: (form) => dispatch(createTrip(form))
 })
-export default connect(null, mapDispatchToProps) (CreateTripPage)
+export default connect(null, mapDispatchToProps)(CreateTripPage)

@@ -8,7 +8,7 @@ const styles = () => ({
   },
 });
 
-function ContrySelect(props) {
+function CSelect(props) {
   const { classes } = props;
   return (
     <TextField
@@ -42,4 +42,4 @@ function ContrySelect(props) {
   )
 }
 
-export default withStyles(styles)(ContrySelect)
+export default withStyles(styles)(CSelect)

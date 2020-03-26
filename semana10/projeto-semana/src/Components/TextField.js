@@ -18,6 +18,9 @@ function CTextField(props) {
         title: props.field.title,
         min: props.field.min
       }}
+      InputLabelProps={{
+        shrink: props.field.type === 'date',
+      }}
     />
   )
 }

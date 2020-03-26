@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import ButtonAppBar from '../../Components/AppBar'
 import Title from '../../Components/Title'
 import CTextField from '../../Components/TextField'
-import ContrySelect from '../../Components/SelectCountry'
+import CSelect from '../../Components/Select'
 import TripSelect from '../../Components/SelectTrip'
 
 
@@ -109,16 +109,34 @@ class ApplyTripPage extends React.Component {
           {createTripForm.map(field => {
             if (field.type !== 'select') {
               return (
-                <CTextField key={field.name} field={field} value={this.state.form[field.name]} change={this.handleFieldChange} />
+                <CTextField
+                  key={field.name}
+                  field={field}
+                  value={this.state.form[field.name]} c
+                  hange={this.handleFieldChange}
+                />
               )
             } else {
               return (
-                <ContrySelect key={field.name} field={field} value={this.state.form[field.name]} change={this.handleFieldChange} options={field.options} />
+                <CSelect
+                  key={field.name}
+                  field={field} v
+                  alue={this.state.form[field.name]}
+                  change={this.handleFieldChange}
+                  options={field.options}
+                />
               )
             }
           })}
-          <TripSelect tripList={tripList} value={this.state.form.trip || ''} change={this.handleFieldChange} />
-          <Button color='primary' variant="contained" type='submit'>Cadastrar</Button>
+          <TripSelect
+            tripList={tripList}
+            value={this.state.form.trip || ''}
+            change={this.handleFieldChange}
+          />
+          <Button
+            color='primary'
+            variant="contained"
+            type='submit' >Cadastrar</Button>
         </form>
       </Wrapper>
 
