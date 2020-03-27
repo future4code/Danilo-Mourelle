@@ -17,6 +17,7 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   align-items:flex-start;
+  align-content: flex-start;
 `
 const List = styled.div`
   width:80%;
@@ -28,6 +29,9 @@ const List = styled.div`
 
 
 class ListTripPages extends React.Component {
+  constructor(props) {
+    super(props)
+  }
   componentDidMount() {
     const token = localStorage.getItem('token')
     if (token === null) {
@@ -59,14 +63,17 @@ class ListTripPages extends React.Component {
     return (
       <Wrapper>
         <ButtonAppBar btns={btnAppBar} />
-
-        {tripList.length > 0 ?<>
+        {tripList.length > 0 ? <>
           <Title> Lista com as viagens cadastradas </Title>
           <List>
             {tripList.map((trip, index) => (
-              <Trip key={index} trip={trip} btnDetailClick={this.handleDetailClick} />
+              <Trip
+                key={index}
+                trip={trip}
+                btnDetailClick={this.handleDetailClick}
+              />
             ))}
-          </List> </>:
+          </List> </> :
           <h3>Carregando Eventos...</h3>
         }
       </Wrapper>

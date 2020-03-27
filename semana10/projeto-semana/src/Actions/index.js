@@ -84,10 +84,9 @@ export const createTrip = (form) => async dispatch => {
 }
 
 export const getTripDetails = (id) => async dispatch => {
-  console.log(id)
   const token = localStorage.getItem('token')
   try {
-    const response = await axios.get(`${baseUrl}${user}/trip/${id}?=`,{
+    const response = await axios.get(`${baseUrl}${user}/trip/${id}?=`, {
       headers: {
         "Content-Type": "application/json",
         auth: token
@@ -95,10 +94,36 @@ export const getTripDetails = (id) => async dispatch => {
     })
     console.log(`Status Requisição getTripDetails: ${response.status}`)
     console.log(`Mensagem Requisição getTripDetails: ${response.statusText}`)
+    dispatch(setTripDetails(response.data.trip))
   }
-  catch (error){
+  catch (error) {
     console.error(error)
     // dispatch(push(routes.root))
+  }
+}
+
+export const decideCandidate = (tripId, candidateId) => async dispatch => {
+  const token = localStorage.getItem('token')
+  const dataToSend = {
+    approve: true
+  }
+  console.log(tripId, candidateId, dataToSend)
+  try {
+    const response = await axios.put(`${baseUrl}${user}/trips/${tripId}/candidates/${candidateId}/decide`,
+      dataToSend,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          auth: token
+        }
+      })
+    console.log(`Status Requisição decideCandidate: ${response.status}`)
+    console.log(`Mensagem Requisição decideCandidate: ${response.statusText}`)
+
+    dispatch(getTripDetails(tripId))
+  }
+  catch (error) {
+    console.error(error)
   }
 }
 
@@ -112,8 +137,15 @@ export const setTripsList = (list) => ({
 })
 
 export const setTripIdToDetail = (id) => ({
-  type: 'SET_TRIP_TO_DETAIL',
-  payload:{
+  type: 'SET_TRIP_ID_TO_DETAIL',
+  payload: {
     id,
+  }
+})
+
+export const setTripDetails = (details) => ({
+  type: 'SET_TRIP_DETAILS',
+  payload: {
+    details,
   }
 })
