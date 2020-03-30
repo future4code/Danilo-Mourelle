@@ -2,6 +2,7 @@ import axios from 'axios'
 import { push } from 'connected-react-router'
 import { routes } from "../Containers/Router"
 
+
 const baseUrl = 'https://us-central1-missao-newton.cloudfunctions.net/futureX/'
 const user = 'mourelle'
 
@@ -127,13 +128,13 @@ export const decideCandidate = (tripId, candidateId) => async dispatch => {
   }
 }
 
-
 //*****SÍNCRONAS*****//
 export const setTripsList = (list) => ({
   type: 'SET_TRIPS_LIST',
   payload: {
     list,
   }
+
 })
 
 export const setTripIdToDetail = (id) => ({

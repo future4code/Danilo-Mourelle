@@ -12,3 +12,4 @@ const tripsInfo = (state = initialState, action) => {
 }
 
 export default tripsInfo
+

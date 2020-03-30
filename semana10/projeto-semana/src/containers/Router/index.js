@@ -13,7 +13,6 @@ export const routes = {
   tripCreation: '/trips/create',
   tripsList: '/trips/list',
   tripsDetails: '/trips/details'
-  
 };
 
 function Router(props) {

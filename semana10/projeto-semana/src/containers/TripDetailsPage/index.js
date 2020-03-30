@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+
 import { connect } from 'react-redux';
 import { push, goBack } from "connected-react-router";
 import { routes } from "../Router"
@@ -110,3 +111,4 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TripDetailsPage)
+
