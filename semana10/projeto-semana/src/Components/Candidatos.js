@@ -31,28 +31,27 @@ const ButtonWrapper = styled.span`
   text-align:center;
 `
 
-function Trip(props) {
-  const { trip } = props
+function Candidates(props) {
+  const { candidate } = props
   return (
     <Wrapper>
       <DetailsWrapper>
-        <DetailField><strong>Nome do Evento: </strong>{trip.name}</DetailField>
-        <DetailField><strong>Planeta: </strong>{trip.planet}</DetailField>
-        <DetailField><strong>Data: </strong>{trip.date}</DetailField>
-        <DetailField><strong>Descrição: </strong>{trip.description}</DetailField>
-        <DetailField><strong>Duração do Evento: </strong>{trip.durationInDays} dias</DetailField>
-
+        <DetailField><strong>Nome: </strong>{candidate.name}</DetailField>
+        <DetailField><strong>Idade: </strong>{candidate.age}</DetailField>
+        <DetailField><strong>Profissão: </strong>{candidate.profession}</DetailField>
+        <DetailField><strong>País: </strong>{candidate.country}</DetailField>
+        <DetailField><strong>Porque escolher: </strong>{candidate.applicationText} dias</DetailField>
       </DetailsWrapper>
-      <ButtonWrapper>
+      {props.btnAproveClick && <ButtonWrapper>
         <Button
           color='primary'
           variant="contained"
-          onClick={() => props.btnDetailClick(trip.id)}
-          type='submit' >Detalhes</Button>
-      </ButtonWrapper>
+          onClick={() => props.btnAproveClick(candidate.id)}
+          type='submit' >Aprovar Candidato</Button>
+      </ButtonWrapper>}
 
     </Wrapper>
   )
 }
 
-export default Trip
+export default Candidates
