@@ -1,4 +1,4 @@
-export function anoBissexto(ano) { }
+export function anoBissexto(ano){
   if (ano % 400 === 0) {
     return true
   }
@@ -8,4 +8,4 @@ export function anoBissexto(ano) { }
   else {
     return false
   }
-
+}
