@@ -29,7 +29,7 @@ const PostActions = styled.div`
   padding: 0 10px;
   height:30px;
 `
-const FaWrapper = styled.span`
+export const FaWrapper = styled.span`
   color: ${props => props.inputColor || "white"};
   margin: 0 3px;
   font-size:1.1rem;
@@ -39,7 +39,7 @@ const FaWrapper = styled.span`
   }
 `
 
-export default function Post(props) {
+export function Post(props) {
 
   const { content } = props
 
@@ -96,3 +96,4 @@ export default function Post(props) {
     </PostWrapper>
   )
 }
+export default Post
