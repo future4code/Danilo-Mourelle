@@ -12,7 +12,7 @@ import {
   setPostIdForDetails
 } from './index'
 
-const mockPost = [
+const mockPostList = [
   {
     "userVoteDirection": -1,
     "id": "0COaXIBbosGCvdIMNv9Y",
@@ -44,45 +44,56 @@ const mockPost = [
     "commentsCount": 2
   }]
 
-describe('Actions that handle Posts', () => {
-  /*   test('signup', () => {
-     const mockSignupForm = {
-       username: 'joaquim@maluco.com',
-       password: '123456'
-     }
-     const mockedAction = signup(mockSignupForm)
-     dispatch = jest.fn()
-     
-     expect(mockedAction)
-    }) */
+const mockPostDetails = {
+  "comments": [
+    {
+      "userVoteDirection": 0,
+      "id": "U95U5yFQKGqW7BIv6lbU",
+      "text": "Que engraçado!",
+      "username": "Mariazinha",
+      "createdAt": 1586049158958
+    },
+    {
+      "userVoteDirection": 0,
+      "id": "sZ1V7rQDvJ8hGlBk0xdd",
+      "votesCount": 0,
+      "text": "oi",
+      "username": "rosana",
+      "createdAt": 1585877853031
+    }
+  ],
+  "userVoteDirection": 0,
+  "id": "4SIVI0M7H8IK78oYxXUI",
+  "votesCount": 0,
+  "commentsCount": 2,
+  "text": "https://vidadeprogramador.com.br/wp-content/uploads/2014/07/tirinha1256.png",
+  "username": "viajante intergalático",
+  "createdAt": 1585874108579,
+  "title": "Piadinha"
+}
 
+describe('Actions that handle Posts', () => {
   test('setPost', () => {
-    const mockedAction = setPost(mockPost)
+    const mockedAction = setPost(mockPostList)
 
     expect(mockedAction.type).toEqual("SET_POST_LIST")
-    expect(mockedAction.payload.listPost).toHaveLength(mockPost.length)
-    expect(mockedAction.payload.listPost[0]).toEqual(mockPost[0])
+    expect(mockedAction.payload.listPost).toHaveLength(mockPostList.length)
+    expect(mockedAction.payload.listPost[0]).toEqual(mockPostList[0])
   })
 
-/*   test('setPostDetails', () => {
-    const mockSignupForm = {
-      username: 'joaquim@maluco.com',
-      password: '123456'
-    }
-    const mockedAction = setPostDetails(mockSignupForm)
+  test('setPostDetails', () => {
+    const mockedAction = setPostDetails(mockPostDetails)
 
-
-    expect(mockedAction)
+    expect(mockedAction.type).toEqual("SET_POST_DETAILS")
+    expect(mockedAction.payload.post).toEqual(mockPostDetails)
+    expect(mockedAction.payload.post.comments[1].id).toEqual(mockPostDetails.comments[1].id)
   })
-
   test('setPostIdForDetails', () => {
-    const mockSignupForm = {
-      username: 'joaquim@maluco.com',
-      password: '123456'
-    }
-    const mockedAction = setPostIdForDetails(mockSignupForm)
+    const mockPostId = 'ononwfiwf8qwh-f84th90h93hg-83hg'
+    const mockedAction = setPostIdForDetails(mockPostId)
 
-
-    expect(mockedAction)
-  }) */
+    expect(mockedAction.type).toEqual("SET_POST_ID_FOR_DETAILS")
+    expect(mockedAction.payload.postId).toBeDefined()
+    expect(mockedAction.payload.postId).toEqual(mockPostId)
+  })
 })
