@@ -1,0 +1,65 @@
+import axios from 'axios'
+import { setTaskList, getTasksList, createTask, baseUrl } from './tasks'
+
+const mockTaskList = [
+  {
+    "id": "jGH9xnVXQMeU3tZOQ2Gy",
+    "day": "Segunda",
+    "text": "Lavar a louça"
+  },
+  {
+    "id": "jbnpwbfpqwfbowuwufbo",
+    "day": "Terça",
+    "text": "Lavar a roupa"
+  }
+]
+const mockForm = {
+  text: 'Comprar comida',
+  day:'Quinta'
+}
+
+let mockDispatch 
+beforeEach(()=> {
+  mockDispatch = jest.fn()
+  console.log = jest.fn()
+})
+
+describe('Actions síncronas que manipulam as tasks', () => {
+  test('setTaskList', () => {
+    const mockedAction = setTaskList(mockTaskList)
+
+    expect(mockedAction.type).toEqual('SET_TASK_LIST')
+    expect(mockedAction.payload.list).toEqual(mockTaskList)
+    expect(mockedAction.payload.list).toHaveLength(2)
+  })
+})
+
+describe('Actions assíncronas que manipulam as tasks', () => {
+  test('getTasksList', async () => {
+    axios.get = jest.fn(() => ({
+      data: mockTaskList
+    }))
+
+    await getTasksList()(mockDispatch)
+
+    expect(console.log).toHaveBeenCalledTimes(2)
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: 'SET_TASK_LIST',
+      payload: {
+        list: mockTaskList
+      }
+    })
+  })
+  test('createTask', async () => {
+    axios.post = jest.fn(() => ({
+      status: 200
+    }))
+
+    await createTask(mockForm)(mockDispatch)
+
+    expect(axios.post).toHaveBeenCalledWith(baseUrl, mockForm)
+    expect(console.log).toHaveBeenCalledTimes(2)
+    expect(console.log).toHaveBeenCalledWith(`Status da Requisição getTasksList: 200`)
+    expect(mockDispatch).toHaveBeenCalledTimes(1)
+  })
+})

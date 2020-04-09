@@ -3,11 +3,24 @@ import { connect } from "react-redux";
 
 import { getTasksList, createTask } from '../../actions/tasks'
 
-export function Planner(props) {
-  const [state, setState] = useState({})
+export class Planner extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+    }
+  }
 
-  return <div />;
+  componentDidMount(){
 
+  }
+
+  componentDidUpdate(){
+    
+  }
+
+  render() {
+    return <div />;
+  }
 }
 
 const mapStateToProps = (state) => ({
@@ -19,4 +32,4 @@ const masDispatchToProps = (dispatch) => ({
   createTask: (form) => dispatch(createTask(form))
 })
 
-export default connect(mapStateToProps,masDispatchToProps)(Planner);
+export default connect(mapStateToProps, masDispatchToProps)(Planner);

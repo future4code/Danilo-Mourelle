@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = 'https://us-central1-missao-newton.cloudfunctions.net/generic/planner-bouman-danilo'
+export const baseUrl = 'https://us-central1-missao-newton.cloudfunctions.net/generic/planner-sagan-danilo'
 
 //*****ASSÍNCRONAS*****//
 export const getTasksList = () => async (dispatch) => {
@@ -32,5 +32,5 @@ export const createTask = (form) => async (dispatch) => {
 //*****SÍNCRONAS*****//
 export const setTaskList = (list) => ({
   type: 'SET_TASK_LIST',
-  payload: { list, }
+  payload:  { list }
 })
