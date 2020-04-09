@@ -5,7 +5,7 @@ const baseUrl = 'https://us-central1-missao-newton.cloudfunctions.net/generic/pl
 //*****ASSÍNCRONAS*****//
 export const getTasksList = () => async (dispatch) => {
   try {
-    const response = await axios.get(${ baseUrl })
+    const response = await axios.get(baseUrl)
     console.log(`Status da Requisição getTasksList: ${response.status}`)
     console.log(`Mensagem da Requisição getTasksList: ${response.statusText}`)
 
@@ -16,7 +16,7 @@ export const getTasksList = () => async (dispatch) => {
   }
 }
 
-export const createTaks = (form) => async (dispatch) => {
+export const createTask = (form) => async (dispatch) => {
   try {
     const response = await axios.post(baseUrl, form)
     console.log(`Status da Requisição getTasksList: ${response.status}`)
