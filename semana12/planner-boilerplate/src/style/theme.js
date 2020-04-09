@@ -6,6 +6,9 @@ export default createMuiTheme({
     primary: {
       main: orange[500],
       contrastText: '#fff'
+    },
+    secondary: {
+      main: '#712f26'
     }
   }
 });
