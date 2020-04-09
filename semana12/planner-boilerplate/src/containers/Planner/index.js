@@ -1,5 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Button, InputLabel, NativeSelect, TextField, InputAdornment } from '@material-ui/core'
+import SendIcon from '@material-ui/icons/Send';
+import BeenhereIcon from '@material-ui/icons/Beenhere';
 
 import { getTasksList, createTask } from '../../actions/tasks'
 
@@ -43,8 +46,31 @@ export class Planner extends React.Component {
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
-          <input name='text' placeholder='Nova Tarefa' value={this.state.form.text || ''} onChange={this.handleInputValueChange}></input>
-          <select name='day' value={this.state.form.day || ''} onChange={this.handleInputValueChange}>
+          {/* <input name='text' placeholder='Nova Tarefa' value={this.state.form.text || ''} onChange={this.handleInputValueChange}></input> */}
+          <TextField
+            id="input-with-icon-textfield"
+            label="Nova Tarefa"
+            value={this.state.form.text || ''}
+            onChange={this.handleInputValueChange}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <BeenhereIcon color="primary"/>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <InputLabel shrink htmlFor="age-native-label-placeholder">
+            Dia da Semana
+          </InputLabel>
+          <NativeSelect
+            value={this.state.form.day || ''}
+            onChange={this.handleInputValueChange}
+            inputProps={{
+              name: 'day',
+              id: 'day-native-label-placeholder',
+            }}
+          >
             <option value='' hidden >Selecione</option>
             <option value={1} >Segunda</option>
             <option value={2} >Terça</option>
@@ -53,8 +79,16 @@ export class Planner extends React.Component {
             <option value={5} >Sexta</option>
             <option value={6} >Sábado</option>
             <option value={7} >Domingo</option>
-          </select>
-          <button type='submit'>Enviar</button>
+          </NativeSelect>
+          <Button
+            type='submit'
+            color='primary'
+            variant="contained"
+            color="primary"
+            endIcon={<SendIcon />}
+          >
+            Enviar
+      </Button>
         </form>
         {tasksList && tasksList.map(task => (
           <>

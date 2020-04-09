@@ -15,13 +15,14 @@ const mockTaskList = [
 ]
 const mockForm = {
   text: 'Comprar comida',
-  day:'Quinta'
+  day: 'Quinta'
 }
 
-let mockDispatch 
-beforeEach(()=> {
+let mockDispatch
+beforeEach(() => {
   mockDispatch = jest.fn()
   console.log = jest.fn()
+  console.error = jest.fn()
 })
 
 describe('Actions síncronas que manipulam as tasks', () => {
@@ -35,7 +36,7 @@ describe('Actions síncronas que manipulam as tasks', () => {
 })
 
 describe('Actions assíncronas que manipulam as tasks', () => {
-  test('getTasksList', async () => {
+  test('getTasksList success', async () => {
     axios.get = jest.fn(() => ({
       data: mockTaskList
     }))
@@ -50,7 +51,17 @@ describe('Actions assíncronas que manipulam as tasks', () => {
       }
     })
   })
-  test('createTask', async () => {
+  test('getTasksList fail', async () => {
+    // Mock do axios
+    axios.get = jest.fn(() => {
+      throw new Error('Deu erro!')
+    })
+
+    await getTasksList()(mockDispatch)
+    expect(axios.get).toThrowError()
+    expect(console.error).toHaveBeenCalledTimes(1)
+  })
+  test('createTask success', async () => {
     axios.post = jest.fn(() => ({
       status: 200
     }))
@@ -61,5 +72,15 @@ describe('Actions assíncronas que manipulam as tasks', () => {
     expect(console.log).toHaveBeenCalledTimes(2)
     expect(console.log).toHaveBeenCalledWith(`Status da Requisição getTasksList: 200`)
     expect(mockDispatch).toHaveBeenCalledTimes(1)
+  })
+  test('createTask fail', async () => {
+    // Mock do axios
+    axios.post = jest.fn(() => {
+      throw new Error('Deu erro!')
+    })
+
+    await createTask(mockForm)(mockDispatch)
+    expect(axios.get).toThrowError()
+    expect(console.error).toHaveBeenCalledTimes(1)
   })
 })
