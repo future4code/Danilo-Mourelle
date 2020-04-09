@@ -8,7 +8,6 @@ export const tasks = (state = initialState, action) => {
       return { ...state, taskList: action.payload.list }
     default:
       return { ...state }
-      break;
   }
 }
 
