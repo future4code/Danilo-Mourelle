@@ -67,12 +67,13 @@ describe('Teste dos componentes interno Planner', () => {
   })
   test('Fab', () => {
     const mockGetList = jest.fn()
+    /* setState = jest.fn() */
     const component = shallow(<Planner getTasksList={mockGetList} />)
-    /* const spy = jest.spyOn(component.instance().handleDialog()) */
+    /* const spy = jest.spyOn(component.instance().handleDialog()) */ 
     const fab = component.find(MyFab)
     expect(fab).toHaveLength(1)
     /* fab.simulate('click')
-    expect(spy).toHaveBeenCalled() */
+    expect(setState).toHaveBeenCalled() */
   })
 })
 
