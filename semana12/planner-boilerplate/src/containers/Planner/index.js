@@ -12,31 +12,42 @@ import MyDialog from '../../components/Dialog'
 const PageWrapper = styled.div`
   width:100%;
   min-height: 100vh;
-  header{
-    background-color: #712f26;
-    height:30px;
-    width:100%;
+`
+export const Header = styled.header`
+  background-color: #712f26;
+  height:30px;
+  width:100%;
+  color:#ffd290;
+  text-align:end;
+  font-size:.7rem;
+  padding: 0 0.5%;
+  a{
+    color:inherit;
   }
 `
-const Title = styled.h1`
+export const Title = styled.h1`
   background-color: none;
   color:#712f26;
   font-family: 'Sofia', cursive;
   font-size: 60px;
-  width:100%;
-  height:7vh;
+  width: 100%;
+  height: 7vh;
   margin: 3% 0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media(max-width: 500px) {
+    font-size: 30px;
+    margin:10% 0;
+  }
 `
-const MyFab = styled(Fab)`
+export const MyFab = styled(Fab)`
   position: absolute;
-  bottom:50px;
-  right:50px;
-  @media (max-width: 500px) {
-    bottom:20px;
-    right:20px;
+  bottom: 50px;
+  right: 50px;
+  @media(max-width: 500px) {
+    bottom: 20px;
+    right: 20px;
   }
 `
 const weekDays = ['Segunda-feira', 'Terça-Feira', 'Quarta-Feira', 'Quinta-Feira', 'Sexta-Feira', 'Sábado', 'Domingo']
@@ -78,13 +89,19 @@ export class Planner extends React.Component {
     })
   }
 
-
   render() {
     const { tasksList } = this.props
     const { dialogOpen, form } = this.state
-    console.log(form)
+    
     return (
       <PageWrapper>
+        <Header>powered by <a href='https://github.com/danilomourelle'>DANILO MOURELLE</a></Header>
+        <Title>Planner Semanal</Title>
+        <MyExpansionPanel
+          weekDays={weekDays}
+          tasksList={tasksList}
+        />
+        {/* DIALOG */}
         <MyDialog
           handleDialog={this.handleDialog}
           dialogOpen={dialogOpen}
@@ -94,15 +111,9 @@ export class Planner extends React.Component {
           day={form.day}
           weekDays={weekDays}
         />
-        <MyFab size="medium" color="secondary" aria-label="add" title="Add Nova Tarefa" onClick={() => this.setState({ dialogOpen: true })}>
+        <MyFab size="medium" color="secondary" aria-label="add" title="Add Nova Tarefa" onClick={() => this.handleDialog(true)}>
           <AddIcon />
         </MyFab>
-        <header></header>
-        <Title>Planner Semanal</Title>
-        <MyExpansionPanel
-          weekDays={weekDays}
-          tasksList={tasksList}
-        />
       </PageWrapper >
     );
   }

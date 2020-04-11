@@ -46,9 +46,9 @@ describe('Reducer que controla as tasks', () => {
   test('DEFAULT', () => {
     const newStore = tasksReducer(mockInitialState,{type:'Vai cair no default'})
 
-    expect(newStore.taskList).toEqual(expect.arrayContaining(mockInitialState.taskList))
-    expect(newStore.taskList).toEqual(mockInitialState.taskList)
-    expect(newStore.taskList).toHaveLength(2)
+    expect(newStore.tasksList).toEqual(expect.arrayContaining(mockInitialState.tasksList))
+    expect(newStore.tasksList).toEqual(mockInitialState.tasksList)
+    expect(newStore.tasksList).toHaveLength(2)
   })
 })
 

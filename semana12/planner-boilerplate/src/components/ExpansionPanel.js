@@ -12,6 +12,7 @@ const MyExpansionPanelSummary = styled(ExpansionPanelSummary)`
 `
 const MyExpansionPanelDetails = styled(ExpansionPanelDetails)`
   background-color: #fffdb9;
+  padding:16px;
 `
 
 export function MyExpansionPanel(props) {

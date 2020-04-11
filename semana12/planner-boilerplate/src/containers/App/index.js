@@ -18,7 +18,7 @@ const middlewares = [
 
 const store = createStore(rootReducer, compose(...middlewares));
 
-const GlobalStayle = createGlobalStyle`
+export const GlobalStayle = createGlobalStyle`
   body{
     background-color: #ffd290;
     min-height:100vh;
