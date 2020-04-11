@@ -2,7 +2,7 @@ import tasksReducer from './tasks'
 import { setTaskList } from '../actions/tasks'
 
 const mockInitialState = {
-  taskList: [
+  tasksList: [
     {
       "id": "jGH9xnVXQMeU3tZOQ2Gy",
       "day": "Segunda",
@@ -18,7 +18,7 @@ const mockInitialState = {
 
 describe('Reducer que controla as tasks', () => {
   test('SET_TASK_LIST', () => {
-    const mockNewTaskList = [
+    const mockNewTasksList = [
       {
         "id": "hbvobfioqpfqwehfiowfib",
         "day": "Domingo",
@@ -35,12 +35,12 @@ describe('Reducer que controla as tasks', () => {
         "text": "Comprar comida"
       }
     ]
-    const newSetListAction = setTaskList(mockNewTaskList)
+    const newSetListAction = setTaskList(mockNewTasksList)
     const newStore = tasksReducer(mockInitialState,newSetListAction)
 
-    expect(newStore.taskList).toEqual(mockNewTaskList)
-    expect(newStore.taskList).toEqual(expect.not.arrayContaining(mockInitialState.taskList))
-    expect(newStore.taskList).toHaveLength(3)
+    expect(newStore.tasksList).toEqual(mockNewTasksList)
+    expect(newStore.tasksList).toEqual(expect.not.arrayContaining(mockInitialState.tasksList))
+    expect(newStore.tasksList).toHaveLength(3)
   })
 
   test('DEFAULT', () => {

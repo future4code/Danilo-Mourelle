@@ -1,4 +1,6 @@
 import React from "react";
+import { createGlobalStyle } from 'styled-components'
+import { StylesProvider } from '@material-ui/core/styles'
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
@@ -16,12 +18,23 @@ const middlewares = [
 
 const store = createStore(rootReducer, compose(...middlewares));
 
+const GlobalStayle = createGlobalStyle`
+  body{
+    background-color: #ffd290;
+    min-height:100vh;
+    margin:0;
+  }
+`
+
 export const App = () => (
   <Provider store={store}>
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline />
-      <Planner />
-    </MuiThemeProvider>
+    <StylesProvider injectFirst>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <GlobalStayle />
+        <Planner />
+      </MuiThemeProvider>
+    </StylesProvider>
   </Provider>
 );
 

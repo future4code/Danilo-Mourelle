@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { setTaskList, getTasksList, createTask, baseUrl } from './tasks'
 
-const mockTaskList = [
+const mockTasksList = [
   {
     "id": "jGH9xnVXQMeU3tZOQ2Gy",
     "day": "Segunda",
@@ -27,10 +27,10 @@ beforeEach(() => {
 
 describe('Actions síncronas que manipulam as tasks', () => {
   test('setTaskList', () => {
-    const mockedAction = setTaskList(mockTaskList)
+    const mockedAction = setTaskList(mockTasksList)
 
     expect(mockedAction.type).toEqual('SET_TASK_LIST')
-    expect(mockedAction.payload.list).toEqual(mockTaskList)
+    expect(mockedAction.payload.list).toEqual(mockTasksList)
     expect(mockedAction.payload.list).toHaveLength(2)
   })
 })
@@ -38,7 +38,7 @@ describe('Actions síncronas que manipulam as tasks', () => {
 describe('Actions assíncronas que manipulam as tasks', () => {
   test('getTasksList success', async () => {
     axios.get = jest.fn(() => ({
-      data: mockTaskList
+      data: mockTasksList
     }))
 
     await getTasksList()(mockDispatch)
@@ -47,7 +47,7 @@ describe('Actions assíncronas que manipulam as tasks', () => {
     expect(mockDispatch).toHaveBeenCalledWith({
       type: 'SET_TASK_LIST',
       payload: {
-        list: mockTaskList
+        list: mockTasksList
       }
     })
   })

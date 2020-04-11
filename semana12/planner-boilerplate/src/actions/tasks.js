@@ -30,7 +30,8 @@ export const createTask = (form) => async (dispatch) => {
 }
 
 //*****SÍNCRONAS*****//
-export const setTaskList = (list) => ({
+export const setTaskList = (list) => (
+  {
   type: 'SET_TASK_LIST',
-  payload:  { list }
+  payload: {list} 
 })
