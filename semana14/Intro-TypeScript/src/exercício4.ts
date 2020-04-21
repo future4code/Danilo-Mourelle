@@ -8,30 +8,6 @@ enum yearRange {
 }
 
 function defineEra(year: number, time?: string): string {
-  /*   if (year > yearRange.max || year < yearRange.min || (time !== cristianTime.ac && time !== cristianTime.dc && time !== cristianTime.empty)) {
-      return "Dados inputados inválidos"
-    }
-    else {
-      if (time === cristianTime.ac) {
-        if (year > 4000) {
-          return 'Pré-história'
-        }
-        else {
-          return 'Idade-Antiga'
-        }
-      }
-      else {
-        if (year < 476) {
-          return 'Idade-Antiga'
-        }
-        else if (year < 1453) {
-          return 'Idade-Moderna'
-        }
-        else {
-          return 'Idade-Contemporânea'
-        }
-      }
-    } */
   switch (time) {
     case cristianTime.ac:
       if (year < yearRange.min) {
