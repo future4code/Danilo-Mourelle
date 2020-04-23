@@ -11,6 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/node": "^12.12.14"
+    "axios": "^0.19.2"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.37"
   }
 }
