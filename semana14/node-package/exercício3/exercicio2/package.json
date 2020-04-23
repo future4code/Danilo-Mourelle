@@ -1,0 +1,16 @@
+{
+  "name": "danilo-sagan-exercicio2",
+  "version": "1.0.0",
+  "description": "Exercício de NodeJS",
+  "main": "exercício2.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node exercício2.js"
+  },
+  "keywords": [
+    "nodejs",
+    "sagan"
+  ],
+  "author": "danilo-mourelle",
+  "license": "ISC"
+}
