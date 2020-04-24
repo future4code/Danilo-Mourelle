@@ -1,4 +1,5 @@
 import { readFileSync, writeFile, } from 'fs'
+import * as moment from 'moment'
 
 const firstParameter: string = process.argv[2]
 const secondParameter: string = process.argv[3]
