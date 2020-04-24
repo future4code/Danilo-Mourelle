@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "ex1": "node build/exercício1.js --target es6"
+    "start": "node build/exercício1.js",
+    "tent": "node build/exercício21.js"
   },
   "author": "",
   "license": "ISC",
