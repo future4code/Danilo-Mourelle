@@ -29,7 +29,7 @@ function createAccount(name, cpf, birthDate) {
     const age = ageFinder(birthDate);
     if (age > 18) {
         try {
-            const data = fs_1.readFileSync('../../database/accounts.json');
+            const data = fs_1.readFileSync(require('path').resolve(__dirname, '../../database/accounts.json'));
             const treatedDataJSON = data.toString();
             accountsArray = JSON.parse(treatedDataJSON);
         }
@@ -54,7 +54,7 @@ function createAccount(name, cpf, birthDate) {
             };
             accountsArray.push(novaConta);
             try {
-                fs_1.writeFile('../../database/accounts.json', JSON.stringify(accountsArray), 'utf8', () => { console.log("Conta criada com sucesso"); });
+                fs_1.writeFile(require('path').resolve(__dirname, '../../database/accounts.json'), JSON.stringify(accountsArray), 'utf8', () => { console.log("Conta criada com sucesso"); });
             }
             catch (_a) {
                 console.log("Erro ao criar a conta");
@@ -69,7 +69,7 @@ exports.createAccount = createAccount;
 function getBalance(name, cpf) {
     let accountsArray;
     try {
-        const data = fs_1.readFileSync('../../database/accounts.json');
+        const data = fs_1.readFileSync(require('path').resolve(__dirname, '../../database/accounts.json'));
         const treatedDataJSON = data.toString();
         accountsArray = JSON.parse(treatedDataJSON);
     }
@@ -91,7 +91,7 @@ function addMoney(name, cpf, money) {
     let accountsArray;
     let accountIndex;
     try {
-        const data = fs_1.readFileSync('../../database/accounts.json');
+        const data = fs_1.readFileSync(require('path').resolve(__dirname, '../../database/accounts.json'));
         const treatedDataJSON = data.toString();
         accountsArray = JSON.parse(treatedDataJSON);
     }
@@ -113,7 +113,7 @@ function addMoney(name, cpf, money) {
         });
         console.log(`Seu novo salde será de: ${accountsArray[accountIndex].balance + Number(money)}`);
         try {
-            fs_1.writeFile('../../database/accounts.json', JSON.stringify(accountsArray), 'utf8', () => { console.log("Operação concluida com sucesso"); });
+            fs_1.writeFile(require('path').resolve(__dirname, '../../database/accounts.json'), JSON.stringify(accountsArray), 'utf8', () => { console.log("Operação concluida com sucesso"); });
         }
         catch (_b) {
             console.log("Erro ao enviar operação");
@@ -136,7 +136,7 @@ function payBill(nome, cpf, amount, description, payAt) {
     }
     if (validPayAt) {
         try {
-            const data = fs_1.readFileSync('../../database/accounts.json');
+            const data = fs_1.readFileSync(require('path').resolve(__dirname, '../../database/accounts.json'));
             const treatedDataJSON = data.toString();
             accountsArray = JSON.parse(treatedDataJSON);
         }
@@ -163,7 +163,7 @@ function payBill(nome, cpf, amount, description, payAt) {
                 });
                 console.log(`Seu novo salde será de: ${accountsArray[accountIndex].balance - Number(amount)}`);
                 try {
-                    fs_1.writeFile('../../database/accounts.json', JSON.stringify(accountsArray), 'utf8', () => { console.log("Operação concluida com sucesso"); });
+                    fs_1.writeFile(require('path').resolve(__dirname, '../../database/accounts.json'), JSON.stringify(accountsArray), 'utf8', () => { console.log("Operação concluida com sucesso"); });
                 }
                 catch (_b) {
                     console.log("Erro ao enviar operação");

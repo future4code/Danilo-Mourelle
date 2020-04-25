@@ -52,7 +52,7 @@ switch (operation) {
     case operations.transf:
         break;
     case ('Ajuda'):
-        console.log('Os seguintes comandos estão disponíveis:\n\n Abertura de conta: "Abrir Conta" "Seu Nome" CPF(apenas números - 12345678900) data-de-nascimento(formato "DD/MM/YYYY") \n\n Verificação de Saldo: Saldo "Seu Nome" CPF(apenas números - 12345678900) \n\n Depositar: Depositar "Seu Nome" CPF(apenas números - 12345678900) Valor(formato 0.00) \n\n Pagamentos: Pagar "Seu Nome" CPF(apenas números - 12345678900) Valor(formato 0.00) Descrição Data-de-pagamento (formato "DD/MM/YYYY")\n');
+        console.log('\u001b[95m Os seguintes comandos estão disponíveis:\n\n Abertura de conta: "Abrir Conta" "Seu Nome" CPF(apenas números - 12345678900) data-de-nascimento(formato "DD/MM/YYYY") \n\n Verificação de Saldo: Saldo "Seu Nome" CPF(apenas números - 12345678900) \n\n Depositar: Depositar "Seu Nome" CPF(apenas números - 12345678900) Valor(formato 0.00) \n\n Pagamentos: Pagar "Seu Nome" CPF(apenas números - 12345678900) Valor(formato 0.00) Descrição Data-de-pagamento (formato "DD/MM/YYYY")\n');
         break;
     default:
         console.log("Por favor digite 'Ajuda' para verificar formato dos comandos");
