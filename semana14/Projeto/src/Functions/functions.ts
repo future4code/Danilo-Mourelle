@@ -43,21 +43,22 @@ function ageFinder(birthDate: string): number {
 }
 function getNewBalance(database: account[], accountId: number): number {
     let result: number = database[accountId].statement.reduce(
-        (accumulator: number, current: bankStatement): number => {
-            switch (current.operation) {
+        (accumulator: number, currentOperation: bankStatement): number => {
+            switch (currentOperation.operation) {
                 case operations.add:
-                    return accumulator + current.value
+                    return accumulator + currentOperation.value
 
                 case operations.pay:
-                    const operationDate: moment.Moment = moment(current.date, "DD/MM/YYYY")
+                    const operationDate: moment.Moment = moment(currentOperation.date, "DD/MM/YYYY")
                     const today: moment.Moment = moment()
-                    return (operationDate.diff(today, 'days') > 0 ? accumulator : accumulator - current.value)
+                    console.log(operationDate.diff(today, 'days'))
+                    return (operationDate.diff(today, 'days') > 0 ? accumulator : accumulator - currentOperation.value)
 
                 case operations.receveidTransfer:
-                    return accumulator + current.value
+                    return accumulator + currentOperation.value
 
                 case operations.sendTransfer:
-                    return accumulator - current.value
+                    return accumulator - currentOperation.value
 
                 default:
                     console.log('Se der erro aqui!!! Fudeu')
@@ -73,7 +74,7 @@ export function createAccount(name: string, cpf: string, birthDate: string) {
     //Função de apoio que retorna idade
     const age: number = ageFinder(birthDate)
     //Se idade maior que 18 anos
-    if (age > 18) {
+    if (age >= 18) {
         //Leitura da base de dados
         try {
             const data: Buffer = readFileSync(require('path').resolve(__dirname, '../../database/accounts.json'))
@@ -192,12 +193,12 @@ export function addMoney(name: string, cpf: string, money: string) {
 export function payBill(name: string, cpf: string, amount: string, description: string, payAt?: string) {
     let accountsArray: account[]
     let accountIndex: number
-    let validPayAt: boolean = false
+    let validPayAt: boolean = true
     //Valida se data não está no passado
     if (payAt) {
         const today: moment.Moment = moment()
         const payDate: moment.Moment = moment(payAt, "DD/MM/YYYY")
-        const diffInDay: number = today.diff(payDate, 'days')
+        const diffInDay: number = payDate.diff(today, 'days')
         validPayAt = (diffInDay >= 0 ? true : false)
     }
     //Se data válida para transação
@@ -232,7 +233,7 @@ export function payBill(name: string, cpf: string, amount: string, description: 
                 accountsArray[accountIndex].statement.push({
                     operation: operations.pay,
                     description: description,
-                    date: moment(payAt, 'DD/MM/YYY').format('DD/MM/YYY'),
+                    date: (payAt ? moment(payAt, 'DD/MM/YYYY').format('DD/MM/YYYY') : moment().format('DD/MM/YYYY')),
                     value: Number(amount),
                     operationId: Date.now()
                 })
@@ -296,7 +297,7 @@ export function performTransfer(senderName: string, cpfSender: string, destName:
             operationId: Date.now()
         })
         //Criando a operação de Recebimento de Transfer na conta do Dest
-        accountsArray[senderAccountIndex].statement.push({
+        accountsArray[destAccountIndex].statement.push({
             operation: operations.receveidTransfer,
             date: moment().format("DD/MM/YYYY"),
             value: Number(value),

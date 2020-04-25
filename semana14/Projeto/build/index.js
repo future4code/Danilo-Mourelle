@@ -38,21 +38,37 @@ switch (operation) {
             console.log("Por favor digite ajuda para verificar formato dos comandos");
         }
         else {
-            functions_1.createAccount(clientName, clientCPF, third);
+            functions_1.addMoney(clientName, clientCPF, third);
         }
         break;
     case operations.pay:
-        if (isNaN(Number(clientCPF)) || isNaN(Number(third)) || !moment(fifth, "DD/MM/YYYY)").isValid()) {
-            console.log("Por favor digite ajuda para verificar formato dos comandos");
+        if (fifth) {
+            if (isNaN(Number(clientCPF)) || isNaN(Number(third)) || !moment(fifth, "DD/MM/YYYY)").isValid()) {
+                console.log("Por favor digite ajuda para verificar formato dos comandos");
+            }
+            else {
+                functions_1.payBill(clientName, clientCPF, third, fourth, fifth);
+            }
         }
         else {
-            functions_1.createAccount(clientName, clientCPF, third);
+            if (isNaN(Number(clientCPF)) || isNaN(Number(third))) {
+                console.log("Por favor digite ajuda para verificar formato dos comandos");
+            }
+            else {
+                functions_1.payBill(clientName, clientCPF, third, fourth);
+            }
         }
         break;
     case operations.transf:
+        if (isNaN(Number(clientCPF)) || isNaN(Number(fourth)) || isNaN(Number(fifth))) {
+            console.log("Por favor digite ajuda para verificar formato dos comandos");
+        }
+        else {
+            functions_1.performTransfer(clientName, clientCPF, third, fourth, fifth);
+        }
         break;
     case ('Ajuda'):
-        console.log('\u001b[95m Os seguintes comandos estão disponíveis:\n\n Abertura de conta: "Abrir Conta" "Seu Nome" CPF(apenas números - 12345678900) data-de-nascimento(formato "DD/MM/YYYY") \n\n Verificação de Saldo: Saldo "Seu Nome" CPF(apenas números - 12345678900) \n\n Depositar: Depositar "Seu Nome" CPF(apenas números - 12345678900) Valor(formato 0.00) \n\n Pagamentos: Pagar "Seu Nome" CPF(apenas números - 12345678900) Valor(formato 0.00) Descrição Data-de-pagamento (formato "DD/MM/YYYY")\n');
+        console.log('\u001b[95m Os seguintes comandos estão disponíveis:\n\n Abertura de conta: "Abrir Conta" "Seu Nome" CPF(apenas números - 12345678900) data-de-nascimento(formato "DD/MM/YYYY") \n\n Verificação de Saldo: Saldo "Seu Nome" CPF(apenas números - 12345678900) \n\n Depositar: Depositar "Seu Nome" CPF(apenas números - 12345678900) Valor(formato 0.00) \n\n Pagamentos: Pagar "Seu Nome" CPF(apenas números - 12345678900) Valor(formato 0.00) Descrição Data-de-pagamento (formato "DD/MM/YYYY")\n\n Transferir: Transferir "Seu Nome" SeuCPF(apenas números - 12345678900) "Nome Destino" DestCPF(apenas números - 12345678900) Valor(formato 0.00)\n ');
         break;
     default:
         console.log("Por favor digite 'Ajuda' para verificar formato dos comandos");

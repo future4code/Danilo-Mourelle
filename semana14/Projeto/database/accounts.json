@@ -1,1 +1,66 @@
-[{"name":"Danilo","CPF":14725836987,"birth":"28/12/1987","age":32,"id":1587773289273,"balance":0,"statement":[]},{"name":"adasda","CPF":147258,"birth":"28/12/1987","age":32,"id":1587775369136,"balance":0,"statement":[]}]
+[
+    {
+        "name": "Danilo",
+        "CPF": 14725836987,
+        "birth": "25/04/2002",
+        "age": 18,
+        "id": 1587837382925,
+        "balance": 49.75,
+        "statement": [
+            {
+                "operation": "Depósito",
+                "date": "25/04/2020",
+                "value": 500,
+                "operationId": 1587837528427
+            },
+            {
+                "operation": "Pagamento",
+                "description": "Moto",
+                "date": "28/04/2020",
+                "value": 100,
+                "operationId": 1587839130239
+            },
+            {
+                "operation": "Pagamento",
+                "description": "Moto",
+                "date": "25/04/2020",
+                "value": 100,
+                "operationId": 1587839152662
+            },
+            {
+                "operation": "Tranferência Enviada",
+                "date": "25/04/2020",
+                "value": 200,
+                "operationId": 1587839420180
+            },
+            {
+                "operation": "Tranferência Enviada",
+                "date": "25/04/2020",
+                "value": 150.25,
+                "operationId": 1587839506338
+            }
+        ]
+    },
+    {
+        "name": "Jana",
+        "CPF": 14725836986,
+        "birth": "14/03/2000",
+        "age": 20,
+        "id": 1587837430248,
+        "balance": 350.25,
+        "statement": [
+            {
+                "operation": "Transferência Recebida",
+                "date": "25/04/2020",
+                "value": 200,
+                "operationId": 1587839420181
+            },
+            {
+                "operation": "Transferência Recebida",
+                "date": "25/04/2020",
+                "value": 150.25,
+                "operationId": 1587839506338
+            }
+        ]
+    }
+]
