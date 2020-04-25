@@ -25,7 +25,7 @@ type bankStatement = {
 enum operations {
     add = 'Depósito',
     pay = 'Pagamento',
-    sendTransfer = 'Tranferência Enviada'
+    sendTransfer = 'Tranferência Enviada',
     receveidTransfer = 'Transferência Recebida'
 }
 //*******FUNÇÕES DE APOIO**********/
