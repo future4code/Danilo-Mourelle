@@ -1,0 +1,20 @@
+{
+  "name": "oop",
+  "version": "1.0.0",
+  "module": "system",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node build/exercício1.js",
+    "tent": "node build/exercício21.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.37"
+  }
+}
