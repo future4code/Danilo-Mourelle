@@ -1,183 +1,230 @@
-class User {
-  private id: string;
-  private email: string;
-  private name: string;
-  private password: string;
+export interface Client {
+  name: string;
+  // Refere-se ao nome do cliente
 
+  registrationNumber: number;
+  // Refere-se ao número de cadastro do cliente na concessionária
+  // como se fosse um id
+
+  consumedEnergy: number;
+  // Refere-se à energia consumida pelo cliente no mês
+
+  calculateBill(): number;
+  // Retorna o valor da conta em reais
+}
+
+const newClient: Client = {
+  name: 'Visconde de Sabugosa',
+  registrationNumber: 1,
+  consumedEnergy: 25,
+  calculateBill(): number {
+    return 4
+  }
+}
+
+//***** EXERCÍCIO 1 *****//
+console.log(newClient.name)
+console.log(newClient.registrationNumber)
+console.log(newClient.consumedEnergy)
+console.log(newClient.calculateBill())
+/*Sim, foi possível imprimir todas as infos pq em interface não há encapsulamento*/
+
+
+export abstract class Place {
+  constructor(protected cep: string) { }
+
+  public getCep(): string {
+    return this.cep;
+  }
+
+  protected static KVH_BASE_VALUE = 0.75
+}
+
+//***** EXERCÍCIO 2 *****//
+//const newPlace = new Place('01234-567')
+/* A. Cannot create an instance of an abstract class
+   B. Tirar o abstract ou criar uma subclasse e criar uma instancia dessa subclasse */
+
+export class Residence extends Place {
   constructor(
-    id: string,
-    email: string,
-    name: string,
-    password: string
+    protected residentsQuantity: number,
+    // Refere-se ao número de moradores da casa
+
+    cep: string
   ) {
-    console.log("Chamando o construtor da classe User")
-    this.id = id
-    this.email = email
-    this.name = name
-    this.password = password
+    super(cep);
   }
-
-  public getId(): string {
-    return this.id
-  }
-
-  public getEmail(): string {
-    return this.email
-  }
-
-  public getName(): string {
-    return this.name
-  }
-  public introduceYourself(): string {
-    return 'Olá, bom dia. Eu sou ' + this.name
+  getResidentsQuantity(): number {
+    return this.residentsQuantity
   }
 }
 
-const eu = new User('primeiro', 'eu@eu.com', 'Eu', 'eu123')
-
-console.log('Email: ' + eu.getEmail())
-console.log('Nome: ' + eu.getName())
-console.log('Id: ' + eu.getId())
-
-//***** RESPOSTAS EXERCÍCIO 1 *****/
-/*A. Não é possível pegar a senha, uma vez que ela é private e não tem nenhum getter
-  B. Foi chamada 1 vez e eu nem tinha reparado*/
-
-class Customer extends User {
-  public purchaseTotal: number = 0;
-  private creditCard: string;
-
+export class Commerce extends Place {
   constructor(
-    id: string,
-    email: string,
-    name: string,
-    password: string,
-    creditCard: string
+    protected floorsQuantity: number,
+    // Refere-se à quantidade de andares do lugar
+
+    cep: string
   ) {
-    super(id, email, name, password);
-    console.log("Chamando o construtor da classe Customer");
-    this.creditCard = creditCard;
+    super(cep);
   }
 
-  public getCreditCard(): string {
-    return this.creditCard;
+  getFloorsQuantity(): number {
+    return this.floorsQuantity
   }
 }
 
-const newCustomer = new Customer('customer1', 'customer@customer.com', 'CUSTOMER', '123456', '1233 1233 1312 3444')
-
-//***** RESPOSTAS EXERCÍCIO 2 *****/
-/*A. 1 VEZ
-B. 2 VEZES - Uma do exercício anterior e outra desse segundo exercícío uma vez que o construtor da classe Customer chama 'super' o que fez 
-com que executasse o contrutor da classe User com os parametros passaddos*/
-
-console.log(
-  'Email: ' + newCustomer.getEmail(),
-  'Nome: ' + newCustomer.getName(),
-  'Id: ' + newCustomer.getId(),
-  'Número do cartão: ' + newCustomer.getCreditCard(),
-  'Total de compras: ' + newCustomer.purchaseTotal
-)
-
-//***** RESPOSTAS EXERCÍCIO 3 *****/
-/* Não é possível pois a mesma está privada na classe User, inclusive não seria possível nem acessa-la dentro da subclasse Customer */
-
-//***** RESPOSTAS EXERCÍCIO 4 *****/
-console.log(newCustomer.introduceYourself())
-
-//***** RESPOSTAS EXERCÍCIO 5 *****/
-/* Ops, feito já no exercício 4.... queimei largada, sorry */
-
-class Employee extends User {
-  protected baseSalary: number
-  protected admissionDate: string
-  protected static BENEFITS_VALUE: number = 400
-
+export class Industry extends Place {
   constructor(
-    id: string,
-    email: string,
-    name: string,
-    password: string,
-    admissionDate: string,
-    baseSalary: number
+    protected machinesQuantity: number,
+    // Refere-se à quantidade de máquinas do local 
+
+    cep: string
   ) {
-    super(id, email, name, password);
-    console.log("Chamando o construtor da classe Employee");
-    this.admissionDate = admissionDate
-    this.baseSalary = baseSalary
+    super(cep);
   }
-
-  public getAdmissionDat(): string {
-    return this.admissionDate;
-  }
-
-  public getBaseSalary(): number {
-    return this.baseSalary;
-  }
-  public calculateTotalSalary(): number {
-    return this.baseSalary + Employee.BENEFITS_VALUE
+  getMachinesQuantity(): number {
+    return this.machinesQuantity
   }
 }
 
-const employee = new Employee('employee1', 'employee@employee.com', 'EMPLOYEE', '123456', '28/04/2020', 3500.50)
+const newResidence = new Residence(2, '04321-070')
+const newCommerce = new Commerce(1, '04321-070')
+const newIndustry = new Industry(20, '04321-070')
+console.log(newResidence.getCep())
+console.log(newCommerce.getCep())
+console.log(newIndustry.getCep())
 
-console.log(
-  'Email: ' + employee.getEmail(),
-  'Nome: ' + employee.getName(),
-  'Id: ' + employee.getId(),
-  'Data de admissão: ' + employee.getAdmissionDat(),
-  'Salário base: ' + employee.getBaseSalary()
-)
-
-//***** RESPOSTAS EXERCÍCIO 6 *****/
-/* A. 1 VEZ também, igual à nova instância da subclasse Customer
-   B. Todos menos a senha. */
-
-//***** RESPOSTAS EXERCÍCIO 7 *****/
-console.log(employee.calculateTotalSalary())
-
-
-class Seller extends Employee {
-  private salesQuantity: number = 0
-  private static SELLING_COMMISSION: number = 5
-
-  public setSalesQuantity(newValue: number): number {
-    return this.salesQuantity = newValue
+class ResidentialClient extends Residence implements Client {
+  constructor(
+    public name: string,
+    public registrationNumber: number,
+    public consumedEnergy: number,
+    private cpf: string,
+    cep: string,
+    residentsQuantity: number
+  ) {
+    super(residentsQuantity, cep)
   }
 
-  public calculateTotalSalary(): number {
-    return this.baseSalary + Employee.BENEFITS_VALUE + Seller.SELLING_COMMISSION * this.salesQuantity
+  getCPF(): string {
+    return this.cpf
+  }
+
+  calculateBill(): number {
+    return Place.KVH_BASE_VALUE * this.consumedEnergy
   }
 }
 
-const seller = new Seller('seller1', 'seller@selle.com', 'SELLER', 'seller1234', '20/12/2012', 3000)
+export const newResidentialClient = new ResidentialClient('Danilo Casa', 1, 30, '147258369-87', '04321-070', 2)
 
-console.log(seller.getName())
-console.log(seller.getEmail())
-console.log(seller.getId())
-console.log(seller.getAdmissionDat())
-console.log(seller.getBaseSalary())
-console.log(seller.calculateTotalSalary())
+//***** EXERCÍCIO 4 *****//
+/* A. Possui name, registrationNumber, consumedEnergy, getCEP(), getCPF(), calculateBill(), getResidentsQuantity() */
 
+class ComercialClient extends Commerce implements Client {
+  constructor(
+    public name: string,
+    public registrationNumber: number,
+    public consumedEnergy: number,
+    private cnpj: string,
+    floorsQuantity: number,
+    cep: string
+  ) {
+    super(floorsQuantity, cep)
+  }
 
-//***** RESPOSTAS EXERCÍCIO 8 *****/
-/* A. Foram necessárias todos os parametros do contrutor User + Employee
-   B. Novamente não consegui acessar as infos de senha...*/
+  getCNPJ(): string {
+    return this.cnpj
+  }
 
-seller.setSalesQuantity(30)
+  private static KVH_DISCCOUNT: number = 0.3
 
-//***** RESPOSTAS EXERCÍCIO 9 *****/
-/* Não é possível imprimir porque não temos um getter e o atributo está com encapsulamento privado*/
+  calculateBill(): number {
+    return this.consumedEnergy * Place.KVH_BASE_VALUE * (1 - ComercialClient.KVH_DISCCOUNT)
+  }
+}
 
-const newSeller = new Seller('seller2', 'seller2@selle.com', 'SELLER2', 'seller1234', '20/12/2015', 2500)
-newSeller.setSalesQuantity(50)
-console.log(newSeller.calculateTotalSalary())
+export const newComercialClient = new ComercialClient('Loja', 2, 40, '01586247/0001-58', 3, '04321-070')
 
-//***** RESPOSTAS EXERCÍCIO 10 *****/
-/* Foi impresso o total com a correção da classe Employee, inclusive o VSCode passa a mostrar o calculateTotalSalary como metodo de Seller e não mais Employee */
+//***** EXERCÍCIO 5 *****//
+/* A. Tudo aquilo herdado da interface Client e da classe Place 
+   B. As diferneças são os atributos e métodos definidos na própria classe (cnpj e getCNPJ())*/
 
+class IndustrialClient extends Industry implements Client {
+  constructor(
+    public name: string,
+    public registrationNumber: number,
+    public consumedEnergy: number,
+    private IncRegister: string,
+    cep: string,
+    machinesQuantity: number
+  ) {
+    super(machinesQuantity, cep)
+  }
 
+  getIncRegister(): string {
+    return this.IncRegister
+  }
 
+  private static KVH_DISCCOUNT: number = 0.4
+  private static VALUE_MACHINNE: number = 100
 
+  calculateBill(): number {
+    return this.consumedEnergy * Place.KVH_BASE_VALUE * (1 - IndustrialClient.KVH_DISCCOUNT) + this.machinesQuantity * IndustrialClient.VALUE_MACHINNE
+  }
+}
+export const newIndustrialClient = new IndustrialClient('Fábrica', 3, 50, '1-6582449-87', '04321-070', 20)
 
+//***** EXERCÍCIO 6 *****//
+/* A. Vai ser filha da classe Industry
+   B. Implemente a interface Client assim como as outras subclasses
+   C. Muito boa pergunta, não sei....*/
+
+class ClientManager {
+  private clients: Client[] = []
+
+  getClientQuantity(): number {
+    return this.clients.length
+  }
+
+  registerClient(client: Client): void {
+    this.clients.push(client)
+  }
+
+  public calculateBillOfClient(registrationNumber: number): number {
+
+    const foundClient = this.clients.find((client) => {
+      return client.registrationNumber === registrationNumber
+    })
+
+    if (foundClient) {
+      // verificando se o usuário existe
+      return foundClient.calculateBill()
+    }
+
+    return 0;
+  }
+
+  public calculateTotalIncome(): number {
+    let TotalValue: number = 0
+    this.clients.forEach((client) => {
+      TotalValue += client.calculateBill()
+    })
+    return TotalValue
+  }
+
+  public deleteUser(registrationNumber: number): void {
+    const newClientList = this.clients.filter((client) => {
+      return client.registrationNumber !== registrationNumber
+    })
+    this.clients = newClientList
+  }
+}
+
+const newClientManager = new ClientManager()
+newClientManager.registerClient(newResidentialClient)
+newClientManager.registerClient(newComercialClient)
+newClientManager.registerClient(newIndustrialClient)
+
+console.log(newClientManager.getClientQuantity())
 
