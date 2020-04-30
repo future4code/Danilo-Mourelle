@@ -1,5 +1,5 @@
-import { Class } from "./Class";
+import { Mission } from "./Mission";
 
-export class DaytimeClass extends Class {
+export class DaytimeMission extends Mission {
   
 }

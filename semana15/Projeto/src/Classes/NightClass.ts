@@ -1,6 +1,6 @@
-import { Class } from "./Class"
+import { Mission } from "./Mission"
 
-export class NightClass extends Class {
+export class NightMission extends Mission {
   public setName(name: string) {
     if (name.includes("-na-night")) {
       super.setName(name)

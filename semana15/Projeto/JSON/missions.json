@@ -1,1 +1,222 @@
-[]
+[
+  {
+    "id": "best",
+    "startDate": "2020-01-13T03:00:00.000Z",
+    "endDate": "2020-07-27T03:00:00.000Z",
+    "name": "Sagan",
+    "studentsList": [
+      {
+        "name": "Daniel",
+        "email": "dcs@outlook.com",
+        "id": "2",
+        "birthDate": "1994-08-18T03:00:00.000Z",
+        "hobbies": [
+          "Video-game",
+          "Futebol",
+          "Finanças"
+        ]
+      },
+      {
+        "name": "Danilo",
+        "email": "danilomourelle@outlook.com",
+        "id": "1",
+        "birthDate": "1987-12-28T02:00:00.000Z",
+        "hobbies": [
+          "Séries",
+          "Filmes",
+          "Code",
+          "YouTube"
+        ]
+      }
+    ],
+    "teachersList": [
+      {
+        "name": "João",
+        "email": "joao@lbn.com",
+        "id": "10",
+        "birthDate": "1990-12-22T02:00:00.000Z",
+        "specialties": [
+          "CSS",
+          "TypeScript",
+          "Programação Orientada a Objeto"
+        ]
+      },
+      {
+        "name": "Goli",
+        "email": "goli@lbn.com",
+        "id": "2",
+        "birthDate": "1996-08-15T03:00:00.000Z",
+        "specialties": [
+          "Back-End",
+          "TypeScript",
+          "Programação Orientada a Objeto"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ok",
+    "startDate": "2020-02-17T03:00:00.000Z",
+    "endDate": "2020-09-04T03:00:00.000Z",
+    "name": "Jullian-na-night",
+    "studentsList": [
+      {
+        "name": "Daniel",
+        "email": "dcs@outlook.com",
+        "id": "2",
+        "birthDate": "1994-08-18T03:00:00.000Z",
+        "hobbies": [
+          "Video-game",
+          "Futebol",
+          "Finanças"
+        ]
+      },
+      {
+        "name": "Danilo",
+        "email": "danilomourelle@outlook.com",
+        "id": "1",
+        "birthDate": "1987-12-28T02:00:00.000Z",
+        "hobbies": [
+          "Séries",
+          "Filmes",
+          "Code",
+          "YouTube"
+        ]
+      }
+    ],
+    "teachersList": [
+      {
+        "name": "João",
+        "email": "joao@lbn.com",
+        "id": "10",
+        "birthDate": "1990-12-22T02:00:00.000Z",
+        "specialties": [
+          "CSS",
+          "TypeScript",
+          "Programação Orientada a Objeto"
+        ]
+      },
+      {
+        "name": "Goli",
+        "email": "goli@lbn.com",
+        "id": "2",
+        "birthDate": "1996-08-15T03:00:00.000Z",
+        "specialties": [
+          "Back-End",
+          "TypeScript",
+          "Programação Orientada a Objeto"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "best",
+    "startDate": "2020-01-13T03:00:00.000Z",
+    "endDate": "2020-07-27T03:00:00.000Z",
+    "name": "Sagan",
+    "studentsList": [
+      {
+        "name": "Daniel",
+        "email": "dcs@outlook.com",
+        "id": "2",
+        "birthDate": "1994-08-18T03:00:00.000Z",
+        "hobbies": [
+          "Video-game",
+          "Futebol",
+          "Finanças"
+        ]
+      },
+      {
+        "name": "Danilo",
+        "email": "danilomourelle@outlook.com",
+        "id": "1",
+        "birthDate": "1987-12-28T02:00:00.000Z",
+        "hobbies": [
+          "Séries",
+          "Filmes",
+          "Code",
+          "YouTube"
+        ]
+      }
+    ],
+    "teachersList": [
+      {
+        "name": "João",
+        "email": "joao@lbn.com",
+        "id": "10",
+        "birthDate": "1990-12-22T02:00:00.000Z",
+        "specialties": [
+          "CSS",
+          "TypeScript",
+          "Programação Orientada a Objeto"
+        ]
+      },
+      {
+        "name": "Goli",
+        "email": "goli@lbn.com",
+        "id": "2",
+        "birthDate": "1996-08-15T03:00:00.000Z",
+        "specialties": [
+          "Back-End",
+          "TypeScript",
+          "Programação Orientada a Objeto"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "ok",
+    "startDate": "2020-02-17T03:00:00.000Z",
+    "endDate": "2020-09-04T03:00:00.000Z",
+    "name": "Jullian-na-night",
+    "studentsList": [
+      {
+        "name": "Daniel",
+        "email": "dcs@outlook.com",
+        "id": "2",
+        "birthDate": "1994-08-18T03:00:00.000Z",
+        "hobbies": [
+          "Video-game",
+          "Futebol",
+          "Finanças"
+        ]
+      },
+      {
+        "name": "Danilo",
+        "email": "danilomourelle@outlook.com",
+        "id": "1",
+        "birthDate": "1987-12-28T02:00:00.000Z",
+        "hobbies": [
+          "Séries",
+          "Filmes",
+          "Code",
+          "YouTube"
+        ]
+      }
+    ],
+    "teachersList": [
+      {
+        "name": "João",
+        "email": "joao@lbn.com",
+        "id": "10",
+        "birthDate": "1990-12-22T02:00:00.000Z",
+        "specialties": [
+          "CSS",
+          "TypeScript",
+          "Programação Orientada a Objeto"
+        ]
+      },
+      {
+        "name": "Goli",
+        "email": "goli@lbn.com",
+        "id": "2",
+        "birthDate": "1996-08-15T03:00:00.000Z",
+        "specialties": [
+          "Back-End",
+          "TypeScript",
+          "Programação Orientada a Objeto"
+        ]
+      }
+    ]
+  }
+]

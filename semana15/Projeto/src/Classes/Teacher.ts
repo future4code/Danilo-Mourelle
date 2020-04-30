@@ -1,5 +1,6 @@
 import { User } from "./UserInterface";
-import moment = require("moment");import { specialty } from "../../helper/Enums";
+import moment = require("moment");
+import { specialty } from "../helper/Enums";
 
 export class Teacher implements User {
   constructor(

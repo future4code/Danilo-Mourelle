@@ -1,0 +1,1 @@
+{"version":3,"file":"NightClass.js","sourceRoot":"","sources":["../../src/Classes/NightClass.ts"],"names":[],"mappings":";;AAAA,uCAAmC;AAEnC,MAAa,YAAa,SAAQ,iBAAO;IAChC,OAAO,CAAC,IAAY;QACzB,IAAI,IAAI,CAAC,QAAQ,CAAC,WAAW,CAAC,EAAE;YAC9B,KAAK,CAAC,OAAO,CAAC,IAAI,CAAC,CAAA;SACpB;aACG;YACF,OAAO,CAAC,GAAG,CAAC,2DAA2D,CAAC,CAAA;SACzE;IACH,CAAC;CACF;AATD,oCASC"}

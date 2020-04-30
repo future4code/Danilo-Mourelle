@@ -2,14 +2,15 @@ import moment = require("moment");
 import { Student } from "./Student";
 import { Teacher } from "./Teacher";
 
-export abstract class Class {
+export abstract class Mission {
   protected name: string = ''
+  protected studentsList: Student[] = []
+  protected teachersList: Teacher[] = []
+
   constructor(
     protected id: string,
     protected startDate: moment.Moment | undefined,
     protected endDate: moment.Moment,
-    protected studentsList: Student[],
-    protected teachersList: Teacher[]
   ) { }
 
   public setName(name: string) {

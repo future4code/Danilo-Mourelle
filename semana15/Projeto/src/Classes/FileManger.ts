@@ -8,7 +8,7 @@ export class FileManager {
   }
 
   public writeFile(data: any): void {
-    fs.writeFileSync(this.filePath, JSON.stringify(data));
+    fs.writeFileSync(this.filePath, JSON.stringify(data, null, 2));
   }
 
   public readFile(): any {
@@ -17,15 +17,21 @@ export class FileManager {
   }
 }
 
-const fm = new FileManager("arquivo");
+export const teachers = new FileManager("./JSON/teachers.json");
+export const studants = new FileManager("./JSON/students.json");
+export const missions = new FileManager("./JSON/missions.json");
 
-// imprime as infos do arquivo
-console.log(fm.readFile());
 
-fm.setFilePath("outro-arquivo");
+/* // imprime as infos do arquivo
+console.log(teachers.readFile());
+
+
 
 // escreve no arquivo
-fm.writeFile({
+teachers.writeFile({
   id: "1",
   name: "Goli",
 });
+
+// imprime as infos do arquivo
+console.log(teachers.readFile()); */

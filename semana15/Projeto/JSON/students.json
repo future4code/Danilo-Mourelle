@@ -1,1 +1,25 @@
-[]
+[
+  {
+    "name": "Daniel",
+    "email": "dcs@outlook.com",
+    "id": "2",
+    "birthDate": "1994-08-18T03:00:00.000Z",
+    "hobbies": [
+      "Video-game",
+      "Futebol",
+      "Finanças"
+    ]
+  },
+  {
+    "name": "Danilo",
+    "email": "danilomourelle@outlook.com",
+    "id": "1",
+    "birthDate": "1987-12-28T02:00:00.000Z",
+    "hobbies": [
+      "Séries",
+      "Filmes",
+      "Code",
+      "YouTube"
+    ]
+  }
+]

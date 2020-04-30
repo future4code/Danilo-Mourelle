@@ -7,3 +7,9 @@ export enum specialty {
   OOP = "Programação Orientada a Objeto",
   BACKEND = "Back-End",
 }
+
+export enum databases {
+  missions = 'mission',
+  teachers = 'teachers',
+  students = 'sutdents'
+}

@@ -9,4 +9,8 @@ export class Student implements User {
     private birthDate: moment.Moment,
     public hobbies: string[]
   ) { }
+
+  getStudentAge(): number {
+    return moment().diff(this.birthDate, "years")
+  }
 }
