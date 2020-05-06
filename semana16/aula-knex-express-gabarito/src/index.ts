@@ -216,20 +216,32 @@ app.get('/movie/all', async (req: Request, res: Response) => {
   }
 })
 
+//Exercício 7
+/*
+- Deve ser um GET (`/movie/search`)
+- Deve receber o termo de busca como uma query string (`/movie/search?query=`)
+- Faz a busca entre todos os filmes que tenham o termo de busca no nome ou na sinopse. Além disso, a lista deve vir ordenada pela data de lançamento
+*/
+const searchMovieQueryBuilder = async (term: string): Promise<any> => {
+  const result = await connection('Movie').where("title", "LIKE", `%${term}%`).orWhere("synposis", "LIKE", `%${term}%`)
+
+  return result;
+};
+
+app.get('/movie/search', async (req: Request, res: Response) => {
+  try {
+    const moviesWithTerm = await searchMovieQueryBuilder(req.query.query as string)
+
+    res.status(200).send({ Movies: moviesWithTerm })
+  } catch (err) {
+    res.status(400).send({
+      message: err.message,
+    })
+  }
+})
 
 
-
-
-
-
-
-
-
-
-
-
-
-// createActor("002", "Tony Ramos", 4000000, new Date("2020-10-05"), "male");
+//Funções de apoio ja dadas
 
 const searchActor = async (name: string): Promise<any> => {
   const result = await connection.raw(`
