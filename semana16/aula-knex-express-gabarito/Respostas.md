@@ -67,4 +67,60 @@ app.get('/actor', async (req: Request, res: Response) => {
 })
 ```
 
+### Exercício 4
+a) Endpoint para atualizar o salario pelo nome do Ator
+```
+app.post("/actor", async (req: Request, res: Response) => {
+  try {
+    await updateSalaryById(
+      req.body.id,
+      req.body.salary,
+    )
 
+    res.status(200).send();
+  } catch (err) {
+    res.status(400).send({
+      message: err.message,
+    })
+  }
+})
+```
+b) Endpoint para deleta o ator pelo ID
+```
+app.delete("/actor/:id", async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id as string
+    await deleteActorById(id)
+
+    res.status(200).send();
+  } catch (err) {
+    res.status(400).send({
+      message: err.message,
+    })
+  }
+})
+```
+
+### Exercício 5
+- Deve ser um POST (`/movie`)
+- Receber todas as informações pelo body
+- Criar o filme na tabela
+```
+app.post('/movies', async (req: Request, res: Response) => {
+  try {
+    await createMovie(
+      req.body.id,
+      req.body.title,
+      req.body.synopsis,
+      new Date(req.body.releaseDate),
+      new Date(req.body.playingLimitDate)
+    )
+
+    res.status(200).send({ message: 'Ator criado com sucesso' });
+  } catch (err) {
+    res.status(400).send({
+      message: err.message,
+    })
+  }
+})
+```

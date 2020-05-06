@@ -104,7 +104,7 @@ app.get("/actor/:id", async (req: Request, res: Response) => {
   }
 });
 
-app.get('/actor?gender=', async (req: Request, res: Response) => {
+app.get('/actor', async (req: Request, res: Response) => {
   try {
     const gender = req.query.gender as string
     const quantity = countActorByGender(gender)
@@ -117,6 +117,87 @@ app.get('/actor?gender=', async (req: Request, res: Response) => {
     })
   }
 })
+
+//Exercício 4
+app.put("/actor", async (req: Request, res: Response) => {
+  try {
+    await createActor(
+      req.body.id,
+      req.body.name,
+      req.body.salary,
+      new Date(req.body.dateOfBirth),
+      req.body.salary
+    );
+
+    res.status(200).send();
+  } catch (err) {
+    res.status(400).send({
+      message: err.message,
+    });
+  }
+});
+/*
+- Deve ser um POST (`/actor`)
+- Receber o salário e o id pelo body
+- Simplesmente atualizar o salário do ator com id em questão
+*/
+app.post("/actor", async (req: Request, res: Response) => {
+  try {
+    await updateSalaryById(
+      req.body.id,
+      req.body.salary,
+    )
+
+    res.status(200).send();
+  } catch (err) {
+    res.status(400).send({
+      message: err.message,
+    })
+  }
+})
+/*
+- Deve ser um DELETE (`/actor/:id`)
+- Receber id do ator como *path param*
+- Simplesmente deletar o ator da tabela
+*/
+app.delete("/actor/:id", async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id as string
+    await deleteActorById(id)
+
+    res.status(200).send();
+  } catch (err) {
+    res.status(400).send({
+      message: err.message,
+    })
+  }
+})
+
+//Exercício 5
+/*
+- Deve ser um POST (`/movie`)
+- Receber todas as informações pelo body
+- Criar o filme na tabela
+*/
+app.post('/movies', async (req: Request, res: Response) => {
+  try {
+    await createMovie(
+      req.body.id,
+      req.body.title,
+      req.body.synopsis,
+      new Date(req.body.releaseDate),
+      new Date(req.body.playingLimitDate)
+    )
+
+    res.status(200).send({ message: 'Ator criado com sucesso' });
+  } catch (err) {
+    res.status(400).send({
+      message: err.message,
+    })
+  }
+})
+
+
 
 
 
