@@ -20,3 +20,29 @@ const countActorByGender = async (gender: string): Promise<any> => {
 ```
 
 ### Exercício 2
+a) Atualizando o salário pelo ID
+```
+const updateSalaryById = async (id:string, salary: number): Promise<any> => {
+  await connection("Actor")
+  .update({ salary})
+  .where('id',id)
+}
+```
+b) Deletar pelo ID
+```
+const deleteActorById = async (id:string): Promise<void> => {
+  await connection('Actor')
+  .delete()
+  .where('id', id)
+}
+```
+c) Busca média de salário por gênero
+```
+const averageSalaryByGender = async (gender:string): Promise<any> => {
+  const result = await connection('Actor')
+  .avg("salary")
+    .where({ gender });
+
+  return result[0];
+}
+```

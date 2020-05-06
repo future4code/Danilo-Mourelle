@@ -34,6 +34,13 @@ const connection = knex({
 
 //******** EXERCÍCIOS ********//
 //Exercicio 1
+const getActorById = async (id: string): Promise<any> => {
+  const result = await connection.raw(`
+    SELECT * FROM Actor WHERE id = '${id}'
+  `)
+
+	return result[0][0]
+}
 const getActorByName = async (name: string): Promise<any> => {
   const result = await connection.raw(`
     SELECT * FROM Actor WHERE name = '${name}'
@@ -48,30 +55,6 @@ const countActorByGender = async (gender: string): Promise<any> => {
 }
 
 //Exercício 2
-
-function getActorById(id: string) { }
-
-app.get("/actor/:id", async (req: Request, res: Response) => {
-  try {
-    const id = req.params.id;
-    const actor = await getActorById(id);
-
-    res.status(200).send(actor);
-  } catch (err) {
-    res.status(400).send({
-      message: err.message,
-    });
-  }
-});
-
-const getActorByIdRaw = async (id: string): Promise<any> => {
-  const result = await connection.raw(`
-    SELECT * FROM Actor WHERE id = '${id}'
-  `)
-
-  return result[0][0]
-}
-
 const createActor = async (
   id: string,
   name: string,
@@ -89,6 +72,47 @@ const createActor = async (
     })
     .into("Actor");
 };
+const updateSalaryById = async (id:string, salary: number): Promise<void> => {
+  await connection("Actor")
+  .update({ salary})
+  .where('id',id)
+}
+const deleteActorById = async (id:string): Promise<void> => {
+  await connection('Actor')
+  .delete()
+  .where('id', id)
+}
+const averageSalaryByGender = async (gender:string): Promise<any> => {
+  const result = await connection('Actor')
+  .avg("salary")
+    .where({ gender });
+
+  return result[0];
+}
+
+
+
+
+
+
+
+
+
+
+app.get("/actor/:id", async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const actor = await getActorById(id);
+
+    res.status(200).send(actor);
+  } catch (err) {
+    res.status(400).send({
+      message: err.message,
+    });
+  }
+});
+
+
 
 // createActor("002", "Tony Ramos", 4000000, new Date("2020-10-05"), "male");
 
@@ -99,26 +123,10 @@ const searchActor = async (name: string): Promise<any> => {
   return result;
 };
 
-const countActors = async (gender: string): Promise<any> => {
-  const result = await connection.raw(`
-    SELECT COUNT(*) as count FROM Actor WHERE gender = "${gender}"
-  `);
 
-  const count = result[0][0].count;
-  return count;
-};
 
-const updateSalary = async (id: string, salary: number): Promise<any> => {
-  await connection("Actor")
-    .update({
-      salary: salary,
-    })
-    .where("id", id);
-};
 
-const deleteActor = async (id: string): Promise<any> => {
-  await connection("Actor").delete().where("id", id);
-};
+
 
 const avgSalary = async (gender: string): Promise<any> => {
   const result = await connection("Actor")
@@ -130,6 +138,8 @@ const avgSalary = async (gender: string): Promise<any> => {
 (async () => {
   console.log(await avgSalary("female"));
 })();
+
+
 
 const createMovie = async (
   id: string,
@@ -149,6 +159,8 @@ const createMovie = async (
     .into("Movie");
 };
 
+
+
 const searchMovie = async (term: string): Promise<any> => {
   const result = await connection.raw(`
     SELECT * FROM Movie 
@@ -158,6 +170,8 @@ const searchMovie = async (term: string): Promise<any> => {
 
   return result[0];
 };
+
+
 
 app.get("/movie/search", async (req: Request, res: Response) => {
   try {
