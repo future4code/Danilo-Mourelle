@@ -1,7 +1,4 @@
-/**
- * EXPRESS
- */
-
+//******** SETUP EXPRESS E DOTENV ********//
 import express, { Request, Response } from "express";
 import { AddressInfo } from "net";
 import dotenv from "dotenv";
@@ -10,7 +7,49 @@ dotenv.config();
 
 const app = express();
 
-function getActorById(id: string) {}
+app.use(express.json());
+
+const server = app.listen(process.env.PORT || 3003, () => {
+  if (server) {
+    const address = server.address() as AddressInfo;
+    console.log(`Server is running in http://localhost:${address.port}`);
+  } else {
+    console.error(`Failure upon starting server.`);
+  }
+});
+
+//******** KNEX ********//
+import knex from "knex";
+
+const connection = knex({
+  client: "mysql",
+  connection: {
+    host: process.env.DB_HOST,
+    port: 3306,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE_NAME,
+  },
+});
+
+//******** EXERCÍCIOS ********//
+//Exercicio 1
+const getActorByName = async (name: string): Promise<any> => {
+  const result = await connection.raw(`
+    SELECT * FROM Actor WHERE name = '${name}'
+  `)
+  return result[0]
+}
+const countActorByGender = async (gender: string): Promise<any> => {
+  const result = await connection.raw(`
+    SELECT COUNT(*) as count FROM Actor WHERE gender = '${gender}'
+  `)
+  return result[0][0]
+}
+
+//Exercício 2
+
+function getActorById(id: string) { }
 
 app.get("/actor/:id", async (req: Request, res: Response) => {
   try {
@@ -25,40 +64,13 @@ app.get("/actor/:id", async (req: Request, res: Response) => {
   }
 });
 
-app.use(express.json());
+const getActorByIdRaw = async (id: string): Promise<any> => {
+  const result = await connection.raw(`
+    SELECT * FROM Actor WHERE id = '${id}'
+  `)
 
-// const server = app.listen(process.env.PORT || 3003, () => {
-//   if (server) {
-//     const address = server.address() as AddressInfo;
-//     console.log(`Server is running in http://localhost:${address.port}`);
-//   } else {
-//     console.error(`Failure upon starting server.`);
-//   }
-// });
-
-/**
- *
- * KNEX
- */
-
-import knex from "knex";
-
-const connection = knex({
-  client: "mysql",
-  connection: {
-    host: process.env.DB_HOST,
-    port: 3306,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_DATABASE_NAME,
-  },
-});
-
-// const getActorById = async (id: string): Promise<any> => {
-//   await connection.raw(`
-//     SELECT * FROM Actor WHERE id = '${id}'
-//   `);
-// };
+  return result[0][0]
+}
 
 const createActor = async (
   id: string,
