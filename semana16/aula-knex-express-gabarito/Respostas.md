@@ -102,7 +102,7 @@ app.delete("/actor/:id", async (req: Request, res: Response) => {
 ```
 
 ### Exercício 5
-- Deve ser um POST (`/movie`)
+- Deve ser um POST (\`/movie\`)
 - Receber todas as informações pelo body
 - Criar o filme na tabela
 ```
@@ -126,7 +126,7 @@ app.post('/movies', async (req: Request, res: Response) => {
 ```
 
 ### Exercício 6
-- Deve ser um GET (`/movie/all`)
+- Deve ser um GET (\`/movie/all\`)
 - Não recebe nada
 - Retorna todos os filmes. Ele deve retornar, no máximo, uma lista com 15 itens
 ```
@@ -144,8 +144,8 @@ app.get('/movie/all', async (req: Request, res: Response) => {
 ```
 
 ### Exercício 7
-- Deve ser um GET (`/movie/search`)
-- Deve receber o termo de busca como uma query string (`/movie/search?query=`)
+- Deve ser um GET (\`/movie/search\`)
+- Deve receber o termo de busca como uma query string (\`/movie/search?query=\`)
 - Faz a busca entre todos os filmes que tenham o termo de busca no nome ou na sinopse. Além disso, a lista deve vir ordenada pela data de lançamento
 *Função knex*
 ```
