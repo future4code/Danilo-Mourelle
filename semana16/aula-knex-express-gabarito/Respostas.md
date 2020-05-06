@@ -46,3 +46,25 @@ const averageSalaryByGender = async (gender:string): Promise<any> => {
   return result[0];
 }
 ```
+
+### Exercício 3
+a) Devido a fomra como esse endpoit está recebendo o input, que nesse caso é através do proprio endereço - *path param*
+b) No *try* é onde é enviado a resposta do banco juntamente com o status da consulta. No *catch* faz exatamente a mesma coisa, porém com status indicando falha e mensagem do porque falhou.
+c) EndPoint para retornar a quantidade de atores por gênero
+```
+app.get('/actor', async (req: Request, res: Response) => {
+  try {
+    const gender = req.query.gender as string
+    const quantity = countActorByGender(gender)
+
+    res.status(200).send(quantity)
+  }
+  catch (err) {
+    res.status(400).send({
+      message: err.message,
+    })
+  }
+})
+```
+
+

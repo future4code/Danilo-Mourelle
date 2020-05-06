@@ -39,7 +39,7 @@ const getActorById = async (id: string): Promise<any> => {
     SELECT * FROM Actor WHERE id = '${id}'
   `)
 
-	return result[0][0]
+  return result[0][0]
 }
 const getActorByName = async (name: string): Promise<any> => {
   const result = await connection.raw(`
@@ -72,33 +72,25 @@ const createActor = async (
     })
     .into("Actor");
 };
-const updateSalaryById = async (id:string, salary: number): Promise<void> => {
+const updateSalaryById = async (id: string, salary: number): Promise<void> => {
   await connection("Actor")
-  .update({ salary})
-  .where('id',id)
+    .update({ salary })
+    .where('id', id)
 }
-const deleteActorById = async (id:string): Promise<void> => {
+const deleteActorById = async (id: string): Promise<void> => {
   await connection('Actor')
-  .delete()
-  .where('id', id)
+    .delete()
+    .where('id', id)
 }
-const averageSalaryByGender = async (gender:string): Promise<any> => {
+const averageSalaryByGender = async (gender: string): Promise<any> => {
   const result = await connection('Actor')
-  .avg("salary")
+    .avg("salary")
     .where({ gender });
 
   return result[0];
 }
 
-
-
-
-
-
-
-
-
-
+//Exercício 3
 app.get("/actor/:id", async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
@@ -111,6 +103,29 @@ app.get("/actor/:id", async (req: Request, res: Response) => {
     });
   }
 });
+
+app.get('/actor?gender=', async (req: Request, res: Response) => {
+  try {
+    const gender = req.query.gender as string
+    const quantity = countActorByGender(gender)
+
+    res.status(200).send(quantity)
+  }
+  catch (err) {
+    res.status(400).send({
+      message: err.message,
+    })
+  }
+})
+
+
+
+
+
+
+
+
+
 
 
 
