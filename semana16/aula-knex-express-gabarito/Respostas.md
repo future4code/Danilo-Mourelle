@@ -124,3 +124,24 @@ app.post('/movies', async (req: Request, res: Response) => {
   }
 })
 ```
+
+### Exercício 6
+- Deve ser um GET (`/movie/all`)
+- Não recebe nada
+- Retorna todos os filmes. Ele deve retornar, no máximo, uma lista com 15 itens
+```
+app.get('/movie/all', async (req: Request, res: Response) => {
+  try {
+    const moviesList = await getAllMovies()
+
+    res.status(200).send({ Movies: moviesList })
+  } catch (err) {
+    res.status(400).send({
+      message: err.message,
+    })
+  }
+})
+```
+
+### Exercício 7
+

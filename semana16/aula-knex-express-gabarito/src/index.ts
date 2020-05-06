@@ -107,7 +107,7 @@ app.get("/actor/:id", async (req: Request, res: Response) => {
 app.get('/actor', async (req: Request, res: Response) => {
   try {
     const gender = req.query.gender as string
-    const quantity = countActorByGender(gender)
+    const quantity = await countActorByGender(gender)
 
     res.status(200).send(quantity)
   }
@@ -197,6 +197,25 @@ app.post('/movies', async (req: Request, res: Response) => {
   }
 })
 
+//Exercicio 6
+/*
+- Deve ser um GET (`/movie/all`)
+- Não recebe nada
+- Retorna todos os filmes. Ele deve retornar, no máximo, uma lista com 15 itens
+*/
+
+app.get('/movie/all', async (req: Request, res: Response) => {
+  try {
+    const moviesList = await getAllMovies()
+
+    res.status(200).send({ Movies: moviesList })
+  } catch (err) {
+    res.status(400).send({
+      message: err.message,
+    })
+  }
+})
+
 
 
 
@@ -222,7 +241,13 @@ const searchActor = async (name: string): Promise<any> => {
 
 
 
+const getAllMovies = async (): Promise<any> => {
+  const result = await connection.raw(`
+    SELECT * FROM Movie LIMIT 15
+  `);
 
+  return result[0];
+};
 
 const avgSalary = async (gender: string): Promise<any> => {
   const result = await connection("Actor")
@@ -234,8 +259,6 @@ const avgSalary = async (gender: string): Promise<any> => {
 (async () => {
   console.log(await avgSalary("female"));
 })();
-
-
 
 const createMovie = async (
   id: string,
