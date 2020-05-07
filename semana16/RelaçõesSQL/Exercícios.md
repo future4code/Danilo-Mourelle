@@ -51,3 +51,12 @@ INSERT INTO MovieCast VALUES ('002', '010');
 Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`sagan_danilo_db`.`MovieCast`, CONSTRAINT `MovieCast_ibfk_2` FOREIGN KEY (`actor_id`) REFERENCES `Actor` (`id`))
 ```
 Erro por não conseguir relacionar o actor_id uma vez que o valor passado não existe na tabela Actor.
+d) **Comando**
+```
+DELETE FROM Actor WHERE id='009'
+```
+**Erro**
+```
+Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (`sagan_danilo_db`.`MovieCast`, CONSTRAINT `MovieCast_ibfk_2` FOREIGN KEY (`actor_id`) REFERENCES `Actor` (`id`))
+```
+Erro por não poder remover uma linha com relação parental com outra tabela.
