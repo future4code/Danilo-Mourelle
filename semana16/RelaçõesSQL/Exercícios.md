@@ -81,7 +81,7 @@ SELECT * FROM Movies
 INNER JOIN Rating ON Movies.id = Rating.movie_id;
 ```
 Seleciona tudo da tabela *Movies* juntamente com a tabela *Rating*, juntando dados onde o valor da coluna ID de Movies se encontra no movie_id de Rating.
-Operador ```ON``` é o que vai fazer a comparação da *FOREIGN KEY*.
+Operador ```ON``` é o que vai fazer a comparação da ```FOREIGN KEY```.
 b) **Comando**
 ```
 SELECT m.name as Nome, m.id as ID, r.rate as Rate FROM Movies m 
@@ -105,3 +105,61 @@ SELECT AVG(r.rate), m.name FROM Movies m
 LEFT JOIN Rating r ON m.id = r.movie_id GROUP BY m.id;
 ```
 
+### Exercício 5
+a) É uma estrutura de pipeline, onde o primeiro ```JOIN``` relaciona a primeira tabela independente com a tabela de junção, gerando uma tabela resultante e o segundo ```JOIN``` relaciona essa tabela resultande com a outra tabela independente.
+b) **Comando**
+```
+SELECT m.id as Movie_ID, m.name as Título, a.id as Actor_ID, a.name as Ator FROM Movies m
+LEFT JOIN MovieCast mc ON m.id = mc.movie_id
+JOIN Actor a ON a.id = mc.actor_id;
+```
+c)**Comando**
+```
+SELECT m.id as movie_id, m,title, a.id as actor_id, a.name FROM Movies m
+LEFT JOIN MovieCast mc ON m.id = mc.movie_id
+JOIN Actor a ON a.id = mc.actor_id;
+```
+**Erro**
+```
+Error Code: 1054. Unknown column 'm' in 'field list'
+```
+Não sei se era esse o erro que deveria reportar, mas é o ```m,title``` que falhou por tem uma ```,``` no lugar de ```.```
+d)**Comando**
+```
+SELECT m.id as Movie_ID, m.name as Título, a.id as Actor_ID, a.name as Ator, r.rate as Nota, r.comment as Cometário 
+FROM Movies m
+LEFT JOIN MovieCast mc ON m.id = mc.movie_id
+JOIN Actor a ON a.id = mc.actor_id
+JOIN Rating r ON m.id = r.movie_id
+```
+
+### Exercício 6
+a) O tipo da relação é N:N, uma vez que um filme pode ganhar mais de 1 oscar, e esse oscar pode ser ganho por mais de um filme (desde que em anos distintos)
+b) **Comando**
+```
+CREATE TABLE Oscars (
+  id VARCHAR(255) PRIMARY KEY,
+  oscar_name VARCHAR(255) NOT NULL,
+)
+```
+Para criar a tabelas com os tipos de oscar e um id para servir de chave primária, embora o próprio nome servisse uma vez que não há prêmios de mesmo nome.
+c) **Comando**
+```
+INSERT INTO OscarsWinners VALUES ('001', '002', 2020);
+INSERT INTO OscarsWinners VALUES ('001', '003', 2020);
+INSERT INTO OscarsWinners VALUES ('002', '001', 2012);
+INSERT INTO OscarsWinners VALUES ('002', '005', 2012);
+INSERT INTO OscarsWinners VALUES ('003', '004', 2003);
+INSERT INTO OscarsWinners VALUES ('003', '003', 2003);
+INSERT INTO OscarsWinners VALUES ('004', '001', 2000);
+INSERT INTO OscarsWinners VALUES ('004', '004', 2000);
+INSERT INTO OscarsWinners VALUES ('005', '003', 2003);
+INSERT INTO OscarsWinners VALUES ('005', '005', 2003);
+```
+d) **Comando**
+```
+SELECT m.name as Filme, o.oscar_name as Oscar, ow.year as Ano 
+FROM Movies m
+LEFT JOIN OscarsWinners ow ON m.id = ow.movie_id
+JOIN Oscars o ON ow.oscar_id = o.id;
+```
