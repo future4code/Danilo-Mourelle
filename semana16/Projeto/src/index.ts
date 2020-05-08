@@ -14,6 +14,7 @@ const connection = knex({
     database: process.env.DB_DATABASE_NAME,
   },
 });
+
 //******** SETUP EXPRESS ********//
 import express, { Request, Response } from "express";
 import { AddressInfo } from "net";
