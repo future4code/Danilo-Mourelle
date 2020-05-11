@@ -16,11 +16,15 @@ export class UserDataBase {
 
   private static TABLE_NAME: string = 'User'
 
-  public async createUser(id: string, password: string, email: string): Promise<void> {
+  public async createUser(id: string, email: string, password: string): Promise<void> {
     await this.connection()
       .insert({ id, email, password }).into(UserDataBase.TABLE_NAME)
   }
-}
 
-const userDatabase = new UserDataBase()
-await userDatabase.createUser('001', '1a2b3c', 'algum@email.com')
+  public async getUserByEmail (email: string): Promise<any> {
+    const result = await this.connection()
+    .select('*').from(UserDataBase.TABLE_NAME).where({email})
+
+    return result [0]
+  }
+}
