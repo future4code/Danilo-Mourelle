@@ -117,14 +117,6 @@ export class Autorizer{
     )
     return token
   }
-  public getData(token:string): AuthenticationData {
-    const payload = jwt.verify(
-      token,
-      process.env.JWT_KEY as string
-    ) as any
-
-    return ({ id: payload.id})
-  }
 }
 interface AuthenticationData {
   id: string
@@ -328,7 +320,7 @@ app.post('/login', async (req: Request, res: Response) => {
       email: req.body.email,
       password: req.body.password
     }
-    
+
    if( data.email === '' || !data.email.icludes('@')){
       throw new Error ('Este email não é válido')
     }
@@ -344,6 +336,132 @@ app.post('/login', async (req: Request, res: Response) => {
     const token = autorizer.generateToken({id: user.id})
 
     res.status(200).send({ token })
+  } catch (err) {
+    res.status(400).send({ message: err.message })
+  }
+})
+```
+
+### Exercício 7
+```TypeScript
+const expiresIn = "1min";
+
+const getData = (token: string): AuthenticationData => {
+  const payload = jwt.verify(token, process.env.JWT_KEY as string) as any;
+  const result = {
+    id: payload.id,
+  };
+  return result;
+};
+```
+
+a) *O que a linha ```as any``` faz? Por que precisamos usá-la ali?*
+Porque nós realmente não temos ideia do que foi inserido no payloado no momento da geração do token, portanto, o retorno dele se enquadra em qualquer coisa mesmo.
+
+b) *Altere a sua classe do JWT para que ela tenha um método que realize a mesma funcionalidade da função acima*
+```TypeScript
+export class Autorizer{
+  public generateToken(payload: AuthenticationData): string {
+    const token = jwt.sign(
+      {
+        id: payload.id
+      },
+      process.env.JWT_KEY as string
+    )
+    return token
+  }
+
+  public getData(token:string): AuthenticationData {
+    const payload = jwt.verify(
+      token,
+      process.env.JWT_KEY as string
+    ) as any
+
+    return ({ id: payload.id})
+  }
+}
+
+interface AuthenticationData {
+  id: string
+}
+```
+
+### Exercício 8 
+Agora, vamos criar um endpoint que retorne as informações do usuário logado. As especificações dele estão abaixo:
+
+- *Verbo/Método*: GET
+- *Path*: `/user/profile`
+- *Input:* Deve receber, nos headers, o token de autenticação:
+
+    ```
+    Authorization: token.do.usuario
+    ```
+
+- *Output*: O body da resposta deve ser
+
+    ```json
+    {
+    	"id": "id do usuário",
+    	"email": "email do usuário"
+    }
+    ```
+
+a) *Comece alterando a classe do banco de dados para que ela tenha um método que retorne o usuário a partir do id*
+```TypeScript
+export class UserDataBase {
+  private connection() {
+    return knex({
+      client: "mysql",
+      connection: {
+        host: process.env.DB_HOST,
+        port: 3306,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE_NAME,
+      },
+    });
+  }
+
+  private static TABLE_NAME: string = 'User'
+
+  public async createUser(id: string, email: string, password: string): Promise<void> {
+    await this.connection()
+      .insert({ id, email, password }).into(UserDataBase.TABLE_NAME)
+  }
+
+  public async getUserByEmail (email: string): Promise<any> {
+    const result = await this.connection()
+    .select('*').from(UserDataBase.TABLE_NAME).where({email})
+
+    return result [0]
+  }
+
+  public async getUserById (id:string): Promise<any> {
+    const result = await this.connection().raw(`
+      SELECT * FROM ${UserDataBase.TABLE_NAME} WHERE id="${id}"
+    `)
+
+    return result[0][0]
+  }
+}
+```
+
+b) *Crie o endpoint com as especificações passadas*
+```TypeScript
+app.get('/user/profile', async (req: Request, res: Response) => {
+  try {
+    const token = req.headers.authorization as string
+    
+    const autorizer = new Autorizer()
+    const userPayload = autorizer.getData(token)
+
+    const userdatabase = new UserDataBase()
+    const userData = await userdatabase.getUserById(userPayload.id)
+
+    res.status(200).send({ 
+      id: userPayload.id,
+      email: userData.email
+     })
   } catch (err) {
     res.status(400).send({ message: err.message })
   }

@@ -27,4 +27,12 @@ export class UserDataBase {
 
     return result [0]
   }
+
+  public async getUserById (id:string): Promise<any> {
+    const result = await this.connection().raw(`
+      SELECT * FROM ${UserDataBase.TABLE_NAME} WHERE id="${id}"
+    `)
+
+    return result[0][0]
+  }
 }

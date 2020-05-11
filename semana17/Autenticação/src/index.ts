@@ -79,6 +79,30 @@ app.post('/login', async (req: Request, res: Response) => {
   }
 })
 
+/*
+ - GET (/user/profile)
+ - Input no header com o token vindo do login
+ - Output no body com email e password
+ */
+app.get('/user/profile', async (req: Request, res: Response) => {
+  try {
+    const token = req.headers.authorization as string
+    
+    const autorizer = new Autorizer()
+    const userPayload = autorizer.getData(token)
+
+    const userdatabase = new UserDataBase()
+    const userData = await userdatabase.getUserById(userPayload.id)
+
+    res.status(200).send({ 
+      id: userPayload.id,
+      email: userData.email
+     })
+  } catch (err) {
+    res.status(400).send({ message: err.message })
+  }
+})
+
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {
     const address = server.address() as AddressInfo;
