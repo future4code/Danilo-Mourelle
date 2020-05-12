@@ -9,7 +9,7 @@ const result = await bcrypt.hash(s, salt);
 console.log("encrypted message: ", result);
 ```
 
-a) *O que são os ```round``` e ```salt```? Que valores são recomendados para o ```round```? Que valor você usou? Por quê?*
+a) *O que são os `round` e `salt`? Que valores são recomendados para o `round`? Que valor você usou? Por quê?*
 Round seriaa quantidade de vezes que a criptografia irá rodar recursivamente. Salt é uma string aleatória gerada no processo que serve para informar a criptografia e o round usado, assim como para dificultar a formação re **rainbow tables.** O melhor número para se utilizar em rounds é a quantidade máxima que seu sistema possa rodar sem que impeça funcionamento adequado de outros componentes.
 
 b) *Instale o bcryptjs no seu projeto e comece criando a classe HashManager. Por ora, implemente a função que **criptografe** uma string usando o bcryptjs.*
@@ -131,7 +131,7 @@ a) *Altere a sua tabela de usuários para ela possuir uma coluna role. Considere
 ALTER TABLE User ADD role VARCHAR(255) NOT NULL DEFAULT 'normal';
 ```
 
-b) *Altere a interface ```AuthenticationData``` e ```Authenticator``` para representarem esse novo tipo no token.*
+b) *Altere a interface `AuthenticationData` e `Authenticator` para representarem esse novo tipo no token.*
 ```Typescript
 import * as jwt from 'jsonwebtoken'
 
@@ -167,7 +167,100 @@ interface AuthenticationData {
 ```
 
 c) *Altere o cadastro para receber o tipo do usuário e criar o token com essa informação*
+```Typescript
+try {
+  const data = {
+    email: req.body.email,
+    password: req.body.password,
+    role: req.body.role
+  }
+  console.log(data)
+  if (data.email === '' || !data.email.includes('@')) {
+    throw new Error('Este email não é válido')
+  }
+  if (data.password.length < 6) {
+    throw new Error('Senha menor que 6 caracteres')
+  }
+
+  const idGenerator = new IdGenerator()
+  const id = idGenerator.generate()
+
+  const hashManager = new HashManager()
+  const hash = await hashManager.generateHash(data.password)
+
+  const userdatabase = new UserDataBase()
+  await userdatabase.createUser(id, data.email, hash, data.role)
+
+  const autorizer = new Autorizer()
+  const token = autorizer.generateToken({
+    id,
+    role: data.role
+  })
+
+  res.status(200).send({ token })
+} catch (err) {
+  res.status(400).send({ message: err.message })
+}
+
 ```
 
-
 d) *Altere o login para crair o token com o role do usuário*
+```Typescript
+try {
+  const data = {
+    email: req.body.email,
+    password: req.body.password
+  }
+
+  if (data.email === '' || !data.email.includes('@')) {
+    throw new Error('Este email não é válido')
+  }
+
+  const userdatabase = new UserDataBase()
+  const user = await userdatabase.getUserByEmail(data.email)
+
+  const hashManager = new HashManager()
+  const isPasswordCorrect = await hashManager.compare(data.password, user.password)
+
+  if (!isPasswordCorrect) {
+    throw new Error("Senha inválida")
+  }
+
+  const autorizer = new Autorizer()
+  const token = autorizer.generateToken({
+    id: user.id,
+    role: user.role
+  })
+
+  res.status(200).send({ token })
+} catch (err) {
+  res.status(400).send({ message: err.message })
+}
+```
+
+### Exercício 4
+Agora, vamos usar esse `role` no endpoint `/user/profile`. Somente o usuários "normais" podem acessar esse endpoint.
+
+a) *Altere o endpoint para que retorne um erro de Unauthorized para os usuários que "não sejam normais" e tentem acessar esse endpoint* 
+```Typescript
+try {
+  const token = req.headers.authorization as string
+  
+  const autorizer = new Autorizer()
+  const userPayload = autorizer.getData(token)
+
+  if(userPayload.role !=="normal"){
+    throw new Error ('Access Denied')
+  }
+  const userdatabase = new UserDataBase()
+  const userData = await userdatabase.getUserById(userPayload.id)
+
+  res.status(200).send({ 
+    id: userData.id,
+    email: userData.email,
+    role: userData.role
+    })
+} catch (err) {
+  res.status(400).send({ message: err.message })
+}
+```
