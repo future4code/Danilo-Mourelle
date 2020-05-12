@@ -16,9 +16,9 @@ export class UserDataBase {
 
   private static TABLE_NAME: string = 'User'
 
-  public async createUser(id: string, email: string, password: string): Promise<void> {
+  public async createUser(id: string, email: string, password: string, role?:string): Promise<void> {
     await this.connection()
-      .insert({ id, email, password }).into(UserDataBase.TABLE_NAME)
+      .insert({ id, email, password, role }).into(UserDataBase.TABLE_NAME)
   }
 
   public async getUserByEmail (email: string): Promise<any> {

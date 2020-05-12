@@ -122,3 +122,52 @@ app.post('/login', async (req: Request, res: Response) => {
 
 d) *No exercício de ontem, nós criamos o endpoint user/profile. Também temos que modificar esse endpoint devido à adição da criptografia? Justifique.*
 Não será necessário uma vez que o endpoint necessita da autorização do token para realizar as suas funções e como o token é obtido durante o processo de login, o passo da verificação da criptografia já foi realizada.
+
+### Exercício 3 
+Agora, vamos pensar em um pouco nas funcionalidades relacionadas aos tipos de usuário. Para isso, vamos ter que fazer umas modificações no banco de dados.
+
+a) *Altere a sua tabela de usuários para ela possuir uma coluna role. Considere que pode assumir os valores normal  e admin. Coloque normal como valor padrão.*
+```SQL
+ALTER TABLE User ADD role VARCHAR(255) NOT NULL DEFAULT 'normal';
+```
+
+b) *Altere a interface ```AuthenticationData``` e ```Authenticator``` para representarem esse novo tipo no token.*
+```Typescript
+import * as jwt from 'jsonwebtoken'
+
+export class Autorizer{
+  public generateToken(payload: AuthenticationData): string {
+    const token = jwt.sign(
+      {
+        id: payload.id,
+        role: payload.role
+      },
+      process.env.JWT_KEY as string
+    )
+    return token
+  }
+
+  public getData(token:string): AuthenticationData {
+    const payload = jwt.verify(
+      token,
+      process.env.JWT_KEY as string
+    ) as any
+
+    return ({ 
+      id: payload.id,
+      role: payload.role
+    })
+  }
+}
+
+interface AuthenticationData {
+  id: string
+  role:string
+}
+```
+
+c) *Altere o cadastro para receber o tipo do usuário e criar o token com essa informação*
+```
+
+
+d) *Altere o login para crair o token com o role do usuário*
