@@ -18,7 +18,7 @@ export const singupEP = async (req: Request, res: Response) => {
       password: req.body.password,
       role: req.body.role
     }
-    console.log(data)
+    
     if (data.email === '' || !data.email.includes('@')) {
       throw new Error('Este email não é válido')
     }
