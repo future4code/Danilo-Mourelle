@@ -59,7 +59,7 @@ app.post('/login', async (req: Request, res: Response) => {
       password: req.body.password
     }
     
-   if( data.email === '' || !data.email.icludes('@')){
+   if( data.email === '' || !data.email.includes('@')){
       throw new Error ('Este email não é válido')
     }
 
@@ -87,7 +87,7 @@ app.post('/login', async (req: Request, res: Response) => {
 app.get('/user/profile', async (req: Request, res: Response) => {
   try {
     const token = req.headers.authorization as string
-    
+    console.log(req.headers)
     const autorizer = new Autorizer()
     const userPayload = autorizer.getData(token)
 
