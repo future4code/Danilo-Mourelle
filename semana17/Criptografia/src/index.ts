@@ -4,6 +4,7 @@ import { AddressInfo } from "net";
 import { IdGenerator } from "./services/IdGenerator";
 import { Autorizer } from "./services/Autorizer";
 import { UserDataBase } from "./data/UserDatabase";
+import { HashManager } from "./services/HashManager";
 
 dotenv.config();
 
@@ -35,8 +36,11 @@ app.post('/signup', async (req: Request, res: Response) => {
     const idGenerator = new IdGenerator()
     const id = idGenerator.generate()
 
+    const hashManager = new HashManager()
+    const hash = await hashManager.generateHash(data.password)
+
     const userdatabase = new UserDataBase()
-    await userdatabase.createUser(id, data.email, data.password)
+    await userdatabase.createUser(id, data.email, hash)
 
     const autorizer = new Autorizer()
     const token = autorizer.generateToken({id})
@@ -65,8 +69,11 @@ app.post('/login', async (req: Request, res: Response) => {
   
     const userdatabase = new UserDataBase()
     const user = await userdatabase.getUserByEmail(data.email)
+  
+    const hashManager = new HashManager()
+    const isPasswordCorrect = await hashManager.compare(data.password, user.password)
 
-    if(user.password !== data.password){
+    if(!isPasswordCorrect){
       throw new Error ("Senha inválida")
     }
 
