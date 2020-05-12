@@ -135,25 +135,22 @@ b) *Altere a interface `AuthenticationData` e `Authenticator` para representarem
 ```Typescript
 import * as jwt from 'jsonwebtoken'
 
-export class Autorizer{
+export class Autorizer {
   public generateToken(payload: AuthenticationData): string {
     const token = jwt.sign(
-      {
-        id: payload.id,
-        role: payload.role
-      },
+      payload,
       process.env.JWT_KEY as string
     )
     return token
   }
 
-  public getData(token:string): AuthenticationData {
+  public getData(token: string): AuthenticationData {
     const payload = jwt.verify(
       token,
       process.env.JWT_KEY as string
     ) as any
 
-    return ({ 
+    return ({
       id: payload.id,
       role: payload.role
     })
@@ -162,7 +159,7 @@ export class Autorizer{
 
 interface AuthenticationData {
   id: string
-  role:string
+  role: string
 }
 ```
 
@@ -263,4 +260,124 @@ try {
 } catch (err) {
   res.status(400).send({ message: err.message })
 }
+```
+
+### Exercício 5
+Implemente o endpoint que realizará a deleção de um usuário. As especificações são:
+
+- *Verbo/Método*: **DELETE**
+- *Path:* `/user/:id`
+- Somente admins podem acessar esse endpoint
+
+```Typescript
+...
+  public async deleteUserById (id:string): Promise<void> {
+    await this.connection()
+    .delete().from(UserDataBase.TABLE_NAME).where({id})
+  }
+...
+```
+```Typescript
+export const deleteUserByIdEP = async (req: Request, res: Response) => {
+try {
+  const data = {
+    token: req.headers.authorization as string,
+    id: req.params.id
+  }
+
+  const autorizer = new Autorizer()
+  const userPayload = autorizer.getData(data.token)
+
+  if (userPayload.role !== 'admin') {
+    throw new Error('Access Denied')
+  }
+
+  const userdatabase = new UserDataBase()
+  await userdatabase.deleteUserById(data.id)
+
+  res.sendStatus(200)
+} 
+catch (err) {
+  res.status(400).send({
+    message: err.message,
+  });
+} 
+}
+```
+
+### Exercício 6
+Implemente o endpoint que retorne as informações (id e email) de um usuário a partir do seu id. As especificações são:
+
+- *Verbo/Método*: **GET**
+- *Path:* `/user/:id`
+- Tanto admins como usuários normais conseguem usar essa funcionalidade
+
+```Typescript
+try {
+  const data = {
+    token: req.headers.authorization as string,
+    id: req.params.id
+  }
+
+  const autorizer = new Autorizer()
+  const userPayload = autorizer.getData(data.token)
+
+  const userdatabase = new UserDataBase()
+  const userData = await userdatabase.getUserById(data.id)
+
+  res.status(200).send({
+    id: userData.id,
+    email: userData.email,
+    role: userData.role,
+  });
+}
+catch (err) {
+  res.status(400).send({ message: err.message })
+}
+  ```
+
+### Exercício 7
+  Para encerrar, vamos introduzir uma nova classe na nossa aplicação: `BaseDatabase`. Ela deve ser usada como classe pai de todas aquelas que se comunicam com o banco de dados. Seguem as suas especificações:
+
+- Deve ser uma classe abstrata,
+- Deve possuir um método `static` que retorne a `connection` da classe (ou seja a variável com as configurações necessárias para a comunicação com o banco)
+- Deve possuir um método `static` chamado `destroyConnection`, que deve encerrar a conexão com o banco de dados
+
+a) *Implemente essa classe e faça com que o `UserDatabase` a implemente. Faça todas as alterações necessárias nessa classe.*
+```Typescript
+export abstract class BaseDataBase {
+
+  private static CONNECTION_KNEX: Knex | null = null
+
+  protected connection() {
+    if (BaseDataBase.CONNECTION_KNEX === null) {
+      BaseDataBase.CONNECTION_KNEX = knex({
+        client: "mysql",
+        connection: {
+          host: process.env.DB_HOST,
+          port: 3306,
+          user: process.env.DB_USER,
+          password: process.env.DB_PASSWORD,
+          database: process.env.DB_DATABASE_NAME,
+        },
+      });
+    }
+
+    return BaseDataBase.CONNECTION_KNEX
+  }
+
+  public static async destroyConnection() {
+    if (BaseDataBase.CONNECTION_KNEX !== null) {
+      await BaseDataBase.CONNECTION_KNEX.destroy()
+      BaseDataBase.CONNECTION_KNEX = null
+    }
+  }
+}
+```
+
+b) *Utilize o método `destroyConnection` nos momentos oportunos (vulgo, no final dos endpoints)*
+```Typescript
+ finally {
+    await BaseDataBase.destroyConnection()
+  }
 ```

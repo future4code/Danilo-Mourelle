@@ -42,7 +42,8 @@ export const singupEP = async (req: Request, res: Response) => {
     })
 
     res.status(200).send({ token })
-  } catch (err) {
+  } 
+  catch (err) {
     res.status(400).send({ message: err.message })
   }
   finally {

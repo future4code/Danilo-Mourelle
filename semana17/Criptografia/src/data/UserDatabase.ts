@@ -35,4 +35,9 @@ export class UserDataBase {
 
     return result[0][0]
   }
+
+  public async deleteUserById (id:string): Promise<void> {
+    await this.connection()
+    .delete().from(UserDataBase.TABLE_NAME).where({id})
+  }
 }

@@ -8,6 +8,8 @@ import { HashManager } from "./services/HashManager";
 import { loginEP } from "./endpoints/login";
 import { singupEP } from "./endpoints/singup";
 import { userProfileEP } from "./endpoints/userProfile";
+import { deleteUserByIdEP } from "./endpoints/deleteUserID";
+import { userByIdEP } from "./endpoints/userById";
 
 dotenv.config();
 
@@ -20,6 +22,9 @@ app.post('/signup', singupEP)
 app.post('/login', loginEP)
 
 app.get('/user/profile', userProfileEP)
+app.get("/user/:id", userByIdEP)
+
+app.delete('/user/:id', deleteUserByIdEP)
 
 const server = app.listen(process.env.PORT || 3003, () => {
   if (server) {
