@@ -1,4 +1,7 @@
 import knex from 'knex'
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export class UserDataBase {
   private connection() {
@@ -16,9 +19,9 @@ export class UserDataBase {
 
   private static TABLE_NAME: string = 'User'
 
-  public async createUser(id: string, email: string, password: string, role?:string): Promise<void> {
+  public async createUser(id: string, name: string, email: string, password: string, role?:string): Promise<void> {
     await this.connection()
-      .insert({ id, email, password, role }).into(UserDataBase.TABLE_NAME)
+      .insert({ id, email, password, role, name }).into(UserDataBase.TABLE_NAME)
   }
 
   public async getUserByEmail (email: string): Promise<any> {
