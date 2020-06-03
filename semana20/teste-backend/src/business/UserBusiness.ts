@@ -73,4 +73,19 @@ export class UserBusiness {
 
     return { accessToken };
   }
+
+  public async getUserById(id: string) {
+    const user = await this.userDatabase.getUserById(id)
+
+    if(!user) {
+      throw new NotFoundError('User not Found!!')
+    }
+
+    return {
+      id: user.getId(),
+      name: user.getName(),
+      email: user.getEmail(),
+      role: user.getRole()
+    }
+  }
 }
