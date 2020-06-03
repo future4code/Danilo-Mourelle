@@ -37,7 +37,7 @@ export class UserController {
     }
   }
 
-  public async getProfile(req: Request, res: Response) {
+  public async getUserById(req: Request, res: Response) {
     const id = req.params.id
 
     try {
@@ -47,4 +47,27 @@ export class UserController {
       res.status(err.errorCode || 400).send({ message: err.message });
     }
   }
+
+  public async getAllUsers(req: Request, res: Response) {
+    const token = req.headers.authorization as string
+
+    try {
+      const result = await UserController.UserBusiness.getAllUsers(token)
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+  }
+
+  public async getProfile(req: Request, res: Response) {
+    const token = req.headers.authorization as string
+
+    try {
+      const result = await UserController.UserBusiness.getProfile(token)
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+  }
 }
+

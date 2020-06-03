@@ -1,10 +1,11 @@
 import { UserDatabase } from "../data/UserDatabase";
-import { User, stringToUserRole } from "../model/User";
+import { User, stringToUserRole, UserRole } from "../model/User";
 import { IdGenerator } from "../services/idGenerator";
 import { HashGenerator } from "../services/hashGenerator";
 import { TokenGenerator } from "../services/tokenGenerator";
 import { NotFoundError } from "../errors/NotFoundError";
 import { InvalidParameterError } from "../errors/InvalidParameterError";
+import { UnauthorizedError } from "../errors/UnauthorizedError";
 
 export class UserBusiness {
   constructor(
@@ -12,7 +13,7 @@ export class UserBusiness {
     private hashGenerator: HashGenerator,
     private tokenGenerator: TokenGenerator,
     private idGenerator: IdGenerator
-  ) {}
+  ) { }
 
   public async signup(
     name: string,
@@ -77,7 +78,41 @@ export class UserBusiness {
   public async getUserById(id: string) {
     const user = await this.userDatabase.getUserById(id)
 
-    if(!user) {
+    if (!user) {
+      throw new NotFoundError('User not Found!!')
+    }
+
+    return {
+      id: user.getId(),
+      name: user.getName(),
+      email: user.getEmail(),
+      role: user.getRole()
+    }
+  }
+
+  public async getAllUsers(token: string) {
+    const userData = this.tokenGenerator.verify(token)
+
+    if (stringToUserRole(userData.role) !== UserRole.ADMIN) {
+      throw new UnauthorizedError("You can't do this pall")
+    }
+
+    const userList = await this.userDatabase.getAllUsers()
+
+    return userList.map((user) => ({
+      id: user.getId(),
+      name: user.getName(),
+      email: user.getEmail(),
+      role: user.getRole()
+    }))
+  }
+
+  public async getProfile(token: string) {
+    const userData = this.tokenGenerator.verify(token)
+
+    const user = await this.userDatabase.getUserById(userData.id)
+
+    if (!user) {
       throw new NotFoundError('User not Found!!')
     }
 

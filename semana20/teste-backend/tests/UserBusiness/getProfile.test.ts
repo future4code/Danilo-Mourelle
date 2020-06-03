@@ -1,14 +1,17 @@
 import { UserBusiness } from "../../src/business/UserBusiness";
 import { User, UserRole, stringToUserRole } from "../../src/model/User";
 
-describe("Testing UserBusiness.getUserById", () => {
+describe("Testing UserBusiness.getProfile", () => {
   let userDatabase = {};
   let hashGenerator = {};
   let tokenGenerator = {};
   let idGenerator = {};
 
   test("Should return 'User not Found!!' when user doesn't exist", async () => {
-    expect.assertions(3);
+    expect.assertions(4);
+
+    const verify = jest.fn((token: string) => ({ id: "Any value", role: "NORMAL" }))
+    tokenGenerator = { verify }
 
     const getUserById = jest.fn((id: string) => undefined)
     userDatabase = { getUserById }
@@ -21,15 +24,19 @@ describe("Testing UserBusiness.getUserById", () => {
         idGenerator as any
       );
 
-      await userBusiness.getUserById("001")
+      await userBusiness.getProfile('token')
     } catch (err) {
       expect(err.errorCode).toBe(404);
       expect(err.message).toBe('User not Found!!');
-      expect(getUserById).toHaveBeenCalledWith("001")
+      expect(verify).toHaveBeenCalledWith("token")
+      expect(getUserById).toHaveBeenCalledWith("Any value")
     }
   });
 
   test("Should return a user found", async () => {
+    const verify = jest.fn((token: string) => ({ id: "35b62ff4-64af-4721-a4c5-d038c6f730cf", role: "ADMIN" }))
+    tokenGenerator = { verify }
+
     const getUserById = jest.fn((id: string) => new User(
       "35b62ff4-64af-4721-a4c5-d038c6f730cf",
       "Astrodev",
@@ -47,8 +54,9 @@ describe("Testing UserBusiness.getUserById", () => {
       idGenerator as any
     );
 
-    const result = await userBusiness.getUserById("35b62ff4-64af-4721-a4c5-d038c6f730cf");
+    const result = await userBusiness.getProfile('token');
 
+    expect(verify).toHaveBeenCalledWith("token")
     expect(getUserById).toHaveBeenCalledWith("35b62ff4-64af-4721-a4c5-d038c6f730cf")
     expect(result).toEqual({
       id: "35b62ff4-64af-4721-a4c5-d038c6f730cf",
