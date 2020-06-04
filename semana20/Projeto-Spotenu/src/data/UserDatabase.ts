@@ -1,14 +1,24 @@
 import { BaseDatabase } from "./BaseDatabase";
-import { User } from "../models/User";
+import { User, stringToUserType } from "../models/User";
 
 export class UserDatabase extends BaseDatabase {
-  private static TABLE_NAME = "User";
+  tableName: string = "Spotenu_Users";
+
 
   private toModel(dbModel?: any): User | undefined {
     return (
       dbModel &&
-      new User(dbModel.id, dbModel.name, dbModel.email, dbModel.password)
-    );
+      new User(
+        dbModel.id,
+        dbModel.name,
+        dbModel.nickname,
+        dbModel.email,
+        dbModel.password,
+        stringToUserType(dbModel.type),
+        super.convertTinyintToBoolean(dbModel.active),
+        dbModel.description
+      )
+    )
   }
 
   public async createUser(user: User): Promise<void> {
@@ -16,16 +26,20 @@ export class UserDatabase extends BaseDatabase {
       .insert({
         id: user.getId(),
         name: user.getName(),
+        nickname: user.getNickname(),
         email: user.getEmail(),
         password: user.getPassword(),
+        type: user.getType(),
+        active: super.convertBooleanToTinyint(user.getIsActive()),
+        description: user.getDescription()
       })
-      .into(UserDatabase.TABLE_NAME);
+      .into(this.tableName);
   }
 
   public async getUserEmail(email: string): Promise<User | undefined> {
     const result = await this.setConnection()
       .select("*")
-      .from(UserDatabase.TABLE_NAME)
+      .from(this.tableName)
       .where({ email });
 
     return this.toModel(result[0]);
@@ -34,7 +48,7 @@ export class UserDatabase extends BaseDatabase {
   public async getUserId(id: string): Promise<User | undefined> {
     const result = await this.setConnection()
       .select("*")
-      .from(UserDatabase.TABLE_NAME)
+      .from(this.tableName)
       .where({ id });
 
     return this.toModel(result[0]);

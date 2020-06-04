@@ -2,11 +2,10 @@ import dotenv from "dotenv";
 import { AddressInfo } from "net";
 import express from "express";
 import { userRouter } from "./router/UserRouter";
-import { UserController } from "./controller/UserController";
 import { postRouter } from "./router/PostRouter";
-import { friendshipRouter } from "./router/FriendshipRouter";
 
 dotenv.config();
+
 const app = express();
 app.use(express.json());
 
@@ -20,12 +19,6 @@ const server = app.listen(process.env.PORT || 3003, () => {
 });
 
 app.use("/user", userRouter);
-app.use("/post/", postRouter);
-app.use("/", friendshipRouter);
+app.use("/post", postRouter);
 
-// app.post("/friendrequest", createFriendship);
 
-// app.post("/createpost", createPost);
-
-// app.get("/post/feed", getPostsFriends);
-// app.get("/post/feedtype", getPostsType);

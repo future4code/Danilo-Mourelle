@@ -1,22 +1,39 @@
 import { Request, Response } from "express";
 import { UserBusiness } from "../business/UserBusiness";
-import { IdGenerator } from "../services/IdGenerator";
 import { TokenManager } from "../services/TokenManager";
+import { UserDatabase } from "../data/UserDatabase";
+import { HashManager } from "../services/HashManager";
+import { IdManager } from "../services/IdManager";
 
 export class UserController {
-  async signup(req: Request, res: Response) {
+  private static UserBusiness = new UserBusiness(
+    new UserDatabase(),
+    new HashManager(),
+    new TokenManager(),
+    new IdManager
+  )
+
+  async signupBand(req: Request, res: Response) {
     try {
-      const { email, password, name } = req.body;
+      const {
+        name,
+        nickname,
+        email,
+        password,
+        description
+      } = req.body;
 
-      const id = new IdGenerator().generateId();
+      await UserController.UserBusiness.signupBand(
+        name,
+        nickname,
+        email,
+        password,
+        description
+      );
 
-      await new UserBusiness().signup(id, name, email, password);
-
-      const token = new TokenManager().generateToken({ id });
-
-      res.status(200).send({ token });
-    } catch (error) {
-      res.status(400).send({ message: error.message });
+      res.sendStatus(200);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
     }
   }
 
@@ -24,7 +41,7 @@ export class UserController {
     try {
       const { email, password } = req.body;
 
-      const result = await new UserBusiness().login(email, password);
+      const result = await UserController.UserBusiness.login(email, password);
 
       const token = new TokenManager().generateToken({ id: result });
 
