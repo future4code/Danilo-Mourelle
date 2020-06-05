@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import { AddressInfo } from "net";
 import express from "express";
 import { userRouter } from "./router/UserRouter";
-import { postRouter } from "./router/PostRouter";
+import { musicGenreRouter } from "./router/MusicGenreRouter";
 
 dotenv.config();
 
@@ -19,6 +19,6 @@ const server = app.listen(process.env.PORT || 3003, () => {
 });
 
 app.use("/user", userRouter);
-app.use("/post", postRouter);
+app.use("/music/genre", musicGenreRouter);
 
 

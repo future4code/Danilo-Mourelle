@@ -34,6 +34,8 @@ export class UserController {
       res.sendStatus(200);
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
+    } finally {
+      await UserDatabase.desconnectDB()
     }
   }
 
@@ -56,6 +58,8 @@ export class UserController {
       res.status(200).send(result);
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
+    } finally {
+      await UserDatabase.desconnectDB()
     }
   }
 
@@ -81,6 +85,8 @@ export class UserController {
       res.status(200).send(result);
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
+    } finally {
+      await UserDatabase.desconnectDB()
     }
   }
 
@@ -99,6 +105,8 @@ export class UserController {
       res.status(200).send(result);
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
+    } finally {
+      await UserDatabase.desconnectDB()
     }
   }
 
@@ -111,6 +119,8 @@ export class UserController {
       res.status(200).send(result);
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
+    } finally {
+      await UserDatabase.desconnectDB()
     }
   }
 
@@ -124,6 +134,8 @@ export class UserController {
       res.sendStatus(200);
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
+    } finally {
+      await UserDatabase.desconnectDB()
     }
   }
 }
