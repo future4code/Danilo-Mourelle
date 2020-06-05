@@ -37,17 +37,25 @@ export class UserController {
     }
   }
 
-  async login(req: Request, res: Response) {
+  async signupCustomer(req: Request, res: Response) {
     try {
-      const { email, password } = req.body;
+      const {
+        name,
+        nickname,
+        email,
+        password,
+      } = req.body;
 
-      const result = await UserController.UserBusiness.login(email, password);
+      const result = await UserController.UserBusiness.signupCustomer(
+        name,
+        nickname,
+        email,
+        password,
+      );
 
-      const token = new TokenManager().generateToken({ id: result });
-
-      res.status(200).send({ token });
-    } catch (error) {
-      res.status(400).send({ message: error.message });
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
     }
   }
 }

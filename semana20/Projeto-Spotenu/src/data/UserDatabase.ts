@@ -31,7 +31,7 @@ export class UserDatabase extends BaseDatabase {
         password: user.getPassword(),
         type: user.getType(),
         active: super.convertBooleanToTinyint(user.getIsActive()),
-        description: user.getDescription()
+        description: user.getDescription() || null
       })
       .into(this.tableName);
   }

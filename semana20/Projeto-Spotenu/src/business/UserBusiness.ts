@@ -47,6 +47,46 @@ export class UserBusiness {
     );
   }
 
+  public async signupCustomer(
+    name: string,
+    nickname: string,
+    email: string,
+    password: string,
+  ) {
+    if (!name || !nickname || !email || !password) {
+      throw new InvalidParameterError("Missing input");
+    }
+    if (email.indexOf("@") === -1) {
+      throw new InvalidParameterError("Invalid email");
+    }
+    if (password.length < 6) {
+      throw new InvalidParameterError("Invalid password");
+    }
+
+    const id = this.idManager.generateId()
+    const hashPassword = await this.hashManager.generateHash(password);
+
+    await this.userDatabase.createUser(
+      new User(
+        id,
+        name,
+        nickname,
+        email,
+        hashPassword,
+        UserType.CUSTOMER,
+        false,
+      )
+    );
+
+    return {
+      token: this.tokenManager.generateToken({
+        id,
+        isActive: false,
+        type: UserType.CUSTOMER
+      })
+    }
+  }
+
   public async login(email: string, password: string) {
     if (!email || !password) {
       throw new Error("Preencha os campos");
