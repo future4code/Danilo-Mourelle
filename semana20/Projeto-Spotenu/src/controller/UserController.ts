@@ -58,4 +58,47 @@ export class UserController {
       res.status(err.errorCode || 400).send({ message: err.message });
     }
   }
+
+  async signupAdmin(req: Request, res: Response) {
+    try {
+      const {
+        name,
+        nickname,
+        email,
+        password,
+      } = req.body;
+
+      const token = req.headers.authorization as string
+
+      const result = await UserController.UserBusiness.signupAdmin(
+        name,
+        nickname,
+        email,
+        password,
+        token
+      );
+
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+  }
+
+  async login(req: Request, res: Response) {
+    try {
+      const {
+        user,
+        password,
+      } = req.body;
+
+      const result = await UserController.UserBusiness.login(
+        user,
+        password
+      );
+
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+  }
 }
