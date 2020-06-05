@@ -1,5 +1,5 @@
 import { BaseDatabase } from "./BaseDatabase";
-import { User, stringToUserType } from "../models/User";
+import { User, stringToUserType, UserType } from "../models/User";
 
 export class UserDatabase extends BaseDatabase {
   tableName: string = "Spotenu_Users";
@@ -36,12 +36,12 @@ export class UserDatabase extends BaseDatabase {
       .into(this.tableName);
   }
 
-  public async getUserEmailorNick(user:string): Promise<User | undefined> {
+  public async getUserEmailorNick(user: string): Promise<User | undefined> {
     const result = await this.setConnection()
       .select("*")
       .from(this.tableName)
       .where({ email: user })
-      .orWhere({ nickname:user });
+      .orWhere({ nickname: user });
 
     return this.toModel(result[0]);
   }
@@ -53,5 +53,16 @@ export class UserDatabase extends BaseDatabase {
       .where({ id });
 
     return this.toModel(result[0]);
+  }
+
+  public async getAllBands(): Promise<User[]> {
+    const result = await this.setConnection()
+      .select("*")
+      .from(this.tableName)
+      .where({ type: UserType.BAND });
+
+     return result.map((band: any) => {
+      return this.toModel(band) as User
+    })
   }
 }

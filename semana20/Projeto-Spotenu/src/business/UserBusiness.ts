@@ -163,4 +163,28 @@ export class UserBusiness {
       })
     }
   }
+
+  public async getAllBands(
+    token:string,
+  ) {
+    if (!token) {
+      throw new InvalidParameterError("Missing input");
+    }
+
+    const userData = this.tokenManager.retrieveDataFromToken(token)
+    if(userData.type !== UserType.ADMIN){
+      throw new UnauthorizedError("Access denied")
+    }
+
+    const bandList = await this.userDatabase.getAllBands()
+
+    return {
+      Bands: bandList.map(band => ({
+        name: band.getName(),
+        email: band.getEmail(),
+        nickname: band.getNickname(),
+        isActive: band.getIsActive()
+      }))
+    }
+  }
 }

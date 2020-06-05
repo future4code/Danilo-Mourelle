@@ -101,4 +101,16 @@ export class UserController {
       res.status(err.errorCode || 400).send({ message: err.message });
     }
   }
+
+  async getAllBands(req: Request, res: Response) {
+    try {
+      const token = req.headers.authorization as string;
+
+      const result = await UserController.UserBusiness.getAllBands(token);
+
+      res.status(200).send(result);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+  }
 }

@@ -9,3 +9,5 @@ userRouter.post("/band/signup", user.signupBand);
 userRouter.post("/customer/signup", user.signupCustomer);
 userRouter.post("/admin/signup", user.signupAdmin)
 userRouter.post("/login", user.login)
+
+userRouter.get("/band", user.getAllBands)
