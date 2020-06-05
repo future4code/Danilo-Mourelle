@@ -113,4 +113,17 @@ export class UserController {
       res.status(err.errorCode || 400).send({ message: err.message });
     }
   }
+
+  async approveBand(req: Request, res: Response) {
+    try {
+      const token = req.headers.authorization as string;
+      const id = req.params.id
+
+      await UserController.UserBusiness.approveBand(token, id);
+
+      res.sendStatus(200);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+  }
 }

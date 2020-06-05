@@ -61,8 +61,15 @@ export class UserDatabase extends BaseDatabase {
       .from(this.tableName)
       .where({ type: UserType.BAND });
 
-     return result.map((band: any) => {
+    return result.map((band: any) => {
       return this.toModel(band) as User
     })
+  }
+
+  public async activateUser(id: string): Promise<void> {
+    await this.setConnection()
+      .update({ active: 1 })
+      .from(this.tableName)
+      .where({ id });
   }
 }

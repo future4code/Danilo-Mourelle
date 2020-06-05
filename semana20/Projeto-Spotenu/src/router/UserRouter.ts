@@ -11,3 +11,5 @@ userRouter.post("/admin/signup", user.signupAdmin)
 userRouter.post("/login", user.login)
 
 userRouter.get("/band", user.getAllBands)
+
+userRouter.put("/band/:id", user.approveBand)

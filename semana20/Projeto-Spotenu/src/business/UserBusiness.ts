@@ -6,6 +6,7 @@ import { IdManager } from "../services/IdManager";
 import { InvalidParameterError } from "../errors/InvalidParameterError";
 import { UnauthorizedError } from "../errors/UnauthorizedError";
 import { NotFoundError } from "../errors/NotFoundError";
+import { GenericError } from "../errors/GenericError";
 
 export class UserBusiness {
   constructor(
@@ -148,6 +149,9 @@ export class UserBusiness {
     if(!userFound){
       throw new NotFoundError("User Not Found")
     }
+    if(userFound.getType() === UserType.BAND && !userFound.getIsActive()){
+      throw new UnauthorizedError("Sua banda precisa ser aprovada para liberar essa função")
+    }
 
     const isPasswordValid = await this.hashManager.compareHash(password, userFound.getPassword())
 
@@ -186,5 +190,30 @@ export class UserBusiness {
         isActive: band.getIsActive()
       }))
     }
+  }
+
+  public async approveBand(
+    token:string,
+    id: string
+  ) {
+    if (!token) {
+      throw new InvalidParameterError("Missing input");
+    }
+
+    const userData = this.tokenManager.retrieveDataFromToken(token)
+    if(userData.type !== UserType.ADMIN){
+      throw new UnauthorizedError("Access denied")
+    }
+
+    const userFound = await this.userDatabase.getUserId(id)
+    if(!userFound){
+      throw new NotFoundError("User Not Found")
+    }
+    if(userFound.getIsActive()){
+      throw new GenericError("User already approved")
+    }
+
+    await this.userDatabase.activateUser(id)
+
   }
 }
