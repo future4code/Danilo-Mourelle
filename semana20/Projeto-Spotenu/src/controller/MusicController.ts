@@ -52,7 +52,7 @@ export class MusicController {
 
       const result = await MusicController.MusicBusiness.getDetails(id, token);
 
-      res.status(result.msgCode).send({musics: result.message})
+      res.status(result.msgCode).send(result.message)
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     } finally {

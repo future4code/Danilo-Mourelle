@@ -9,6 +9,7 @@ import { UserType } from "../models/User";
 import { NotFoundError } from "../errors/NotFoundError";
 import { Music } from "../models/Music";
 import { ContentList } from "../messages/ContentList";
+import { GenericResult } from "../messages/GenericResult";
 
 
 export class MusicBusiness {
@@ -33,7 +34,7 @@ export class MusicBusiness {
     if (!album) {
       throw new NotFoundError("Album não encontrado")
     }
-    if (userData.id !== album.getBandId()){
+    if (userData.id !== album.getBandId()) {
       throw new UnauthorizedError("Este album não pertence a essa banda")
     }
 
@@ -60,7 +61,7 @@ export class MusicBusiness {
     }
 
     const musicList = await this.musicDatabase.getAll(Number(page))
-    
+
     return new ContentList(musicList.map(music => ({
       id: music.getId(),
       name: music.getName()
@@ -78,7 +79,15 @@ export class MusicBusiness {
     }
 
     const music = await this.musicDatabase.getDetails(id)
-    
-    return 
+
+    music[0].genre = [music[0].genre]
+
+    if (music.length > 0) {
+      for (let index = 1; index < music.length; index++) {
+        music[0].genre.push(music[index].genre);
+      }
+
+    }
+    return new GenericResult({details: music[0]} )
   }
 }

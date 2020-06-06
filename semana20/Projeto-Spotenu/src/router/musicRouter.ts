@@ -8,5 +8,5 @@ const music = new MusicController();
 
 musicRouter.post("/create", music.create);
 
+musicRouter.get("/details/:musicId", music.getDetails)
 musicRouter.get("/:page", music.getAll)
-musicRouter.get("/:musicId", music.getDetails)
