@@ -2,7 +2,7 @@ import { BaseDatabase } from "./BaseDatabase";
 import { MusicGenre } from "../models/MusicGenre";
 
 export class MusicGenreDatabase extends BaseDatabase {
-  tableName: string = 'Spotenu_MusicGenre'
+  public static TABLE_NAME: string = 'Spotenu_MusicGenre'
 
   private toModel(dbModel?: any): MusicGenre | undefined {
     return (
@@ -20,13 +20,13 @@ export class MusicGenreDatabase extends BaseDatabase {
         id: genre.getId(),
         name: genre.getName(),
       })
-      .into(this.tableName);
+      .into(MusicGenreDatabase.TABLE_NAME);
   }
 
   public async getMusicGenreByName(name: string): Promise<MusicGenre | undefined> {
     const result = await this.setConnection()
       .select("*")
-      .from(this.tableName)
+      .from(MusicGenreDatabase.TABLE_NAME)
       .where({ name })
 
       return this.toModel(result[0])
@@ -35,7 +35,7 @@ export class MusicGenreDatabase extends BaseDatabase {
   public async getMusicGenreById(id: string): Promise<MusicGenre | undefined> {
     const result = await this.setConnection()
       .select("*")
-      .from(this.tableName)
+      .from(MusicGenreDatabase.TABLE_NAME)
       .where({ id })
 
       return this.toModel(result[0])
@@ -44,7 +44,7 @@ export class MusicGenreDatabase extends BaseDatabase {
   public async getAllMusicGenre(): Promise<MusicGenre[]> {
     const result = await this.setConnection()
       .select("*")
-      .from(this.tableName)
+      .from(MusicGenreDatabase.TABLE_NAME)
       
       return result.map((genre: any) => {
         return this.toModel(genre) as MusicGenre

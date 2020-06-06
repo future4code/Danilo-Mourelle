@@ -1,4 +1,4 @@
-import { MusicDatabse } from "../data/MusicDatabase";
+import { MusicDatabase } from "../data/MusicDatabase";
 import { AlbumDatabase } from "../data/AlbumDatabase";
 import { TokenManager } from "../services/TokenManager";
 import { IdManager } from "../services/IdManager";
@@ -13,7 +13,7 @@ import { ContentList } from "../messages/ContentList";
 
 export class MusicBusiness {
   constructor(
-    private musicDatabase: MusicDatabse,
+    private musicDatabase: MusicDatabase,
     private albumDatabase: AlbumDatabase,
     private tokenManager: TokenManager,
     private idManager: IdManager
@@ -36,7 +36,7 @@ export class MusicBusiness {
     if (userData.id !== album.getBandId()){
       throw new UnauthorizedError("Este album não pertence a essa banda")
     }
-    
+
     const music = await this.musicDatabase.getMusicByIdInAlbum(name, albumId)
     if (music) {
       throw new GenericError("Este album já contém essa música")
@@ -65,6 +65,20 @@ export class MusicBusiness {
       id: music.getId(),
       name: music.getName()
     })))
+  }
 
+  public async getDetails(id: string, token: string) {
+    if (!id || !token) {
+      throw new InvalidParameterError("Missing input");
+    }
+
+    const userData = this.tokenManager.retrieveDataFromToken(token)
+    if (userData.type !== UserType.CUSTOMER) {
+      throw new UnauthorizedError("Access denied")
+    }
+
+    const music = await this.musicDatabase.getDetails(id)
+    
+    return 
   }
 }

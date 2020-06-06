@@ -2,7 +2,7 @@ import { BaseDatabase } from "./BaseDatabase";
 import { User, stringToUserType, UserType } from "../models/User";
 
 export class UserDatabase extends BaseDatabase {
-  tableName: string = "Spotenu_Users";
+  public static TABLE_NAME: string = "Spotenu_Users";
 
 
   private toModel(dbModel?: any): User | undefined {
@@ -33,13 +33,13 @@ export class UserDatabase extends BaseDatabase {
         active: super.convertBooleanToTinyint(user.getIsActive()),
         description: user.getDescription() || null
       })
-      .into(this.tableName);
+      .into(UserDatabase.TABLE_NAME);
   }
 
   public async getUserEmailorNick(user: string): Promise<User | undefined> {
     const result = await this.setConnection()
       .select("*")
-      .from(this.tableName)
+      .from(UserDatabase.TABLE_NAME)
       .where({ email: user })
       .orWhere({ nickname: user });
 
@@ -49,7 +49,7 @@ export class UserDatabase extends BaseDatabase {
   public async getUserId(id: string): Promise<User | undefined> {
     const result = await this.setConnection()
       .select("*")
-      .from(this.tableName)
+      .from(UserDatabase.TABLE_NAME)
       .where({ id });
 
     return this.toModel(result[0]);
@@ -58,7 +58,7 @@ export class UserDatabase extends BaseDatabase {
   public async getAllBands(): Promise<User[]> {
     const result = await this.setConnection()
       .select("*")
-      .from(this.tableName)
+      .from(UserDatabase.TABLE_NAME)
       .where({ type: UserType.BAND });
 
     return result.map((band: any) => {
@@ -69,7 +69,7 @@ export class UserDatabase extends BaseDatabase {
   public async activateUser(id: string): Promise<void> {
     await this.setConnection()
       .update({ active: 1 })
-      .from(this.tableName)
+      .from(UserDatabase.TABLE_NAME)
       .where({ id });
   }
 }

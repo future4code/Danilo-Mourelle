@@ -4,8 +4,6 @@ import Knex from 'knex'
 export abstract class BaseDatabase {
   private static CONNECTION_KNEX: Knex | null = null
 
-  abstract tableName: string
-
   protected setConnection() {
     if (BaseDatabase.CONNECTION_KNEX === null) {
       BaseDatabase.CONNECTION_KNEX = knex({

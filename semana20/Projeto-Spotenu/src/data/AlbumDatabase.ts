@@ -2,7 +2,7 @@ import { BaseDatabase } from "./BaseDatabase";
 import { Album } from "../models/Album";
 
 export class AlbumDatabase extends BaseDatabase {
-  tableName: string = "Spotenu_Albuns"
+  public static TABLE_NAME: string = "Spotenu_Albuns"
   
   private toModel(dbModel?: any): Album | undefined {
     return (
@@ -22,13 +22,13 @@ export class AlbumDatabase extends BaseDatabase {
         name: album.getName(),
         band_id: album.getBandId()
       })
-      .into(this.tableName);
+      .into(AlbumDatabase.TABLE_NAME);
   }
 
   public async getAlbumById(id: string): Promise<Album | undefined> {
     const result = await this.setConnection()
       .select("*")
-      .from(this.tableName)
+      .from(AlbumDatabase.TABLE_NAME)
       .where({ id })
 
     return this.toModel(result[0]);
