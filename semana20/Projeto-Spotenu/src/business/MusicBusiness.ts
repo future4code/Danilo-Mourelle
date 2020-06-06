@@ -8,6 +8,7 @@ import { UnauthorizedError } from "../errors/UnauthorizedError";
 import { UserType } from "../models/User";
 import { NotFoundError } from "../errors/NotFoundError";
 import { Music } from "../models/Music";
+import { ContentList } from "../messages/ContentList";
 
 
 export class MusicBusiness {
@@ -32,7 +33,10 @@ export class MusicBusiness {
     if (!album) {
       throw new NotFoundError("Album não encontrado")
     }
-
+    if (userData.id !== album.getBandId()){
+      throw new UnauthorizedError("Este album não pertence a essa banda")
+    }
+    
     const music = await this.musicDatabase.getMusicByIdInAlbum(name, albumId)
     if (music) {
       throw new GenericError("Este album já contém essa música")
@@ -43,5 +47,24 @@ export class MusicBusiness {
     await this.musicDatabase.createMusic(
       new Music(musicId, name, albumId, userData.id)
     );
+  }
+
+  public async getAll(page: string, token: string) {
+    if (!page || !token) {
+      throw new InvalidParameterError("Missing input");
+    }
+
+    const userData = this.tokenManager.retrieveDataFromToken(token)
+    if (userData.type !== UserType.CUSTOMER) {
+      throw new UnauthorizedError("Access denied")
+    }
+
+    const musicList = await this.musicDatabase.getAll(Number(page))
+    
+    return new ContentList(musicList.map(music => ({
+      id: music.getId(),
+      name: music.getName()
+    })))
+
   }
 }

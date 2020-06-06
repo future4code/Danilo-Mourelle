@@ -29,4 +29,19 @@ export class MusicController {
       await BaseDatabase.desconnectDB()
     }
   }
+
+  async getAll(req: Request, res: Response) {
+    try {
+      const page  = req.params.page;
+      const token = req.headers.authorization as string
+
+      const result = await MusicController.MusicBusiness.getAll(page, token);
+
+      res.status(result.msgCode).send({musics: result.message})
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    } finally {
+      await BaseDatabase.desconnectDB()
+    }
+  }
 }

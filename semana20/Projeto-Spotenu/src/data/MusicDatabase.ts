@@ -38,5 +38,18 @@ export class MusicDatabse extends BaseDatabase{
 
     return this.toModel(result[0])
   }
+
+  public async getAll(page:number): Promise<Music[]>{
+   const result = await this.setConnection()
+    .select("*")
+    .from(this.tableName)
+    .limit(10)
+    .offset((page - 1) * 10)
+    .orderBy('name')
+
+    return result.map((music: any) => {
+      return this.toModel(music) as Music
+    })
+  }
   
 }
