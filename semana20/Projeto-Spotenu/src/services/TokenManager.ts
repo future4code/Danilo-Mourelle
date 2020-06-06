@@ -13,7 +13,7 @@ export class TokenManager {
     return {
       isActive: data.isActive,
       type: data.type,
-      id: data.string
+      id: data.id
     }
   }
 }

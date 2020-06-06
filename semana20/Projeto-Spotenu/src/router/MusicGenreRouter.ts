@@ -6,7 +6,6 @@ export const musicGenreRouter = express.Router();
 const musicGenre = new MusicGenreController()
 
 musicGenreRouter.post("/create", musicGenre.create);
-// musicGenreRouter.post("/create", musicGenre.createPost);
 
-// musicGenreRouter.get("/feedtype", musicGenre.getPostsType);
+musicGenreRouter.get("/", musicGenre.getAllMusicGenre);
  

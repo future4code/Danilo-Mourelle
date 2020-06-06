@@ -1,12 +1,16 @@
 import { Request, Response } from "express";
-import { MusicGenreBusiness } from "../business/MusicGenreBusiness";
+import { AlbumBusiness } from "../business/AlbumBusiness";
+import { AlbumDatabase } from "../data/AlbumDatabase";
+import { AlbumGenreDatabase } from "../data/AlbumGenreDatabase";
 import { MusicGenreDatabase } from "../data/MusicGenreDatabase";
 import { TokenManager } from "../services/TokenManager";
 import { IdManager } from "../services/IdManager";
 import { BaseDatabase } from "../data/BaseDatabase";
 
-export class MusicGenreController {
-  private static MusicGenreBusiness = new MusicGenreBusiness(
+export class AlbumController {
+  private static AlbumBusiness = new AlbumBusiness(
+    new AlbumDatabase(),
+    new AlbumGenreDatabase(),
     new MusicGenreDatabase(),
     new TokenManager(),
     new IdManager()
@@ -14,12 +18,12 @@ export class MusicGenreController {
 
   async create(req: Request, res: Response) {
     try {
-      const { name } = req.body;
+      const { name, genreIdList } = req.body;
       const token = req.headers.authorization as string
 
-      await MusicGenreController.MusicGenreBusiness.create(name, token);
+     const result = await AlbumController.AlbumBusiness.create(name, genreIdList, token);
 
-      res.sendStatus(200);
+      res.status(result.msgCode).send({message: result.message});
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     }
@@ -32,9 +36,9 @@ export class MusicGenreController {
     try {
       const token = req.headers.authorization as string
 
-      const result = await MusicGenreController.MusicGenreBusiness.getAllMusicGenre(token);
+      // const result = await MusicGenreController.MusicGenreBusiness.getAllMusicGenre(token);
 
-      res.status(200).send(result);
+      res.status(200).send('result');
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     }

@@ -7,6 +7,7 @@ import { InvalidParameterError } from "../errors/InvalidParameterError";
 import { UnauthorizedError } from "../errors/UnauthorizedError";
 import { NotFoundError } from "../errors/NotFoundError";
 import { GenericError } from "../errors/GenericError";
+import { Token } from "../messages/Token";
 
 export class UserBusiness {
   constructor(
@@ -22,7 +23,7 @@ export class UserBusiness {
     email: string,
     password: string,
     description: string
-  ) {
+  ): Promise<void> {
     if (!name || !nickname || !email || !password || !description) {
       throw new InvalidParameterError("Missing input");
     }
@@ -55,7 +56,7 @@ export class UserBusiness {
     nickname: string,
     email: string,
     password: string,
-  ) {
+  ): Promise<Token> {
     if (!name || !nickname || !email || !password) {
       throw new InvalidParameterError("Missing input");
     }
@@ -81,13 +82,14 @@ export class UserBusiness {
       )
     );
 
-    return {
-      token: this.tokenManager.generateToken({
+    return new Token(
+      201,
+       this.tokenManager.generateToken({
         id,
         isActive: false,
         type: UserType.CUSTOMER
       })
-    }
+    )
   }
 
   public async signupAdmin(
@@ -96,7 +98,7 @@ export class UserBusiness {
     email: string,
     password: string,
     token: string
-  ) {
+  ): Promise<Token> {
     if (!name || !nickname || !email || !password || !token) {
       throw new InvalidParameterError("Missing input");
     }
@@ -127,19 +129,20 @@ export class UserBusiness {
       )
     );
 
-    return {
-      token: this.tokenManager.generateToken({
+    return new Token(
+      201,
+       this.tokenManager.generateToken({
         id,
         isActive: true,
         type: UserType.ADMIN
       })
-    }
+    )
   }
 
   public async login(
     user:string,
     password: string,
-  ) {
+  ): Promise<Token> {
     if (!user || !password) {
       throw new InvalidParameterError("Missing input");
     }
@@ -158,14 +161,16 @@ export class UserBusiness {
     if(!isPasswordValid){
       throw new InvalidParameterError("Invalid Password")
     }
+    console.log(userFound)
 
-    return {
-      token: this.tokenManager.generateToken({
+    return new Token(
+      202,
+       this.tokenManager.generateToken({
         id: userFound.getId(),
         isActive: userFound.getIsActive(),
         type: userFound.getType()
       })
-    }
+    )
   }
 
   public async getAllBands(

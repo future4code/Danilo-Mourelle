@@ -4,6 +4,8 @@ import { TokenManager } from "../services/TokenManager";
 import { UserDatabase } from "../data/UserDatabase";
 import { HashManager } from "../services/HashManager";
 import { IdManager } from "../services/IdManager";
+import { BaseDatabase } from "../data/BaseDatabase";
+import { Create } from "../messages/Create";
 
 export class UserController {
   private static UserBusiness = new UserBusiness(
@@ -31,11 +33,11 @@ export class UserController {
         description
       );
 
-      res.sendStatus(200);
+      res.sendStatus(new Create().msgCode);
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     } finally {
-      await UserDatabase.desconnectDB()
+      await BaseDatabase.desconnectDB()
     }
   }
 
@@ -55,11 +57,11 @@ export class UserController {
         password,
       );
 
-      res.status(200).send(result);
+      res.status(result.msgCode).send({ token: result.token });
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     } finally {
-      await UserDatabase.desconnectDB()
+      await BaseDatabase.desconnectDB()
     }
   }
 
@@ -82,11 +84,11 @@ export class UserController {
         token
       );
 
-      res.status(200).send(result);
+      res.status(result.msgCode).send({ token: result.token });
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     } finally {
-      await UserDatabase.desconnectDB()
+      await BaseDatabase.desconnectDB()
     }
   }
 
@@ -102,11 +104,11 @@ export class UserController {
         password
       );
 
-      res.status(200).send(result);
+      res.status(result.msgCode).send({ token: result.token });
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     } finally {
-      await UserDatabase.desconnectDB()
+      await BaseDatabase.desconnectDB()
     }
   }
 
@@ -120,7 +122,7 @@ export class UserController {
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     } finally {
-      await UserDatabase.desconnectDB()
+      await BaseDatabase.desconnectDB()
     }
   }
 
@@ -135,7 +137,7 @@ export class UserController {
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     } finally {
-      await UserDatabase.desconnectDB()
+      await BaseDatabase.desconnectDB()
     }
   }
 }
