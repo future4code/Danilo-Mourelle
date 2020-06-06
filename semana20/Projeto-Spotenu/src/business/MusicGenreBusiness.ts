@@ -6,7 +6,7 @@ import { UserType } from "../models/User";
 import { InvalidParameterError } from "../errors/InvalidParameterError";
 import { GenericError } from "../errors/GenericError";
 import { UnauthorizedError } from "../errors/UnauthorizedError";
-import { userRouter } from "../router/UserRouter";
+import { userRouter } from "../router/userRouter";
 
 export class MusicGenreBusiness {
   constructor(

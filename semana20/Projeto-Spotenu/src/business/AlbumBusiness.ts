@@ -55,24 +55,4 @@ export class AlbumBusiness {
       return new GenericResult("Todos os gêneros foram adicionados")
     }
   }
-
-  /*  public async getAllMusicGenre(token: string) {
-     if (!token) {
-       throw new InvalidParameterError("Missing input");
-     }
- 
-     const userData = this.tokenManager.retrieveDataFromToken(token)
-     if (userData.type !== UserType.ADMIN && userData.type !== UserType.BAND) {
-       throw new UnauthorizedError("Access denied")
-     }
- 
-     const genresList = await this.musicGenreDatabase.getAllMusicGenre()
- 
-     return {
-       Genres: genresList.map(genre => ({
-         name: genre.getName(),
-         id: genre.getId(),
-       }))
-     }
-   } */
 }

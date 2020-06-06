@@ -4,6 +4,7 @@ import express from "express";
 import { userRouter } from "./router/UserRouter";
 import { musicGenreRouter } from "./router/MusicGenreRouter";
 import { albumRouter } from "./router/AlbumRouter";
+import { musicRouter } from "./router/musicRouter";
 
 dotenv.config();
 
@@ -22,5 +23,6 @@ const server = app.listen(process.env.PORT || 3003, () => {
 app.use("/user", userRouter);
 app.use("/music/genre", musicGenreRouter);
 app.use('/album', albumRouter);
+app.use('/music', musicRouter)
 
 

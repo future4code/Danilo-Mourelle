@@ -161,7 +161,6 @@ export class UserBusiness {
     if(!isPasswordValid){
       throw new InvalidParameterError("Invalid Password")
     }
-    console.log(userFound)
 
     return new Token(
       202,
