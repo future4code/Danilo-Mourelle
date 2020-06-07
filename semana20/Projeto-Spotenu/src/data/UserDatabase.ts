@@ -72,4 +72,11 @@ export class UserDatabase extends BaseDatabase {
       .from(UserDatabase.TABLE_NAME)
       .where({ id });
   }
+
+  public async update(id: string, name: string): Promise<void> {
+    await this.setConnection()
+      .update({ name })
+      .from(UserDatabase.TABLE_NAME)
+      .where({ id });
+  }
 }

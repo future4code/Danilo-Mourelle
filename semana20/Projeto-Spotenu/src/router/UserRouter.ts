@@ -14,3 +14,4 @@ userRouter.get("/band", user.getAllBands)
 
 userRouter.put("/band/:id", user.approveBand)
 userRouter.put('/customer/:id', user.approveCustomer)
+userRouter.put('/', user.updateUser)

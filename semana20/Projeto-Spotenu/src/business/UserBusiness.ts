@@ -8,6 +8,9 @@ import { UnauthorizedError } from "../errors/UnauthorizedError";
 import { NotFoundError } from "../errors/NotFoundError";
 import { GenericError } from "../errors/GenericError";
 import { Token } from "../messages/Token";
+import { Create } from "../messages/Create";
+import { ContentList } from "../messages/ContentList";
+import { GenericResult } from "../messages/GenericResult";
 
 export class UserBusiness {
   constructor(
@@ -23,7 +26,7 @@ export class UserBusiness {
     email: string,
     password: string,
     description: string
-  ): Promise<void> {
+  ): Promise<Create> {
     if (!name || !nickname || !email || !password || !description) {
       throw new InvalidParameterError("Missing input");
     }
@@ -56,6 +59,8 @@ export class UserBusiness {
         description
       )
     );
+
+    return new Create()
   }
 
   public async signupCustomer(
@@ -195,7 +200,7 @@ export class UserBusiness {
 
   public async getAllBands(
     token: string,
-  ) {
+  ): Promise<ContentList> {
     if (!token) {
       throw new InvalidParameterError("Missing input");
     }
@@ -207,20 +212,20 @@ export class UserBusiness {
 
     const bandList = await this.userDatabase.getAllBands()
 
-    return {
-      Bands: bandList.map(band => ({
+    return new ContentList(
+      bandList.map(band => ({
         name: band.getName(),
         email: band.getEmail(),
         nickname: band.getNickname(),
         isActive: band.getIsActive()
-      }))
-    }
+      })))
+
   }
 
   public async approveBand(
     token: string,
     id: string
-  ) {
+  ): Promise<GenericResult> {
     if (!token) {
       throw new InvalidParameterError("Missing input");
     }
@@ -234,7 +239,7 @@ export class UserBusiness {
     if (!userFound) {
       throw new NotFoundError("User Not Found")
     }
-    if(userFound.getType() !== UserType.BAND){
+    if (userFound.getType() !== UserType.BAND) {
       throw new GenericError("User not a band")
     }
     if (userFound.getIsActive()) {
@@ -242,12 +247,14 @@ export class UserBusiness {
     }
 
     await this.userDatabase.activateUser(id)
+
+    return new GenericResult()
   }
 
   public async approveCustomer(
     token: string,
     id: string
-  ) {
+  ):Promise<GenericResult> {
     if (!token) {
       throw new InvalidParameterError("Missing input");
     }
@@ -261,7 +268,7 @@ export class UserBusiness {
     if (!userFound) {
       throw new NotFoundError("User Not Found")
     }
-    if(userFound.getType() !== UserType.CUSTOMER){
+    if (userFound.getType() !== UserType.CUSTOMER) {
       throw new GenericError("User not a customer")
     }
     if (userFound.getIsActive()) {
@@ -269,5 +276,27 @@ export class UserBusiness {
     }
 
     await this.userDatabase.activateUser(id)
+
+    return new GenericResult()
+  }
+
+  public async updateUser(
+    token: string,
+    name: string
+  ): Promise<GenericResult> {
+    if (!token || !name) {
+      throw new InvalidParameterError("Missing input");
+    }
+
+    const userData = this.tokenManager.retrieveDataFromToken(token)
+
+    const userFound = await this.userDatabase.getUserId(userData.id)
+    if (!userFound) {
+      throw new NotFoundError("User Not Found")
+    }
+
+    await this.userDatabase.update(userFound.getId(), name)
+
+    return new GenericResult()
   }
 }
