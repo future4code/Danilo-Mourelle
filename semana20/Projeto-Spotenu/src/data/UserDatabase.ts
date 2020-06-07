@@ -68,7 +68,7 @@ export class UserDatabase extends BaseDatabase {
 
   public async activateUser(id: string): Promise<void> {
     await this.setConnection()
-      .update({ active: 1 })
+      .update({ active: super.convertBooleanToTinyint(true) })
       .from(UserDatabase.TABLE_NAME)
       .where({ id });
   }

@@ -1,8 +1,8 @@
 import { BaseDatabase } from "./BaseDatabase";
 import { Playlist } from "../models/Playlist";
 
-export class PlaylistDatabase extends BaseDatabase{
-  public static TABLE_NAME:string = 'Spotenu_Playlist'
+export class PlaylistDatabase extends BaseDatabase {
+  public static TABLE_NAME: string = 'Spotenu_Playlist'
 
   private toModel(dbModel?: any): Playlist | undefined {
     return (
@@ -31,22 +31,29 @@ export class PlaylistDatabase extends BaseDatabase{
     const result = await this.setConnection()
       .select("*")
       .from(PlaylistDatabase.TABLE_NAME)
-      .where({id: playlistId})
+      .where({ id: playlistId })
 
-      return this.toModel(result[0])
+    return this.toModel(result[0])
   }
 
   public async getAll(page: number, customerId: string): Promise<Playlist[] | undefined> {
     const result = await this.setConnection()
       .select("*")
       .from(PlaylistDatabase.TABLE_NAME)
-      .where({customer_id:customerId})
+      .where({ customer_id: customerId })
       .limit(10)
       .offset((page - 1) * 10)
       .orderBy('name')
 
-      return result.map((playlist: any) => {
-        return this.toModel(playlist) as Playlist
-      })
+    return result.map((playlist: any) => {
+      return this.toModel(playlist) as Playlist
+    })
+  }
+
+  public async share(id: string): Promise<void> {
+    const result = await this.setConnection()
+      .update({ privacy: super.convertBooleanToTinyint(false) })
+      .from(PlaylistDatabase.TABLE_NAME)
+      .where({ id })
   }
 }

@@ -10,4 +10,6 @@ playlistRouter.post('/music/add', playlist.addMusic)
 
 playlistRouter.get('/getall/:page', playlist.getAll)
 
+playlistRouter.put('/:id', playlist.sharePlaylist)
+
 playlistRouter.delete('/music/delete', playlist.deleteMusicFromPlaylist)

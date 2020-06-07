@@ -79,4 +79,20 @@ export class PlaylistController {
       await BaseDatabase.desconnectDB()
     }
   }
+
+  async sharePlaylist(req: Request, res: Response) {
+    try {
+      const playlistId = req.params.id
+      const token = req.headers.authorization as string
+
+      const result = await PlaylistController.PlaylistBusiness.sharePlaylist(playlistId, token);
+
+      res.sendStatus(result.msgCode)
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+    finally {
+      await BaseDatabase.desconnectDB()
+    }
+  }
 }

@@ -128,4 +128,26 @@ export class PlaylistBusiness {
       name: playlist.getName()
     })))
   }
+
+  public async sharePlaylist(playlistId:string, token: string): Promise<GenericResult> {
+    if (!token || !playlistId) {
+      throw new InvalidParameterError("Missing input");
+    }
+
+    const userData = this.tokenManager.retrieveDataFromToken(token)
+    if (userData.type !== UserType.CUSTOMER || userData.isActive === false) {
+      throw new NotClientError("Premium customer service only")
+    }
+
+    const playlist = await this.playlistDatabase.getPlaylistById(playlistId)
+    if(!playlist){
+      throw new NotFoundError('PlayList Not Found')
+    } else if (playlist.getCustomerId() !== userData.id){
+      throw new UnauthorizedError("This playlist is not yours")
+    }
+
+    await this.playlistDatabase.share(playlistId)
+    
+    return new GenericResult()
+  }
 }
