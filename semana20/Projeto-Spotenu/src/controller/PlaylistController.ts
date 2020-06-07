@@ -47,4 +47,20 @@ export class PlaylistController {
       await BaseDatabase.desconnectDB()
     }
   }
+
+  async deleteMusicFromPlaylist(req: Request, res: Response) {
+    try {
+      const { musicId, playlistId } = req.body;
+      const token = req.headers.authorization as string
+
+     const result = await PlaylistController.PlaylistBusiness.deleteMusicFromPlaylist(musicId, playlistId, token);
+
+      res.sendStatus(result.msgCode);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+    finally {
+      await BaseDatabase.desconnectDB()
+    }
+  }
 }

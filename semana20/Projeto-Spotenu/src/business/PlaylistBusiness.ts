@@ -12,6 +12,7 @@ import { Playlist } from "../models/Playlist";
 import { NotClientError } from "../errors/NotClientError";
 import { MusicPlaylistRelation } from "../models/MusicPlaylisRelation";
 import { MusicDatabase } from "../data/MusicDatabase";
+import { GenericResult } from "../messages/GenericResult";
 
 export class PlaylistBusiness {
   constructor(
@@ -77,5 +78,34 @@ export class PlaylistBusiness {
     )
     
     return new Create()
+  }
+
+  public async deleteMusicFromPlaylist(musicId: string, playlistId:string, token: string): Promise<Create> {
+    if (!musicId || !playlistId || !token) {
+      throw new InvalidParameterError("Missing input");
+    }
+
+    const userData = this.tokenManager.retrieveDataFromToken(token)
+    if (userData.type !== UserType.CUSTOMER || userData.isActive === false) {
+      throw new NotClientError("Premium customer service only")
+    }
+
+    const relation = await this.musicPlaylistRelationDatabase.getRelation(
+      new MusicPlaylistRelation(
+        musicId,
+        playlistId,
+      ))
+    if(!relation){
+      throw new NotFoundError("This music is not in this playlist")
+    }
+
+    await this.musicPlaylistRelationDatabase.delete(
+      new MusicPlaylistRelation(
+        musicId,
+        playlistId,
+      )
+    )
+    
+    return new GenericResult()
   }
 }
