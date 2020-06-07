@@ -14,12 +14,15 @@ import { MusicPlaylistRelation } from "../models/MusicPlaylisRelation";
 import { MusicDatabase } from "../data/MusicDatabase";
 import { GenericResult } from "../messages/GenericResult";
 import { ContentList } from "../messages/ContentList";
+import { UserPlaylistRelationDatabase } from "../data/UserPlaylistRelationDatabase";
+import { UserPlaylistRelation } from "../models/UserPlaylistRelation";
 
 export class PlaylistBusiness {
   constructor(
     private playlistDatabase: PlaylistDatabase,
     private musicDatabase: MusicDatabase,
     private musicPlaylistRelationDatabase: MusicPlaylistRelationDatabase,
+    private userPlaylistRelationDatabase: UserPlaylistRelationDatabase,
     private tokenManager: TokenManager,
     private idManager: IdManager
   ) { }
@@ -147,6 +150,35 @@ export class PlaylistBusiness {
     }
 
     await this.playlistDatabase.share(playlistId)
+    
+    return new GenericResult()
+  }
+
+  public async followPlaylist(playlistId:string, token: string): Promise<GenericResult> {
+    if (!token || !playlistId) {
+      throw new InvalidParameterError("Missing input");
+    }
+
+    const userData = this.tokenManager.retrieveDataFromToken(token)
+    if (userData.type !== UserType.CUSTOMER || userData.isActive === false) {
+      throw new NotClientError("Premium customer service only")
+    }
+
+    const playlist = await this.playlistDatabase.getPlaylistById(playlistId)
+    if(!playlist){
+      throw new NotFoundError('PlayList Not Found')
+    } else if (playlist.getIsPrivate()){
+      throw new UnauthorizedError("This playlist is private and can't be followed")
+    } else if (playlist.getCustomerId() === userData.id){
+      throw new GenericError("This playlist belongs to you")
+    }
+
+    await this.userPlaylistRelationDatabase.create(
+      new UserPlaylistRelation(
+        userData.id,
+        playlistId
+      )
+    )
     
     return new GenericResult()
   }

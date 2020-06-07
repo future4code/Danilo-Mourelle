@@ -3,6 +3,7 @@ import { PlaylistBusiness } from "../business/PlaylistBusiness";
 import { PlaylistDatabase } from "../data/PlaylistDatabase";
 import { MusicDatabase } from "../data/MusicDatabase";
 import { MusicPlaylistRelationDatabase } from "../data/MusicPlaylistRelationDatabase";
+import { UserPlaylistRelationDatabase } from "../data/UserPlaylistRelationDatabase";
 import { TokenManager } from "../services/TokenManager";
 import { IdManager } from "../services/IdManager";
 import { BaseDatabase } from "../data/BaseDatabase";
@@ -12,6 +13,7 @@ export class PlaylistController {
     new PlaylistDatabase(),
     new MusicDatabase(),
     new MusicPlaylistRelationDatabase(),
+    new UserPlaylistRelationDatabase(),
     new TokenManager(),
     new IdManager()
   )
@@ -86,6 +88,22 @@ export class PlaylistController {
       const token = req.headers.authorization as string
 
       const result = await PlaylistController.PlaylistBusiness.sharePlaylist(playlistId, token);
+
+      res.sendStatus(result.msgCode)
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+    finally {
+      await BaseDatabase.desconnectDB()
+    }
+  }
+
+  async followPlaylist(req: Request, res: Response) {
+    try {
+      const playlistId = req.params.id
+      const token = req.headers.authorization as string
+
+      const result = await PlaylistController.PlaylistBusiness.followPlaylist(playlistId, token);
 
       res.sendStatus(result.msgCode)
     } catch (err) {
