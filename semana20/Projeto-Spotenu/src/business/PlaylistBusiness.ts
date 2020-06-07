@@ -68,7 +68,7 @@ export class PlaylistBusiness {
         playlistId
       )
     )
-    
+
     if (!playlist && !relation) {
       throw new NotFoundError("Playlist not Found")
     }
@@ -91,7 +91,7 @@ export class PlaylistBusiness {
     return new Create()
   }
 
-  public async deleteMusicFromPlaylist(musicId: string, playlistId: string, token: string): Promise<Create> {
+  public async deleteMusicFromPlaylist(musicId: string, playlistId: string, token: string): Promise<GenericResult> {
     if (!musicId || !playlistId || !token) {
       throw new InvalidParameterError("Missing input");
     }
@@ -186,6 +186,29 @@ export class PlaylistBusiness {
         playlistId
       )
     )
+
+    return new GenericResult()
+  }
+
+  public async editPlaylist(playlistId: string, name: string, token: string): Promise<GenericResult> {
+    if (!token || !playlistId || !name) {
+      throw new InvalidParameterError("Missing input");
+    }
+
+    const userData = this.tokenManager.retrieveDataFromToken(token)
+    if (userData.type !== UserType.CUSTOMER || userData.isActive === false) {
+      throw new NotClientError("Premium customer service only")
+    }
+
+    const playlist = await this.playlistDatabase.getPlaylistById(playlistId)
+    
+    if (!playlist) {
+      throw new NotFoundError('PlayList Not Found')
+    } else if (playlist.customer_id !== userData.id && playlist.user_id !== userData.id) {
+      throw new UnauthorizedError("This playlist is not yours or followed by you")
+    }
+
+    await this.playlistDatabase.update(playlistId, name)
 
     return new GenericResult()
   }

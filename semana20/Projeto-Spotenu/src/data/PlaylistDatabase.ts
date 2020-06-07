@@ -28,13 +28,15 @@ export class PlaylistDatabase extends BaseDatabase {
       .into(PlaylistDatabase.TABLE_NAME);
   }
 
-  public async getPlaylistById(playlistId: string): Promise<Playlist | undefined> {
+  public async getPlaylistById(playlistId: string): Promise<any | undefined> {
     const result = await this.setConnection()
-      .select("*")
-      .from(PlaylistDatabase.TABLE_NAME)
-      .where({ id: playlistId })
+      .raw(
+        `SELECT * FROM ${PlaylistDatabase.TABLE_NAME} pl 
+        LEFT JOIN ${UserPlaylistRelationDatabase.TABLE_NAME} rel ON pl.id = rel.playlist_id
+        WHERE pl.id = '${playlistId}' OR rel.playlist_id = '${playlistId}'`
+      )
 
-    return this.toModel(result[0])
+    return result[0][0]
   }
 
   public async getAll(page: number, customerId: string): Promise<Playlist[] | undefined> {
@@ -53,8 +55,15 @@ export class PlaylistDatabase extends BaseDatabase {
   }
 
   public async share(id: string): Promise<void> {
-    const result = await this.setConnection()
+    await this.setConnection()
       .update({ privacy: super.convertBooleanToTinyint(false) })
+      .from(PlaylistDatabase.TABLE_NAME)
+      .where({ id })
+  }
+
+  public async update(id: string, name:string): Promise<void> {
+    await this.setConnection()
+      .update({ name })
       .from(PlaylistDatabase.TABLE_NAME)
       .where({ id })
   }

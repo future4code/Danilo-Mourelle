@@ -11,6 +11,7 @@ playlistRouter.post('/follow/:id',playlist.followPlaylist)
 
 playlistRouter.get('/getall/:page', playlist.getAll)
 
-playlistRouter.put('/:id', playlist.sharePlaylist)
+playlistRouter.put('/edit/:id', playlist.editPlaylist)
+playlistRouter.put('/share/:id', playlist.sharePlaylist)
 
 playlistRouter.delete('/music/delete', playlist.deleteMusicFromPlaylist)

@@ -73,7 +73,7 @@ export class PlaylistController {
 
       const result = await PlaylistController.PlaylistBusiness.getAll(token, page);
 
-      res.status(result.msgCode).send(result.message);
+      res.status(result.msgCode).send({Playlists: result.message});
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     }
@@ -104,6 +104,23 @@ export class PlaylistController {
       const token = req.headers.authorization as string
 
       const result = await PlaylistController.PlaylistBusiness.followPlaylist(playlistId, token);
+
+      res.sendStatus(result.msgCode)
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+    finally {
+      await BaseDatabase.desconnectDB()
+    }
+  }
+
+  async editPlaylist(req: Request, res: Response) {
+    try {
+      const playlistId = req.params.id
+      const token = req.headers.authorization as string
+      const name = req.body.name
+
+      const result = await PlaylistController.PlaylistBusiness.editPlaylist(playlistId, name, token);
 
       res.sendStatus(result.msgCode)
     } catch (err) {
