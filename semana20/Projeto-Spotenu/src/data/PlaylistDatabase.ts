@@ -1,5 +1,6 @@
 import { BaseDatabase } from "./BaseDatabase";
 import { Playlist } from "../models/Playlist";
+import { UserPlaylistRelationDatabase } from "./UserPlaylistRelationDatabase";
 
 export class PlaylistDatabase extends BaseDatabase {
   public static TABLE_NAME: string = 'Spotenu_Playlist'
@@ -38,14 +39,15 @@ export class PlaylistDatabase extends BaseDatabase {
 
   public async getAll(page: number, customerId: string): Promise<Playlist[] | undefined> {
     const result = await this.setConnection()
-      .select("*")
-      .from(PlaylistDatabase.TABLE_NAME)
-      .where({ customer_id: customerId })
-      .limit(10)
-      .offset((page - 1) * 10)
-      .orderBy('name')
+      .raw(
+        `SELECT * FROM ${PlaylistDatabase.TABLE_NAME} pl 
+        LEFT JOIN ${UserPlaylistRelationDatabase.TABLE_NAME} rel ON pl.id = rel.playlist_id
+        WHERE pl.customer_id = '${customerId}' OR rel.user_id = '${customerId}'
+        ORDER BY pl.name LIMIT 10 OFFSET ${(page - 1) * 10}`
+      )
 
-    return result.map((playlist: any) => {
+
+    return result[0].map((playlist: any) => {
       return this.toModel(playlist) as Playlist
     })
   }
