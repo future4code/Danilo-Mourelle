@@ -13,6 +13,7 @@ import { NotClientError } from "../errors/NotClientError";
 import { MusicPlaylistRelation } from "../models/MusicPlaylisRelation";
 import { MusicDatabase } from "../data/MusicDatabase";
 import { GenericResult } from "../messages/GenericResult";
+import { ContentList } from "../messages/ContentList";
 
 export class PlaylistBusiness {
   constructor(
@@ -107,5 +108,24 @@ export class PlaylistBusiness {
     )
     
     return new GenericResult()
+  }
+
+  public async getAll(token: string, page:string): Promise<ContentList> {
+    if (!token || !page) {
+      throw new InvalidParameterError("Missing input");
+    }
+
+    const userData = this.tokenManager.retrieveDataFromToken(token)
+    if (userData.type !== UserType.CUSTOMER || userData.isActive === false) {
+      throw new NotClientError("Premium customer service only")
+    }
+
+    const playlistList = await this.playlistDatabase.getAll(Number(page), userData.id)
+    
+    
+    return new ContentList(playlistList?.map(playlist => ({
+      id: playlist.getId(),
+      name: playlist.getName()
+    })))
   }
 }

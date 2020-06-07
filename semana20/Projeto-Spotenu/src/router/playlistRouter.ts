@@ -8,4 +8,6 @@ const playlist = new PlaylistController()
 playlistRouter.post('/create', playlist.create)
 playlistRouter.post('/music/add', playlist.addMusic)
 
+playlistRouter.get('/getall/:page', playlist.getAll)
+
 playlistRouter.delete('/music/delete', playlist.deleteMusicFromPlaylist)

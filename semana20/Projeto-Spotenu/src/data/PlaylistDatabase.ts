@@ -35,4 +35,18 @@ export class PlaylistDatabase extends BaseDatabase{
 
       return this.toModel(result[0])
   }
+
+  public async getAll(page: number, customerId: string): Promise<Playlist[] | undefined> {
+    const result = await this.setConnection()
+      .select("*")
+      .from(PlaylistDatabase.TABLE_NAME)
+      .where({customer_id:customerId})
+      .limit(10)
+      .offset((page - 1) * 10)
+      .orderBy('name')
+
+      return result.map((playlist: any) => {
+        return this.toModel(playlist) as Playlist
+      })
+  }
 }

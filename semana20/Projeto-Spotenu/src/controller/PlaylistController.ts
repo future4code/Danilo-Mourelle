@@ -21,7 +21,7 @@ export class PlaylistController {
       const { name } = req.body;
       const token = req.headers.authorization as string
 
-     const result = await PlaylistController.PlaylistBusiness.create(name, token);
+      const result = await PlaylistController.PlaylistBusiness.create(name, token);
 
       res.sendStatus(result.msgCode);
     } catch (err) {
@@ -37,7 +37,7 @@ export class PlaylistController {
       const { musicId, playlistId } = req.body;
       const token = req.headers.authorization as string
 
-     const result = await PlaylistController.PlaylistBusiness.addMusic(musicId, playlistId, token);
+      const result = await PlaylistController.PlaylistBusiness.addMusic(musicId, playlistId, token);
 
       res.sendStatus(result.msgCode);
     } catch (err) {
@@ -53,9 +53,25 @@ export class PlaylistController {
       const { musicId, playlistId } = req.body;
       const token = req.headers.authorization as string
 
-     const result = await PlaylistController.PlaylistBusiness.deleteMusicFromPlaylist(musicId, playlistId, token);
+      const result = await PlaylistController.PlaylistBusiness.deleteMusicFromPlaylist(musicId, playlistId, token);
 
       res.sendStatus(result.msgCode);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+    finally {
+      await BaseDatabase.desconnectDB()
+    }
+  }
+
+  async getAll(req: Request, res: Response) {
+    try {
+      const page = req.params.page
+      const token = req.headers.authorization as string
+
+      const result = await PlaylistController.PlaylistBusiness.getAll(token, page);
+
+      res.status(result.msgCode).send(result.message);
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     }
