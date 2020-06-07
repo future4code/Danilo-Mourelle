@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { PlaylistBusiness } from "../business/PlaylistBusiness";
 import { PlaylistDatabase } from "../data/PlaylistDatabase";
+import { MusicDatabase } from "../data/MusicDatabase";
+import { MusicPlaylistRelationDatabase } from "../data/MusicPlaylistRelationDatabase";
 import { TokenManager } from "../services/TokenManager";
 import { IdManager } from "../services/IdManager";
 import { BaseDatabase } from "../data/BaseDatabase";
@@ -8,6 +10,8 @@ import { BaseDatabase } from "../data/BaseDatabase";
 export class PlaylistController {
   private static PlaylistBusiness = new PlaylistBusiness(
     new PlaylistDatabase(),
+    new MusicDatabase(),
+    new MusicPlaylistRelationDatabase(),
     new TokenManager(),
     new IdManager()
   )
@@ -28,5 +32,19 @@ export class PlaylistController {
     }
   }
 
+  async addMusic(req: Request, res: Response) {
+    try {
+      const { musicId, playlistId } = req.body;
+      const token = req.headers.authorization as string
 
+     const result = await PlaylistController.PlaylistBusiness.addMusic(musicId, playlistId, token);
+
+      res.sendStatus(result.msgCode);
+    } catch (err) {
+      res.status(err.errorCode || 400).send({ message: err.message });
+    }
+    finally {
+      await BaseDatabase.desconnectDB()
+    }
+  }
 }

@@ -26,4 +26,13 @@ export class PlaylistDatabase extends BaseDatabase{
       })
       .into(PlaylistDatabase.TABLE_NAME);
   }
+
+  public async getPlaylistById(playlistId: string): Promise<Playlist | undefined> {
+    const result = await this.setConnection()
+      .select("*")
+      .from(PlaylistDatabase.TABLE_NAME)
+      .where({id: playlistId})
+
+      return this.toModel(result[0])
+  }
 }

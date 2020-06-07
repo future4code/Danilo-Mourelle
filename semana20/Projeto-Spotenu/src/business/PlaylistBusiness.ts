@@ -1,4 +1,5 @@
 import { PlaylistDatabase } from "../data/PlaylistDatabase";
+import { MusicPlaylistRelationDatabase } from "../data/MusicPlaylistRelationDatabase";
 import { TokenManager } from "../services/TokenManager";
 import { IdManager } from "../services/IdManager";
 import { InvalidParameterError } from "../errors/InvalidParameterError";
@@ -8,10 +9,15 @@ import { GenericError } from "../errors/GenericError";
 import { Create } from "../messages/Create";
 import { UserType } from "../models/User";
 import { Playlist } from "../models/Playlist";
+import { NotClientError } from "../errors/NotClientError";
+import { MusicPlaylistRelation } from "../models/MusicPlaylisRelation";
+import { MusicDatabase } from "../data/MusicDatabase";
 
 export class PlaylistBusiness {
   constructor(
     private playlistDatabase: PlaylistDatabase,
+    private musicDatabase: MusicDatabase,
+    private musicPlaylistRelationDatabase: MusicPlaylistRelationDatabase,
     private tokenManager: TokenManager,
     private idManager: IdManager
   ) { }
@@ -34,6 +40,39 @@ export class PlaylistBusiness {
         name,
         userData.id,
         true
+      )
+    )
+    
+    return new Create()
+  }
+
+  public async addMusic(musicId: string, playlistId:string, token: string): Promise<Create> {
+    if (!musicId || !playlistId || !token) {
+      throw new InvalidParameterError("Missing input");
+    }
+
+    const userData = this.tokenManager.retrieveDataFromToken(token)
+    if (userData.type !== UserType.CUSTOMER || userData.isActive === false) {
+      throw new NotClientError("Premium customer service only")
+    }
+
+    const playlist = await this.playlistDatabase.getPlaylistById(playlistId)
+    if(!playlist){
+      throw new NotFoundError("Playlist not Found")
+    }
+    if(playlist.getCustomerId() !== userData.id){
+      throw new UnauthorizedError("Access denied")
+    }
+
+    const music = await this.musicDatabase.getMusicById(musicId)
+    if(!music){
+      throw new NotFoundError("Music not Found")
+    }
+
+    await this.musicPlaylistRelationDatabase.create(
+      new MusicPlaylistRelation(
+        musicId,
+        playlistId,
       )
     )
     

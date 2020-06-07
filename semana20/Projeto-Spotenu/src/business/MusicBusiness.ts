@@ -38,7 +38,7 @@ export class MusicBusiness {
       throw new UnauthorizedError("Este album não pertence a essa banda")
     }
 
-    const music = await this.musicDatabase.getMusicByIdInAlbum(name, albumId)
+    const music = await this.musicDatabase.getMusicInAlbumByName(name, albumId)
     if (music) {
       throw new GenericError("Este album já contém essa música")
     }

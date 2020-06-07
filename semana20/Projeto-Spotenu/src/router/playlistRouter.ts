@@ -6,3 +6,4 @@ export const playlistRouter = express.Router()
 const playlist = new PlaylistController()
 
 playlistRouter.post('/create', playlist.create)
+playlistRouter.post('/music/add', playlist.addMusic)
