@@ -47,11 +47,11 @@ export class PlaylistBusiness {
         true
       )
     )
-    
+
     return new Create()
   }
 
-  public async addMusic(musicId: string, playlistId:string, token: string): Promise<Create> {
+  public async addMusic(musicId: string, playlistId: string, token: string): Promise<Create> {
     if (!musicId || !playlistId || !token) {
       throw new InvalidParameterError("Missing input");
     }
@@ -62,15 +62,22 @@ export class PlaylistBusiness {
     }
 
     const playlist = await this.playlistDatabase.getPlaylistById(playlistId)
-    if(!playlist){
+    const relation = await this.userPlaylistRelationDatabase.getRelation(
+      new UserPlaylistRelation(
+        userData.id,
+        playlistId
+      )
+    )
+    
+    if (!playlist && !relation) {
       throw new NotFoundError("Playlist not Found")
     }
-    if(playlist.getCustomerId() !== userData.id){
+    if (playlist?.getCustomerId() !== userData.id && relation?.getUserId() !== userData.id) {
       throw new UnauthorizedError("Access denied")
     }
 
     const music = await this.musicDatabase.getMusicById(musicId)
-    if(!music){
+    if (!music) {
       throw new NotFoundError("Music not Found")
     }
 
@@ -80,11 +87,11 @@ export class PlaylistBusiness {
         playlistId,
       )
     )
-    
+
     return new Create()
   }
 
-  public async deleteMusicFromPlaylist(musicId: string, playlistId:string, token: string): Promise<Create> {
+  public async deleteMusicFromPlaylist(musicId: string, playlistId: string, token: string): Promise<Create> {
     if (!musicId || !playlistId || !token) {
       throw new InvalidParameterError("Missing input");
     }
@@ -99,7 +106,7 @@ export class PlaylistBusiness {
         musicId,
         playlistId,
       ))
-    if(!relation){
+    if (!relation) {
       throw new NotFoundError("This music is not in this playlist")
     }
 
@@ -109,11 +116,11 @@ export class PlaylistBusiness {
         playlistId,
       )
     )
-    
+
     return new GenericResult()
   }
 
-  public async getAll(token: string, page:string): Promise<ContentList> {
+  public async getAll(token: string, page: string): Promise<ContentList> {
     if (!token || !page) {
       throw new InvalidParameterError("Missing input");
     }
@@ -124,15 +131,15 @@ export class PlaylistBusiness {
     }
 
     const playlistList = await this.playlistDatabase.getAll(Number(page), userData.id)
-    
-    
+
+
     return new ContentList(playlistList?.map(playlist => ({
       id: playlist.getId(),
       name: playlist.getName()
     })))
   }
 
-  public async sharePlaylist(playlistId:string, token: string): Promise<GenericResult> {
+  public async sharePlaylist(playlistId: string, token: string): Promise<GenericResult> {
     if (!token || !playlistId) {
       throw new InvalidParameterError("Missing input");
     }
@@ -143,18 +150,18 @@ export class PlaylistBusiness {
     }
 
     const playlist = await this.playlistDatabase.getPlaylistById(playlistId)
-    if(!playlist){
+    if (!playlist) {
       throw new NotFoundError('PlayList Not Found')
-    } else if (playlist.getCustomerId() !== userData.id){
+    } else if (playlist.getCustomerId() !== userData.id) {
       throw new UnauthorizedError("This playlist is not yours")
     }
 
     await this.playlistDatabase.share(playlistId)
-    
+
     return new GenericResult()
   }
 
-  public async followPlaylist(playlistId:string, token: string): Promise<GenericResult> {
+  public async followPlaylist(playlistId: string, token: string): Promise<GenericResult> {
     if (!token || !playlistId) {
       throw new InvalidParameterError("Missing input");
     }
@@ -165,11 +172,11 @@ export class PlaylistBusiness {
     }
 
     const playlist = await this.playlistDatabase.getPlaylistById(playlistId)
-    if(!playlist){
+    if (!playlist) {
       throw new NotFoundError('PlayList Not Found')
-    } else if (playlist.getIsPrivate()){
+    } else if (playlist.getIsPrivate()) {
       throw new UnauthorizedError("This playlist is private and can't be followed")
-    } else if (playlist.getCustomerId() === userData.id){
+    } else if (playlist.getCustomerId() === userData.id) {
       throw new GenericError("This playlist belongs to you")
     }
 
@@ -179,7 +186,7 @@ export class PlaylistBusiness {
         playlistId
       )
     )
-    
+
     return new GenericResult()
   }
 }
