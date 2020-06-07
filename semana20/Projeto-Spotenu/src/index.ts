@@ -5,6 +5,7 @@ import { userRouter } from "./router/UserRouter";
 import { musicGenreRouter } from "./router/MusicGenreRouter";
 import { albumRouter } from "./router/AlbumRouter";
 import { musicRouter } from "./router/musicRouter";
+import { playlistRouter } from "./router/playlistRouter";
 
 dotenv.config();
 
@@ -24,5 +25,6 @@ app.use("/user", userRouter);
 app.use("/music/genre", musicGenreRouter);
 app.use('/album', albumRouter);
 app.use('/music', musicRouter)
+app.use('/playlist', playlistRouter)
 
 
