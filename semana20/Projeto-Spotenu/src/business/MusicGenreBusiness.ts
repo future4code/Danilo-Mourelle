@@ -6,7 +6,8 @@ import { UserType } from "../models/User";
 import { InvalidParameterError } from "../errors/InvalidParameterError";
 import { GenericError } from "../errors/GenericError";
 import { UnauthorizedError } from "../errors/UnauthorizedError";
-import { userRouter } from "../router/userRouter";
+import { Create } from "../messages/Create";
+import { ContentList } from "../messages/ContentList";
 
 export class MusicGenreBusiness {
   constructor(
@@ -15,7 +16,7 @@ export class MusicGenreBusiness {
     private idManager: IdManager
   ) { }
 
-  public async create(name: string, token: string) {
+  public async create(name: string, token: string): Promise<Create> {
     if (!name || !token) {
       throw new InvalidParameterError("Missing input");
     }
@@ -35,25 +36,27 @@ export class MusicGenreBusiness {
     await this.musicGenreDatabse.createMusicGenre(
       new MusicGenre(id, name.toLowerCase())
     );
+
+    return new Create()
   }
 
-  public async getAllMusicGenre(token: string) {
+  public async getAllMusicGenre(token: string): Promise<ContentList> {
     if (!token) {
       throw new InvalidParameterError("Missing input");
     }
 
     const userData = this.tokenManager.retrieveDataFromToken(token)
-    if (userData.type !== UserType.ADMIN && userData.type!== UserType.BAND) {
+    if (userData.type !== UserType.ADMIN && userData.type !== UserType.BAND) {
       throw new UnauthorizedError("Access denied")
     }
 
     const genresList = await this.musicGenreDatabse.getAllMusicGenre()
-    
-    return {
-      Genres: genresList.map(genre => ({
+
+    return new ContentList(
+      genresList.map(genre => ({
         name: genre.getName(),
         id: genre.getId(),
       }))
-    }
+    )
   }
 }

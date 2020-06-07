@@ -21,7 +21,7 @@ export class AlbumBusiness {
     private idManager: IdManager
   ) { }
 
-  public async create(name: string, genreIdList: string[], token: string) {
+  public async create(name: string, genreIdList: string[], token: string):Promise<GenericResult | PartialContent> {
     if (!name || !token || genreIdList.length === 0) {
       throw new InvalidParameterError("Missing input");
     }

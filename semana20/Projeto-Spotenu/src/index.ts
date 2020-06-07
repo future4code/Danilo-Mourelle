@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 import { AddressInfo } from "net";
 import express from "express";
-import { userRouter } from "./router/UserRouter";
-import { musicGenreRouter } from "./router/MusicGenreRouter";
-import { albumRouter } from "./router/AlbumRouter";
+import { userRouter } from "./router/userRouter";
+import { musicGenreRouter } from "./router/musicGenreRouter";
+import { albumRouter } from "./router/albumRouter";
 import { musicRouter } from "./router/musicRouter";
 import { playlistRouter } from "./router/playlistRouter";
 

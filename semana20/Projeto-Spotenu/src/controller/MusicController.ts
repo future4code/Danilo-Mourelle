@@ -20,9 +20,9 @@ export class MusicController {
       const { name, albumId } = req.body;
       const token = req.headers.authorization as string
 
-      await MusicController.MusicBusiness.create(name, albumId, token);
+      const result = await MusicController.MusicBusiness.create(name, albumId, token);
 
-      res.sendStatus(new Create().msgCode)
+      res.sendStatus(result.msgCode)
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     } finally {

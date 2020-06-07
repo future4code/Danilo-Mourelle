@@ -17,9 +17,9 @@ export class MusicGenreController {
       const { name } = req.body;
       const token = req.headers.authorization as string
 
-      await MusicGenreController.MusicGenreBusiness.create(name, token);
+      const result = await MusicGenreController.MusicGenreBusiness.create(name, token);
 
-      res.sendStatus(200);
+      res.sendStatus(result.msgCode);
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     }
@@ -34,7 +34,7 @@ export class MusicGenreController {
 
       const result = await MusicGenreController.MusicGenreBusiness.getAllMusicGenre(token);
 
-      res.status(200).send(result);
+      res.status(result.msgCode).send({genres: result.message});
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     }

@@ -10,6 +10,7 @@ import { NotFoundError } from "../errors/NotFoundError";
 import { Music } from "../models/Music";
 import { ContentList } from "../messages/ContentList";
 import { GenericResult } from "../messages/GenericResult";
+import { Create } from "../messages/Create";
 
 
 export class MusicBusiness {
@@ -20,7 +21,7 @@ export class MusicBusiness {
     private idManager: IdManager
   ) { }
 
-  public async create(name: string, albumId: string, token: string) {
+  public async create(name: string, albumId: string, token: string):Promise<Create> {
     if (!name || !token || !albumId) {
       throw new InvalidParameterError("Missing input");
     }
@@ -48,9 +49,11 @@ export class MusicBusiness {
     await this.musicDatabase.createMusic(
       new Music(musicId, name, albumId, userData.id)
     );
+
+    return new Create()
   }
 
-  public async getAll(page: string, token: string) {
+  public async getAll(page: string, token: string):Promise<ContentList> {
     if (!page || !token) {
       throw new InvalidParameterError("Missing input");
     }
@@ -68,7 +71,7 @@ export class MusicBusiness {
     })))
   }
 
-  public async getDetails(id: string, token: string) {
+  public async getDetails(id: string, token: string):Promise<GenericResult> {
     if (!id || !token) {
       throw new InvalidParameterError("Missing input");
     }

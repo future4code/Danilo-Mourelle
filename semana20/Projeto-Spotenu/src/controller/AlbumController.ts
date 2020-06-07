@@ -23,22 +23,7 @@ export class AlbumController {
 
      const result = await AlbumController.AlbumBusiness.create(name, genreIdList, token);
 
-      res.status(result.msgCode).send({message: result.message});
-    } catch (err) {
-      res.status(err.errorCode || 400).send({ message: err.message });
-    }
-    finally {
-      await BaseDatabase.desconnectDB()
-    }
-  }
-
-  async getAllMusicGenre(req: Request, res: Response) {
-    try {
-      const token = req.headers.authorization as string
-
-      // const result = await MusicGenreController.MusicGenreBusiness.getAllMusicGenre(token);
-
-      res.status(200).send('result');
+      res.sendStatus(result.msgCode).send({message: result.message});
     } catch (err) {
       res.status(err.errorCode || 400).send({ message: err.message });
     }
