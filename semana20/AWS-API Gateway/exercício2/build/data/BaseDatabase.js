@@ -45,6 +45,7 @@ var BaseDatabase = /** @class */ (function () {
     function BaseDatabase() {
     }
     BaseDatabase.prototype.setConnection = function () {
+        console.log('passou aqui tb');
         if (BaseDatabase.CONNECTION_KNEX === null) {
             BaseDatabase.CONNECTION_KNEX = knex_1.default({
                 client: "mysql",
@@ -64,6 +65,7 @@ var BaseDatabase = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        console.log("passou por aqui", BaseDatabase.CONNECTION_KNEX === null);
                         if (!(BaseDatabase.CONNECTION_KNEX !== null)) return [3 /*break*/, 2];
                         return [4 /*yield*/, BaseDatabase.CONNECTION_KNEX.destroy()];
                     case 1:

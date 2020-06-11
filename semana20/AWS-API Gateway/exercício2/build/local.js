@@ -4,7 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var index_1 = __importDefault(require("./index"));
-var server = index_1.default.listen(3000, function () {
+var dotenv_1 = __importDefault(require("dotenv"));
+dotenv_1.default.config();
+var server = index_1.default.listen(3003, function () {
     if (server) {
         var address = server.address();
         console.log("Servidor rodando em http://localhost:" + address.port);

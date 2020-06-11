@@ -5,6 +5,7 @@ export abstract class BaseDatabase {
   private static CONNECTION_KNEX: Knex | null = null
 
   protected setConnection() {
+    console.log('passou aqui tb')
     if (BaseDatabase.CONNECTION_KNEX === null) {
       BaseDatabase.CONNECTION_KNEX = knex({
         client: "mysql",
@@ -21,6 +22,7 @@ export abstract class BaseDatabase {
   }
 
   public static async desconnectDB() {
+    console.log("passou por aqui", BaseDatabase.CONNECTION_KNEX === null)
     if (BaseDatabase.CONNECTION_KNEX !== null) {
       await BaseDatabase.CONNECTION_KNEX.destroy()
       BaseDatabase.CONNECTION_KNEX = null
@@ -33,5 +35,4 @@ export abstract class BaseDatabase {
   protected convertBooleanToTinyint(value: boolean): number {
     return value ? 1 : 0
   }
-
 }
