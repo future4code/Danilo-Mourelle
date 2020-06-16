@@ -1,0 +1,13 @@
+1) No exercício ocorre a verificação da existência de conteúdo na variável 'input'.
+
+Portanto temos que:
+input = undefined -> false
+input = null -> false
+input = "Hello word" -> true
+
+2) Para poder transformar o body, que originalmente é um JSON (uma string) em um objeto
+
+3) Essa lambda retorna 200 em casos em que o event contiver alguma requisição por queryStringParameters ou por meio do body. O body da resposta é um objeto com duas propriedade booleanas 
+uma mostrando se tem um body e outra mostrando se tem uma query
+
+4)  Essa lambda retorna 400 em casos em que o event NÂO contiver alguma requisição por queryStringParameters e por meio do body.
