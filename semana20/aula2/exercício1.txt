@@ -1,0 +1,29 @@
+b) Entrará no primeiro IF, portanto deve retornar algo do tipo 
+  {
+    statusCode: 400,
+    body: { "message": "Missing input" }
+  };
+
+c) Como não tem o user.info, também cai no mesmo IF do item b e portanto a mesma resposta
+
+d) Vai cair no IF de verificação de user.email, e devolverá a seguinte mensagem
+  {
+    statusCode: 400,
+    body: { "message": "Missing email" }
+  };
+
+e) Vai cair no IF de verificação de user.password.length, e devolverá a seguinte mensagem
+  {
+    statusCode: 400,
+    body: { "message": "Invalid password" }
+  };
+
+f) Vai realizar o código completo e portanto devolverá a seguinte mensagem
+  {
+    statusCode: 200,
+    body: { "message": "User is correct" }
+  };
+
+g) Para devolver 422 em casos de email inválido, seria necessário fazer um novo IF verificando as condições de validação do conteudo do user.email
+
+h) Algo da forma como foi passado no item f
