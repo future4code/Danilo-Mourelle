@@ -50,21 +50,24 @@ var ProductController = /** @class */ (function () {
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
-                        _b.trys.push([0, 2, 3, 5]);
+                        _b.trys.push([0, 3, , 5]);
                         _a = req.body, name_1 = _a.name, price = _a.price, imageLink = _a.imageLink;
                         return [4 /*yield*/, ProductController.ProductBusiness.createProduct(name_1, price, imageLink)];
                     case 1:
                         _b.sent();
+                        return [4 /*yield*/, BaseDatabase_1.BaseDatabase.desconnectDB()];
+                    case 2:
+                        _b.sent();
                         res.sendStatus(201);
                         return [3 /*break*/, 5];
-                    case 2:
+                    case 3:
                         err_1 = _b.sent();
-                        res.status(err_1.errorCode || 400).send({ message: err_1.message });
-                        return [3 /*break*/, 5];
-                    case 3: return [4 /*yield*/, BaseDatabase_1.BaseDatabase.desconnectDB()];
+                        console.log(err_1);
+                        return [4 /*yield*/, BaseDatabase_1.BaseDatabase.desconnectDB()];
                     case 4:
                         _b.sent();
-                        return [7 /*endfinally*/];
+                        res.status(err_1.errorCode || 400).send({ message: err_1.message });
+                        return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
             });
@@ -76,21 +79,24 @@ var ProductController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        _a.trys.push([0, 2, 3, 5]);
+                        _a.trys.push([0, 3, , 5]);
                         id = req.params.id;
                         return [4 /*yield*/, ProductController.ProductBusiness.getProduct(id)];
                     case 1:
                         result = _a.sent();
+                        return [4 /*yield*/, BaseDatabase_1.BaseDatabase.desconnectDB()];
+                    case 2:
+                        _a.sent();
                         res.status(200).send({ product: result });
                         return [3 /*break*/, 5];
-                    case 2:
+                    case 3:
                         err_2 = _a.sent();
-                        res.status(err_2.errorCode || 400).send({ message: err_2.message });
-                        return [3 /*break*/, 5];
-                    case 3: return [4 /*yield*/, BaseDatabase_1.BaseDatabase.desconnectDB()];
+                        return [4 /*yield*/, BaseDatabase_1.BaseDatabase.desconnectDB()];
                     case 4:
                         _a.sent();
-                        return [7 /*endfinally*/];
+                        console.log(err_2);
+                        res.status(err_2.errorCode || 400).send({ message: err_2.message });
+                        return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
             });

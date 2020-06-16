@@ -24,11 +24,12 @@ export class ProductController {
         imageLink,
       );
 
+      await BaseDatabase.desconnectDB()
       res.sendStatus(201);
     } catch (err) {
-      res.status(err.errorCode || 400).send({ message: err.message });
-    } finally {
+      console.log(err)
       await BaseDatabase.desconnectDB()
+      res.status(err.errorCode || 400).send({ message: err.message });
     }
   }
 
@@ -40,11 +41,12 @@ export class ProductController {
 
       const result = await ProductController.ProductBusiness.getProduct(id);
 
-      res.status(200).send({product: result});
-    } catch (err) {
-      res.status(err.errorCode || 400).send({ message: err.message });
-    } finally {
       await BaseDatabase.desconnectDB()
+      res.status(200).send({ product: result });
+    } catch (err) {
+      await BaseDatabase.desconnectDB()
+      console.log(err)
+      res.status(err.errorCode || 400).send({ message: err.message });
     }
   }
 }
