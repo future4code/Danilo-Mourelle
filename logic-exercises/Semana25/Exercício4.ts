@@ -1,5 +1,5 @@
-function countNegativeIntoMatrix(matrix) {
-  let countNegatives = 0
+function countNegativeIntoMatrix(matrix: number[][]): number {
+  let countNegatives: number = 0
 
   for (let i = 0; i < matrix.length; i++) {
     if (matrix[i][0] >= 0) {
@@ -15,5 +15,3 @@ function countNegativeIntoMatrix(matrix) {
   }
   return countNegatives
 }
-
-console.log(countNegativeIntoMatrix([[-1]]))
