@@ -1,4 +1,4 @@
-function moveZero(arr){
+function moveZero(arr: number[]): number[]{
   arr.sort((a,b) => {
     if(a === 0){
       return 1
@@ -12,5 +12,3 @@ function moveZero(arr){
 
   return arr
 }
-
-console.log(moveZero([0,3,0,0,4,0,5]))
