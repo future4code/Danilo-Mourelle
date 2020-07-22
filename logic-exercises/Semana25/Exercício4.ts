@@ -1,4 +1,4 @@
-function countNegativeIntoMatrix(matrix: number[][]): number {
+export function countNegativeIntoMatrix(matrix: number[][]): number {
   let countNegatives: number = 0
 
   for (let i = 0; i < matrix.length; i++) {

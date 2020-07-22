@@ -1,12 +1,12 @@
 import { Personagem } from "../Exercício1/Personagens";
-import { validatePersonagem } from "../Exercício1/validatePesonagem";
+import { validatePersonagem } from "../Exercício1/validatePersonagem";
 
 export function performAttack(attacker: Personagem, defender: Personagem): void {
     if (!validatePersonagem(attacker) || !validatePersonagem(defender)) {
         throw new Error("Invalid Personagem")
     }
-    if (attacker.atack > defender.defense) {
-        defender.life -= attacker.atack - defender.defense
+    if (attacker.attack > defender.defense) {
+        defender.life -= attacker.attack - defender.defense
     }
 }
 
@@ -14,8 +14,8 @@ export function performAttackInvDep(attacker: Personagem, defender: Personagem, 
     if (!validator(attacker) || !validator(defender)) {
         throw new Error("Invalid Personagem")
     }
-    if (attacker.atack > defender.defense) {
-        defender.life -= attacker.atack - defender.defense
+    if (attacker.attack > defender.defense) {
+        defender.life -= attacker.attack - defender.defense
     }
 }
 

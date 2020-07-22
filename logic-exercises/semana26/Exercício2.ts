@@ -1,4 +1,4 @@
-function moveZero(arr: number[]): number[]{
+export function moveZero(arr: number[]): number[]{
   arr.sort((a,b) => {
     if(a === 0){
       return 1

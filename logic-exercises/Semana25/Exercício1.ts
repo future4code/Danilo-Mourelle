@@ -1,4 +1,4 @@
-function lonelyNumber(array: number[]): number{
+export function lonelyNumber(array: number[]): number{
   const stack: number[] = []
 
   for (const number of array) {
