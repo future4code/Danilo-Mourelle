@@ -1,4 +1,4 @@
-function numberInverted(num: number): number {
+export function numberInverted(num: number): number {
   const numberInString: string = Math.abs(num).toString()
   const stringReverse: string = numberInString.split('').reverse().join('')
 

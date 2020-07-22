@@ -1,4 +1,4 @@
-const arrayRotation = (nums: number[], k: number): number[] => {
+export const arrayRotation = (nums: number[], k: number): number[] => {
   let newArray: number[] = []
   for (let index = nums.length - k; index < nums.length; index++) {
     newArray.push(nums[index])

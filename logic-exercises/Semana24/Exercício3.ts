@@ -1,4 +1,4 @@
-function checkStringSymbols(input: string): boolean {
+export function checkStringSymbols(input: string): boolean {
   if (input.length % 2 !== 0) {
     return false
   }

@@ -1,4 +1,4 @@
-function checkPrefix(input: string[]): string {
+export function checkPrefix(input: string[]): string {
   let smallestString: string = input[0]
   for (const str of input) {
     if (str.length < smallestString.length) {
