@@ -1,5 +1,5 @@
 import { Personagem } from "../../src/Exercício1/Personagens"
-import { validatePersonagem } from "../../src/Exercício1/validatePesonagem"
+import { validatePersonagem } from "../../src/Exercício1/validatePersonagem"
 
 describe("Testing validatePersonagem.ts", () => {
     test("Should return FALSE for input with empty name", () => {
@@ -7,7 +7,7 @@ describe("Testing validatePersonagem.ts", () => {
             name: '',
             life: 1500,
             defense: 850,
-            atack: 920
+            attack: 920
         }
 
         const result = validatePersonagem(personagem)
@@ -53,7 +53,7 @@ describe("Testing validatePersonagem.ts", () => {
             name: 'Growlithe',
             life: 1500,
             defense: -850,
-            atack: 920
+            attack: 920
         }
 
         const result = validatePersonagem(personagem)
@@ -65,7 +65,7 @@ describe("Testing validatePersonagem.ts", () => {
             name: 'Growlithe',
             life: 1500,
             defense: 850,
-            atack: 0
+            attack: 0
         }
 
         const result = validatePersonagem(personagem)
@@ -77,7 +77,7 @@ describe("Testing validatePersonagem.ts", () => {
             name: 'Growlithe',
             life: 1500,
             defense: 850,
-            atack: 920
+            attack: 920
         }
 
         const result = validatePersonagem(personagem)
